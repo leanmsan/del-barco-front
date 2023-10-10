@@ -1,13 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Menu } from "./pages/Menu";
+
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-   <h1></h1>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path= '/' element={<Menu/>}/>
+        </Routes>
+      </BrowserRouter>
+    </div>
 
   )
 }
