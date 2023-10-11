@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SideBar } from '../components/SideBar'
+import { Inicio } from '../components/Inicio'
 import '../css/menu.css'
 
 
@@ -22,6 +23,7 @@ export function Menu() {
 
         <div>
             <SideBar handleTabClick = {handleTabClick} selectedTab = {selectedTab}/>
+            
         </div>
     )
 }
