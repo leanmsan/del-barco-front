@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import logo from '../assets/img/logo1.png'
 
 export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
     <nav>
       <div className="logo-name">
         <div className="logo-image">
-          {/* <img src={logo} alt="Logo Cervecería Del Barco" onClick={handleLogoClick}/> */}
+         <img src={logo} alt="Logo Cervecería Del Barco" onClick={handleLogoClick}/>
         </div>
       </div>
 
