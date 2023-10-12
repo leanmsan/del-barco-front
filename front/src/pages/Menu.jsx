@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SideBar } from "../components/SideBar";
-import { Inicio } from "../components/Inicio";
 import { TablaInsumos } from "../components/insumos/TablaInsumos";
-import { ProveedoresPage } from "./ProveedoresPage";
+import ProveedoresPage from "./ProveedoresPage";
 import "../css/menu.css";
 
 export function Menu() {
