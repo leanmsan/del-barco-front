@@ -4,8 +4,6 @@ import { Inicio } from "./components/Inicio";
 import ProveedoresPage from "./pages/ProveedoresPage";
 
 
-
-
 function App() {
 
   return (
