@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import axios from 'axios';
 
@@ -43,7 +43,7 @@ setData(resultadosBusqueda);
   return (
     <div>
       <div className='search-box'>
-      <button class="btn-search"><i class="fas fa-search"></i></button>
+      <button className="btn-search"><i className="fas fa-search"></i></button>
         <input 
           className='input-search' type="text" placeholder="Buscar..." 
           value={busqueda} onChange={handleChange}
