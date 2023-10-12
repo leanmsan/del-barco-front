@@ -61,12 +61,12 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           </li>
           <li
             className={`nav-link-item ${
-              selectedTab === "altaProducto" ? "active" : ""
+              selectedTab === "altaInsumos" ? "active" : ""
             }`}
           >
-            <Link to="/altaproducto">
+            <Link to="/altainsumos">
               <i className="fa-solid fa-square-plus nav-link-icon"></i>
-              <span className="link-name">Alta de producto</span>
+              <span className="link-name">Alta de insumos</span>
             </Link>
           </li>
           <li
