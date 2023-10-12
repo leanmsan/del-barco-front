@@ -54,9 +54,9 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
               selectedTab === "productos" ? "active" : ""
             }`}
           >
-            <Link to="/productos">
+            <Link to="/tablainsumos">
               <i className="fa-solid fa-cart-flatbed nav-link-icon"></i>
-              <span className="link-name">Productos</span>
+              <span className="link-name">Insumos</span>
             </Link>
           </li>
           <li
