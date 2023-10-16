@@ -1,4 +1,5 @@
 import { useState } from "react";
+import navegate from "react;"
 import "../../css/form.css"
 
 export function AltaProveedores () {
