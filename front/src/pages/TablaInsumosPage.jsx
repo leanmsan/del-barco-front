@@ -7,7 +7,6 @@ export function TablaInsumosPage(){
         <div>
             <SideBar />
             <TablaInsumos/>
-
         </div>
     )
 }
