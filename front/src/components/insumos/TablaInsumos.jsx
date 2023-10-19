@@ -53,7 +53,6 @@ setData(resultadosBusqueda);
       <Table>
         <TableHead>
           <TableRow>
-            
             <TableCell>Descripcion</TableCell>
             <TableCell>Cantidad disponible</TableCell>
             <TableCell>Tipo de medida</TableCell>
