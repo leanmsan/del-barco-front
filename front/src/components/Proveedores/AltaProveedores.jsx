@@ -3,8 +3,6 @@ import navegate from "react";
 import "../../css/form.css"
 
 export function AltaProveedores () {
-    // const [idproveedor, setIdProveedor] = useState("");
-    // const [errorIdProveedor, setErrorIdProveedor] = useState(false);
 
     const [nombre, setNombre] = useState("");
     const [errorNombre, setErrorNombre] = useState(false);
@@ -15,9 +13,6 @@ export function AltaProveedores () {
     const [telefono, setTelefono] = useState("");
     const [errorTelefono, setErrorTelefono] = useState(false);
 
-    const [estado, setEstado] = useState("");
-    const [errorEstado, setErrorEstado] = useState(false);
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         
@@ -25,7 +20,6 @@ export function AltaProveedores () {
             nombre,
             mail,
             telefono,
-            estado,
           };
     
          try {
@@ -55,12 +49,6 @@ export function AltaProveedores () {
               setErrorTelefono(false)
             }
 
-            if (estado.trim() !== 'A' && estado.trim() !== 'I') {
-              setErrorEstado(true);
-            }else{
-              setErrorEstado(false)
-            }
-
             if (response.ok) {
                 console.log(response, "esto es response")
                 console.log('proveedor creado exitosamente')
@@ -76,17 +64,7 @@ export function AltaProveedores () {
         <div className='container'>
           <form className='form' onSubmit={handleSubmit}>
             <h1 className='title' >Alta de Proveedores</h1>
-          <div className='input-control'
-          >
-            {/* <label>ID</label>
-            <input
-              type='text'
-              name='idproveedor'
-              onChange={(e) => {setIdProveedor(e.target.value)
-                setErrorIdProveedor(false)}}
-            />
-            {errorNombre && <div className='error-message'>El nombre es requerido</div>}
-            <br /> */}
+          <div className='input-control'>
 
             <label>Nombre</label>
             <input
@@ -117,15 +95,6 @@ export function AltaProveedores () {
             />
             {errorTelefono && <div className='error-message'>El contacto es requerido</div>}
             <br />
-
-            <label>Estado (A o I)</label>
-            <input
-              type='text'
-              name='estado'
-              onChange={(e) => {setEstado(e.target.value)
-                setErrorEstado(false)}}
-            />
-            {errorEstado && <div className='error-message'>El estado ingresado es invalido o esta vacio</div>}
           </div>
         <button className='button' type="submit">Enviar</button>
       </form>
