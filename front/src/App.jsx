@@ -5,6 +5,7 @@ import ProveedoresPage from "./pages/ProveedoresPage";
 import {TablaInsumosPage} from './pages/TablaInsumosPage'
 import AltaInsumosPage from "./pages/AltaInsumosPage";
 import { AltaProvPage } from './pages/AltaProvPage';
+import { RegistroEntradaPage } from "./pages/RegistroEntradaPage";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path= '/altaproveedores' element={<AltaProvPage/>}/>
           <Route path= '/tablainsumos' element={<TablaInsumosPage/>}/>
           <Route path= '/altainsumos' element={<AltaInsumosPage/>}/>
+          <Route path= '/registroentradas' element={<RegistroEntradaPage/>}/>
         </Routes>
       </BrowserRouter>
     </div>
