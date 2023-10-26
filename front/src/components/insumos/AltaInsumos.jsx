@@ -1,39 +1,61 @@
 import React, { useEffect, useState } from "react";
-import '../../css/form.css'
+import "../../css/form.css";
 
 export function AltaInsumos() {
-
   const [descripcion, setDescripcion] = useState("");
   const [errorDescripcion, setErrorDescripcion] = useState(false);
 
-  const [cantidad_disponible, setcantidad_disponible] = useState("");
-  const [errorcantidad_disponible, setErrorcantidad_disponible] = useState(false);
+  const [cantidad_disponible, setCantidad_disponible] = useState("");
+  const [errorCantidad_disponible, setErrorCantidad_disponible] = useState(false);
 
-  const [tipo_medida, settipo_medida] = useState("");
-  const [errortipo_medida, setErrortipo_medidaa] = useState(false);
+  const [tipo_medida, setTipo_medida] = useState("");
+  const [errorTipo_medida, setErrorTipo_medida] = useState(false);
 
   const [categoria, setCategoria] = useState("");
   const [errorCategoria, setErrorCategoria] = useState(false);
 
-  const [precio_unitario, setprecio_unitario] = useState(0);
-  const [errorprecio_unitario, setErrorprecio_unitario] = useState(false);
+  const [precio_unitario, setPrecio_unitario] = useState(0);
+  const [errorPrecio_unitario, setErrorPrecio_unitario] = useState(false);
 
-  const [proveedor_id, setproveedor_id] = useState({});
-  const [errorproveedor_id, setErrorproveedor_id] = useState(false);
+  const [proveedor_id, setProveedor_id] = useState({});
+  const [errorProveedor_id, setErrorProveedor_id] = useState(false);
 
+  const [proveedores, setProveedores] = useState([]);
+  const [proveedorSeleccionado, setProveedorSeleccionado] = useState("");
 
+  const unidadesDeMedida = ["Kg", "g", "Mg", "L", "Ml", "Cc"];
 
+  useEffect(() => {
+    async function fetchProveedores() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/proveedores/");
+        if (response.ok) {
+          const data = await response.json();
+          
+          setProveedores(data.proveedores);
+          
+        } else {
+          console.error(
+            "Error al obtener la lista de proveedores desde la API"
+          );
+        }
+      } catch (error) {
+        console.error("Error en la solicitud GET", error);
+      }
+    }
+    fetchProveedores();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const insumo = {
-        descripcion,
-        cantidad_disponible,
-        tipo_medida,
-        categoria,
-        precio_unitario,
-        proveedor_id
+      descripcion,
+      cantidad_disponible,
+      tipo_medida,
+      categoria,
+      precio_unitario,
+      proveedor_id,
     };
 
     try {
@@ -52,15 +74,15 @@ export function AltaInsumos() {
       }
 
       if (cantidad_disponible.trim() === "") {
-        setErrorcantidad_disponible(true);
+        setErrorCantidad_disponible(true);
       } else {
-        setErrorcantidad_disponible(false);
+        setErrorCantidad_disponible(false);
       }
 
       if (tipo_medida.trim() === "") {
-        setErrortipo_medidaa(true);
+        setErrorTipo_medida(true);
       } else {
-        setErrortipo_medidaa(false);
+        setErrorTipo_medida(false);
       }
 
       if (categoria.trim() === "") {
@@ -68,14 +90,13 @@ export function AltaInsumos() {
       } else {
         setErrorCategoria(false);
       }
-
-
-
+      console.log(response)
       if (response.ok) {
         console.log("El formulario se envió correctamente");
       } else {
         console.log("Error al enviar el formulario");
       }
+      console.log("esto es insumos", insumo)
     } catch (error) {
       console.log("Error en la solicitud POST", error);
     }
@@ -87,7 +108,7 @@ export function AltaInsumos() {
         <h1 className="title">Alta de Insumos</h1>
         <div className="input-control">
           <label>
-            Descripcion
+            Descripción
             <input
               type="text"
               value={descripcion}
@@ -97,7 +118,7 @@ export function AltaInsumos() {
               }}
             />
             {errorDescripcion && (
-              <div className="error-message">La descripcion es requerida</div>
+              <div className="error-message">La descripción es requerida</div>
             )}
           </label>
           <br />
@@ -107,34 +128,42 @@ export function AltaInsumos() {
               type="text"
               value={cantidad_disponible}
               onChange={(e) => {
-                setcantidad_disponible(e.target.value);
-                setErrorcantidad_disponible(false);
+                setCantidad_disponible(e.target.value);
+                setErrorCantidad_disponible(false);
               }}
             />
-            {errorcantidad_disponible && (
-              <div className="error-message">La cantidad disponible es requerida</div>
-            )}
-          </label>
-          <br />
-          <label>
-            Tipo medida
-            <input
-              type="text"
-              value={tipo_medida}
-              onChange={(e) => {
-                settipo_medida(e.target.value);
-                setErrortipo_medidaa(false);
-              }}
-            />
-            {errortipo_medida && (
+            {errorCantidad_disponible && (
               <div className="error-message">
-                el tipo de medida es requerido
+                La cantidad disponible es requerida
               </div>
             )}
           </label>
           <br />
           <label>
-            Categoria
+            Tipo de medida
+            <select
+              value={tipo_medida}
+              onChange={(e) => {
+                setTipo_medida(e.target.value);
+                setErrorTipo_medida(false);
+              }}
+            >
+              <option value="">Selecciona la unidad de medida</option>
+              {unidadesDeMedida.map((unidad, index) => (
+                <option key={index} value={unidad}>
+                  {unidad}
+                </option>
+              ))}
+            </select>
+            {errorTipo_medida && (
+              <div className="error-message">
+                La unidad de medida es requerida
+              </div>
+            )}
+          </label>
+          <br />
+          <label>
+            Categoría
             <input
               type="text"
               value={categoria}
@@ -144,9 +173,7 @@ export function AltaInsumos() {
               }}
             />
             {errorCategoria && (
-              <div className="error-message">
-                La categoria es requerida
-              </div>
+              <div className="error-message">La categoría es requerida</div>
             )}
           </label>
           <br />
@@ -156,31 +183,39 @@ export function AltaInsumos() {
               type="text"
               value={precio_unitario}
               onChange={(e) => {
-                setprecio_unitario(e.target.value);
-                setErrorprecio_unitario(false);
+                setPrecio_unitario(e.target.value);
+                setErrorPrecio_unitario(false);
               }}
             />
-            {errorprecio_unitario && (
-              <div className="error-message">el precio unitario es requerido</div>
+            {errorPrecio_unitario && (
+              <div className="error-message">
+                El precio unitario es requerido
+              </div>
             )}
           </label>
           <br />
           <label>
-            Proovedor
-            <input
-              type="text"
+            Proveedor
+            <select
               value={proveedor_id}
               onChange={(e) => {
-                setproveedor_id(e.target.value);
-                setErrorproveedor_id(false);
+                setProveedor_id(e.target.value);
+                
               }}
-            />
-            {errorproveedor_id && (
-              <div className="error-message">
-                El stock disponible debe ser mayor a 0
-              </div>
+            >
+              <option value="">Selecciona un proveedor</option>
+              {proveedores.map((proveedor) => (
+                <option key={proveedor.idproveedor} value={proveedor.nombre}>
+                  {proveedor.nombre}
+                </option>
+              ))}
+            </select>
+            {errorProveedor_id && (
+              <div className="error-message">Selecciona un proveedor</div>
             )}
           </label>
+          <br />
+
           <br />
         </div>
 
