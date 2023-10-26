@@ -90,12 +90,13 @@ export function AltaInsumos() {
       } else {
         setErrorCategoria(false);
       }
-
+      console.log(response)
       if (response.ok) {
         console.log("El formulario se envió correctamente");
       } else {
         console.log("Error al enviar el formulario");
       }
+      console.log("esto es insumos", insumo)
     } catch (error) {
       console.log("Error en la solicitud POST", error);
     }
@@ -196,15 +197,15 @@ export function AltaInsumos() {
           <label>
             Proveedor
             <select
-              value={proveedorSeleccionado}
+              value={proveedor_id}
               onChange={(e) => {
-                setProveedorSeleccionado(e.target.value);
-                setErrorProveedor_id(false);
+                setProveedor_id(e.target.value);
+                
               }}
             >
               <option value="">Selecciona un proveedor</option>
               {proveedores.map((proveedor) => (
-                <option key={proveedor.idproveedor} value={proveedor.idproveedor}>
+                <option key={proveedor.idproveedor} value={proveedor.nombre}>
                   {proveedor.nombre}
                 </option>
               ))}
