@@ -7,6 +7,7 @@ import AltaInsumosPage from "./pages/AltaInsumosPage";
 import { AltaProvPage } from './pages/AltaProvPage';
 import { TablaSalida } from "./pages/TablaSalidasPage";
 import { RegistroSalidaForm } from "./pages/RegistroSalidaForm";
+import { TablaRecetasPage } from "./pages/TablaRecetasPage";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path= '/altainsumos' element={<AltaInsumosPage/>}/>
           <Route path= '/salidas' element={<TablaSalida/>}/>
           <Route path= '/registrosalidas' element={<RegistroSalidaForm/>}/>
+          <Route path= '/recetas' element={<TablaRecetasPage/>}/>
         </Routes>
       </BrowserRouter>
     </div>
