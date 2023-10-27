@@ -5,8 +5,8 @@ import ProveedoresPage from "./pages/ProveedoresPage";
 import {TablaInsumosPage} from './pages/TablaInsumosPage'
 import AltaInsumosPage from "./pages/AltaInsumosPage";
 import { AltaProvPage } from './pages/AltaProvPage';
-import { RegistroEntradaPage } from "./pages/RegistroEntradaPage";
 import { TablaSalida } from "./pages/TablaSalidasPage";
+import { RegistroSalidaForm } from "./pages/RegistroSalidaForm";
 
 
 function App() {
@@ -21,8 +21,8 @@ function App() {
           <Route path= '/altaproveedores' element={<AltaProvPage/>}/>
           <Route path= '/tablainsumos' element={<TablaInsumosPage/>}/>
           <Route path= '/altainsumos' element={<AltaInsumosPage/>}/>
-          <Route path= '/registroentradas' element={<RegistroEntradaPage/>}/>
           <Route path= '/salidas' element={<TablaSalida/>}/>
+          <Route path= '/registrosalidas' element={<RegistroSalidaForm/>}/>
         </Routes>
       </BrowserRouter>
     </div>
