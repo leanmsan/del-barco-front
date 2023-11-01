@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../../css/form.css";
 
 export function AltaInsumos() {
-  const [descripcion, setDescripcion] = useState("");
-  const [errorDescripcion, setErrorDescripcion] = useState(false);
+  const [nombre_insumo, setNombre_insumo] = useState("");
+  const [errorNombre_insumo, setErrorNombre_insumo] = useState(false);
 
   const [cantidad_disponible, setCantidad_disponible] = useState("");
   const [errorCantidad_disponible, setErrorCantidad_disponible] = useState(false);
@@ -50,7 +50,7 @@ export function AltaInsumos() {
     e.preventDefault();
 
     const insumo = {
-      descripcion,
+      nombre_insumo,
       cantidad_disponible,
       tipo_medida,
       categoria,
@@ -67,10 +67,10 @@ export function AltaInsumos() {
         body: JSON.stringify(insumo),
       });
 
-      if (descripcion.trim() === "") {
-        setErrorDescripcion(true);
+      if (nombre_insumo.trim() === "") {
+        setErrorNombre_insumo(true);
       } else {
-        setErrorDescripcion(false);
+        setErrorNombre_insumo(false);
       }
 
       if (cantidad_disponible.trim() === "") {
@@ -108,16 +108,16 @@ export function AltaInsumos() {
         <h1 className="title">Alta de Insumos</h1>
         <div className="input-control">
           <label>
-            Descripción
+            Nombre Insumo
             <input
               type="text"
-              value={descripcion}
+              value={nombre_insumo}
               onChange={(e) => {
-                setDescripcion(e.target.value);
-                setErrorDescripcion(false);
+                setNombre_insumo(e.target.value);
+                setErrorNombre_insumo(false);
               }}
             />
-            {errorDescripcion && (
+            {errorNombre_insumo && (
               <div className="error-message">La descripción es requerida</div>
             )}
           </label>
