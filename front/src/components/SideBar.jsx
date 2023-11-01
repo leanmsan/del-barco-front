@@ -8,7 +8,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
   const [entradasOpen, setEntradasOpen] = useState(false);
   const [salidasOpen, setSalidasOpen] = useState(false);
   const [insumosOpen, setInsumosOpen] = useState(false);
-  const [productosOpen, setProductosOpen] = useState(false);
+  const [recetasOpen, setRecetasOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("authenticated");
@@ -19,16 +19,26 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
   const toggleEntradas = () => {
     setEntradasOpen(!entradasOpen);
     setSalidasOpen(false);
+    setRecetasOpen(false)
   };
 
   const toggleSalidas = () => {
     setSalidasOpen(!salidasOpen);
     setEntradasOpen(false);
+    setRecetasOpen(false)
+  };
+
+  const toogleRecetas = () => {
+    setRecetasOpen(!recetasOpen);
+    setEntradasOpen(false);
+    setSalidasOpen(false)
+
   };
   const toggleInsumos = () => {
     setSalidasOpen(!insumosOpen);
     setEntradasOpen(false);
   };
+
   const toggleProveedores = () => {
     setSalidasOpen(!productosOpen);
     setEntradasOpen(false);
@@ -154,6 +164,38 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
               </ul>
             )}
           </li>
+          <br />
+          <li
+            className={`nav-link-item ${
+              selectedTab === "recetas" ? "active" : ""
+            }`}
+          >
+            <Link onClick={toogleRecetas}>
+              <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
+              <span className="link-name">Recetas</span>
+            </Link>
+          </li>
+          <li
+            className={`nav-link-item ${
+              selectedTab === "recetas" ? "active" : ""
+            }`}
+          >
+            {recetasOpen && (
+              <ul className="sub-menu">
+                <li>
+                  <Link to="/registrorecetas">
+                    <i className="fa-solid fa-cash-register nav-link-icon"></i>
+                    <span className="link-name">Registro Recetas</span>
+                  </Link>
+                  <Link to="/recetas">
+                    <i className="fa-solid fa-cash-register nav-link-icon"></i>
+                    <span className="link-name">Tabla Recetas</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+          
         </ul>
 
         <ul className="logout-mod">
