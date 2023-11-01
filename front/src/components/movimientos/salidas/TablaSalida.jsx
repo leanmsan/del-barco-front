@@ -44,7 +44,7 @@ export const TablaSalidasMovimientos = () => {
             {salidas.map((salida) => (
               <TableRow key={salida.idsalida} onClick={() => handleSalidasClick(salida.idsalida)}>
                 <TableCell>{salida.idsalida}</TableCell>
-                <TableCell>{salida.fecha}</TableCell>
+                <TableCell>{salida.fecha_salida}</TableCell>
                 
               </TableRow>
             ))}
@@ -86,9 +86,9 @@ export const TablaSalidasMovimientos = () => {
                 </TableHead>
                 <TableBody>
                   {filteredSalidasDetalle.map((salidasDetalle) => (
-                    <TableRow key={`${salidasDetalle.idsalida_id}-${salidasDetalle.idinsumo_id}`}>
+                    <TableRow key={`${salidasDetalle.idsalida_id}-${salidasDetalle.insumo_id}`}>
                       <TableCell>{salidasDetalle.idsalida_id}</TableCell>
-                      <TableCell>{salidasDetalle.idinsumo_id}</TableCell>
+                      <TableCell>{salidasDetalle.insumo_id}</TableCell>
                       <TableCell>{salidasDetalle.cantidad}</TableCell>
 
                     </TableRow>

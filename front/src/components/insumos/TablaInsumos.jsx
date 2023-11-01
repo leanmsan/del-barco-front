@@ -16,7 +16,7 @@ export const TablaInsumos = () => {
 
 const filtrar = (terminoBusqueda) => {
 let resultadosBusqueda = tablaInsumos.filter((elemento) => {
-    if(elemento.descripcion.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())){
+    if(elemento.nombre_insumo.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())){
         return elemento;
     }
 })
