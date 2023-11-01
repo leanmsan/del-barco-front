@@ -81,7 +81,7 @@ export const TablaRecetas = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell>ID Recetas</TableCell>
-                    <TableCell>ID Insumo</TableCell>
+                    <TableCell>Insumo</TableCell>
                     <TableCell>Cantidad</TableCell>
                     <TableCell>Tipo Medida</TableCell>
                   </TableRow>
@@ -90,7 +90,7 @@ export const TablaRecetas = () => {
                   {filteredRecetasDetalle.map((e) => (
                     <TableRow key={`${e.idsalida_id}-${e.idinsumo_id}`}>
                       <TableCell>{e.idreceta_id}</TableCell>
-                      <TableCell>{e.idinsumo_id}</TableCell>
+                      <TableCell>{e.insumo_id}</TableCell>
                       <TableCell>{e.cantidad}</TableCell>
                       <TableCell>{e.tipo_medida}</TableCell>
 
