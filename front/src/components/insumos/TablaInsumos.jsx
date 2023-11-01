@@ -53,7 +53,7 @@ setData(resultadosBusqueda);
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Descripcion</TableCell>
+            <TableCell>Nombre insumo</TableCell>
             <TableCell>Cantidad disponible</TableCell>
             <TableCell>Tipo de medida</TableCell>
             <TableCell>Categoria</TableCell>
@@ -64,7 +64,7 @@ setData(resultadosBusqueda);
         <TableBody>
           {insumos.map((row) => (
             <TableRow key={row.idinsumo}>
-              <TableCell>{row.descripcion}</TableCell>
+              <TableCell>{row.nombre_insumo}</TableCell>
               <TableCell style={{ textTransform: 'capitalize'}}>{row.cantidad_disponible}</TableCell>
               <TableCell>{row.tipo_medida}</TableCell>
               <TableCell>{row.categoria}</TableCell>
