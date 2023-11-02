@@ -59,7 +59,7 @@ export const TablaProveedores = () => {
         <TableBody>
           {proveedores.map((row) => (
             <TableRow key={row.idproveedor}>
-              <TableCell>{row.nombre}</TableCell>
+              <TableCell>{row.nombre_proveedor}</TableCell>
               <TableCell>{row.mail}</TableCell>
               <TableCell>{row.telefono}</TableCell>              
               <TableCell>{row.estado}</TableCell>
