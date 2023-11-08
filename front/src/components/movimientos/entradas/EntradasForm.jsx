@@ -100,21 +100,40 @@ export function EntradaForm() {
 
     const agregarDetalle = () => {
         if (insumo_id && cantidad && precio_unitario) {
-            setListaDetalle([
-                ...listaDetalle,
-                {
-                    identrada_id: identrada_id,
-                    insumo_id,
-                    cantidad,
-                    precio_unitario,
-                },
-            ]);
-            setInsumoId("");
-            setCantidad("");
-            setPrecioUnitario("");
+          // Crea un nuevo detalle
+          const nuevoDetalle = {
+            identrada_id: identrada_id,
+            insumo_id: insumo_id,
+            cantidad: cantidad,
+            precio_unitario: precio_unitario,
+          };
+      
+          // Calcula el subtotal del nuevo detalle
+          const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
+      
+          // Inicializa nuevoTotal con 0 si aún no tiene valor
+          var nuevoTotal = nuevoTotal || 0;
+      
+          // Calcula el nuevo total sumando el subtotal al total anterior
+          nuevoTotal = nuevoTotal + subtotal;
+      
+          //var total = nuevoTotal.toString();
+      
+          // Actualiza la lista de detalles y el total
+          setListaDetalle([...listaDetalle, nuevoDetalle]);
+          setMontoTotal((prevTotal) => prevTotal + subtotal);
+      
+          // Reinicia los estados a vacío
+          setInsumoId("");
+          setCantidad("");
+          setPrecioUnitario("");
+        } else {
+          // Manejo de la situación en la que falta información
+          console.log('Falta información para agregar un detalle');
         }
-    };
-
+      };
+      
+    // handleSubmit
     const handleSubmit = async (e) => {
         e.preventDefault();
 
