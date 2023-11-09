@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../../css/form.css";
 
 // imports para la tabla con los insumos que componen el detalle
@@ -97,24 +97,49 @@ export function EntradaForm() {
 
         fetchLastInsertedId();
     }, []);
-
+    const entradaDetalleFormRef = useRef(null)
     const agregarDetalle = () => {
         if (insumo_id && cantidad && precio_unitario) {
-            setListaDetalle([
-                ...listaDetalle,
-                {
-                    identrada_id: identrada_id,
-                    insumo_id,
-                    cantidad,
-                    precio_unitario,
-                },
-            ]);
+            // Crea un nuevo detalle
+            const nuevoDetalle = {
+                identrada_id: identrada_id,
+                insumo_id: insumo_id,
+                cantidad: cantidad,
+                precio_unitario: precio_unitario,
+            };
+    
+            // Calcula el subtotal del nuevo detalle
+            const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
+    
+            // Inicializa nuevoTotal con el valor actual de monto_total o 0 si no tiene valor
+            var nuevoTotal = monto_total || 0;
+    
+            // Calcula el nuevo total sumando el subtotal al total anterior
+            nuevoTotal = nuevoTotal + subtotal;
+    
+            // Actualiza la lista de detalles y el total
+            setListaDetalle([...listaDetalle, nuevoDetalle]);
+            setMontoTotal(nuevoTotal);
+    
+            // Reinicia los estados a vacío
             setInsumoId("");
             setCantidad("");
             setPrecioUnitario("");
+            console.log('Esto es InsumoId despues de agregar detalle', insumo_id);
+            console.log('Esto es Cantidad despues de agregar detalle', cantidad);
+            console.log('Esto es Precio Unitario despues de agregar detalle', precio_unitario);
+
+            if (entradaDetalleFormRef.current) {
+                entradaDetalleFormRef.current.reset()
+            }
+        } else {
+            // Manejo de la situación en la que falta información
+            console.log('Falta información para agregar un detalle');
         }
     };
+    
 
+    // handleSubmit
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -142,6 +167,13 @@ export function EntradaForm() {
             if (response.ok) {
                 const data = await response.json();
                 setLastInsertedId(data.id); // Actualiza lastInsertedId con el ID de la entrada creada
+                setProveedorId('')
+                setErrorProveedor(false)
+                setFechaEntrada('')
+                setErrorFecha(false)
+                setMontoTotal(0)
+                setListaDetalle([])
+
             } else {
                 console.log('Error al crear la entrada', response);
                 return;
@@ -170,7 +202,7 @@ export function EntradaForm() {
 
     return (
         <div className="container">
-            <form className="form" onSubmit={handleSubmit}>
+            <form  ref={entradaDetalleFormRef} id="EntradaDetalle" className="form" onSubmit={handleSubmit}>
                 <h1 className="title">Nueva entrada</h1>
                 <div className="input-control">
                     {/* entrada */}
@@ -245,9 +277,26 @@ export function EntradaForm() {
                 <button className="button" type="button" onClick={agregarDetalle}>Agregar insumo</button>
 
                 {/* Tabla con los insumos en el detalle */}
-
-
-
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Insumo</TableCell>
+                                <TableCell>Cantidad</TableCell>
+                                <TableCell>Precio Unitario</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {listaDetalle.map((detalle) => (
+                                <TableRow key={detalle.identrada_id}>
+                                    <TableCell>{detalle.insumo_id}</TableCell>
+                                    <TableCell>{detalle.cantidad}</TableCell>
+                                    <TableCell>{detalle.precio_unitario}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
                 <button className="button" type="submit">Enviar</button>
             </form>
         </div>
