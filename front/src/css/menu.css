@@ -66,7 +66,8 @@ nav.close .logo-image {
 }
 
 nav .logo-image img{
-    width: 150px;
+    width: 75%;
+    margin-left: 20px;
     object-fit: cover;
     transition: var(--tran-05);
 }
@@ -86,6 +87,7 @@ nav .menu-items {
 
 .menu-items .nav-link-item {
     list-style: none;
+
 
 }
 
@@ -107,8 +109,8 @@ nav .menu-items {
 }
 
 .menu-items .nav-link-item a .nav-link-icon {
-    min-width: 45px;
-    height: 60px;
+    min-width: 10px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
