@@ -4,7 +4,7 @@ import "../../css/form.css"
 
 export function AltaProveedores () {
 
-    const [nombre, setNombre] = useState("");
+    const [nombre_proveedor, setNombre] = useState("");
     const [errorNombre, setErrorNombre] = useState(false);
 
     const [mail, setMail] = useState("");
@@ -13,11 +13,13 @@ export function AltaProveedores () {
     const [telefono, setTelefono] = useState("");
     const [errorTelefono, setErrorTelefono] = useState(false);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         
         const proveedor = {
-            nombre,
+          nombre_proveedor,
             mail,
             telefono,
           };
@@ -31,7 +33,7 @@ export function AltaProveedores () {
                 body: JSON.stringify(proveedor)
             })
             
-            if (nombre.trim() === '') {
+            if (nombre_proveedor.trim() === '') {
               setErrorNombre(true);
             }else{
               setErrorNombre(false)
@@ -42,6 +44,8 @@ export function AltaProveedores () {
             }else{
               setErrorMail(false)
             }
+
+            setErrorMail(!emailRegex.test(mail.trim()))
             
             if (telefono.trim() === '') {
               setErrorTelefono(true);
@@ -83,7 +87,7 @@ export function AltaProveedores () {
               onChange={(e) => {setMail(e.target.value)
                 setErrorMail(false) }}
             />
-            {errorMail && <div className='error-message'>La provincia es requerido</div>}
+            {errorMail && <div className='error-message'>El mail es requerido</div>}
             <br />
 
             <label>Contacto</label>

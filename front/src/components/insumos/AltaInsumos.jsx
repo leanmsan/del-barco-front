@@ -205,8 +205,8 @@ export function AltaInsumos() {
             >
               <option value="">Selecciona un proveedor</option>
               {proveedores.map((proveedor) => (
-                <option key={proveedor.idproveedor} value={proveedor.nombre}>
-                  {proveedor.nombre}
+                <option key={proveedor.idproveedor} value={proveedor.nombre_proveedor}>
+                  {proveedor.nombre_proveedor}
                 </option>
               ))}
             </select>
