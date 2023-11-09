@@ -121,7 +121,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/registroentradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro Entradas</span>
+                    <span className="link-name">Registro de entradas</span>
                   </Link>
                   <Link to="/entradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
@@ -153,7 +153,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/registrosalidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro Salidas</span>
+                    <span className="link-name">Registro de salidas</span>
                   </Link>
                   <Link to="/salidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
