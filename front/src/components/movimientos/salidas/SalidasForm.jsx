@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../../css/form.css";
 
 // imports para la tabla con los insumos que componen el detalle
@@ -6,14 +6,15 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from
 
 export function SalidasForm() {
 
-    //salida
+    // salida
     const [fecha_salida, setFechaSalida] = useState("");
     const [errorFecha, setErrorFecha] = useState(false);
 
-    const [descripcion, setDescripcion] = useState("");
+    const [monto_total, setMontoTotal] = useState(0);
 
-    // Salida detalle
-    const [idsalida_id, setIdsalidaId] = useState("");
+    // salida detalle
+    const [idsalida_id, setIdSalidaId] = useState("");
+
     const [seleccionarInsumo, setSeleccionarInsumo] = useState([]);
 
     const [insumo_id, setInsumoId] = useState("");
@@ -51,15 +52,15 @@ export function SalidasForm() {
         const fetchLastInsertedId = async () => {
             try {
                 // Realiza una solicitud a la API de entradas para obtener todas las entradas
-                const response = await fetch('http://127.0.0.1:8000/api/lastid/');
+                const response = await fetch('http://127.0.0.1:8000/api/lastidsalida/');
                 const data = await response.json();
-                console.log('Esto es data', data);
+                //console.log('Esto es data', data);
                 const lastId = data.lastid + 1;
-                console.log('Esto es ultimo id', lastId);
+                //console.log('Esto es ultimo id', lastId);
 
                 if (response.ok) {
                     setLastInsertedId(lastId);
-                    setIdsalidaId(lastId);
+                    setIdSalidaId(lastId);
                 } else {
                     console.log('Error al obtener el último id de entrada', response);
                 }
@@ -71,22 +72,46 @@ export function SalidasForm() {
         fetchLastInsertedId();
     }, []);
 
+
+    const salidaDetalleFormRef = useRef(null)
     const agregarDetalle = () => {
-        if (insumo_id && cantidad ) {
-            const idSalidaId = idsalida_id ? parseInt(idsalida_id) : null
-            setListaDetalle([
-                ...listaDetalle,
-                {
-                    idsalida_id: idsalida_id,
-                    insumo_id,
-                    cantidad,
-                },
-            ]);
+        if (insumo_id && cantidad) {
+            // Crea un nuevo detalle
+            const nuevoDetalle = {
+                idsalida_id: idsalida_id,
+                insumo_id: insumo_id,
+                cantidad: cantidad,
+            };
+    
+            // Calcula el subtotal del nuevo detalle
+            const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
+    
+            // Inicializa nuevoTotal con el valor actual de monto_total o 0 si no tiene valor
+            var nuevoTotal = monto_total || 0;
+    
+            // Calcula el nuevo total sumando el subtotal al total anterior
+            nuevoTotal = nuevoTotal + subtotal;
+    
+            // Actualiza la lista de detalles y el total
+            setListaDetalle([...listaDetalle, nuevoDetalle]);
+            setMontoTotal(nuevoTotal);
+    
+            // Reinicia los estados a vacío
             setInsumoId("");
             setCantidad("");
+            console.log('Esto es InsumoId despues de agregar detalle', insumo_id);
+            console.log('Esto es Cantidad despues de agregar detalle', cantidad);
+
+            if (salidaDetalleFormRef.current) {
+                salidaDetalleFormRef.current.reset()
+            }
+        } else {
+            // Manejo de la situación en la que falta información
+            console.log('Falta información para agregar un detalle');
         }
     };
-
+    
+    // handleSubmit
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -95,9 +120,9 @@ export function SalidasForm() {
             return;
         }
 
-        const entrada = {
+        const salida = {
             fecha_salida,
-            descripcion,
+            monto_total,
         };
 
         try {
@@ -106,12 +131,17 @@ export function SalidasForm() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(entrada),
+                body: JSON.stringify(salida),
             });
 
             if (response.ok) {
                 const data = await response.json();
                 setLastInsertedId(data.id); // Actualiza lastInsertedId con el ID de la entrada creada
+                setFechaSalida('')
+                setErrorFecha(false)
+                setMontoTotal(0)
+                setListaDetalle([])
+
             } else {
                 console.log('Error al crear la entrada', response);
                 return;
@@ -129,8 +159,8 @@ export function SalidasForm() {
             );
 
             // Espera a que se completen todas las solicitudes
+            console.log(promises);
             await Promise.all(promises);
-            console.log('esto es promise',promises);
 
             console.log('Entrada y detalles creados exitosamente');
         } catch (error) {
@@ -140,11 +170,11 @@ export function SalidasForm() {
 
     return (
         <div className="container">
-            <form className="form" onSubmit={handleSubmit}>
+            <form  ref={salidaDetalleFormRef} id="SalidaDetalle" className="form" onSubmit={handleSubmit}>
                 <h1 className="title">Nueva salida</h1>
                 <div className="input-control">
-                    {/* salda */}
-                    <label>
+                    {/* salida */}
+                    <label>Fecha
                         <input type="date" name="fecha" onChange={(e) => {
                             setFechaSalida(e.target.value);
                             setErrorFecha(false)
@@ -155,7 +185,7 @@ export function SalidasForm() {
                     </label>
                 </div>
 
-                {/* entrada detalle*/}
+                {/* salida detalle*/}
                 <div className="input-control">
                     <label name="insumo_id">Insumo
                         <select value={insumo_id} onChange={(e) => {
@@ -187,9 +217,24 @@ export function SalidasForm() {
                 <button className="button" type="button" onClick={agregarDetalle}>Agregar insumo</button>
 
                 {/* Tabla con los insumos en el detalle */}
-
-
-
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Insumo</TableCell>
+                                <TableCell>Cantidad</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {listaDetalle.map((detalle) => (
+                                <TableRow key={detalle.identrada_id}>
+                                    <TableCell>{detalle.insumo_id}</TableCell>
+                                    <TableCell>{detalle.cantidad}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
                 <button className="button" type="submit">Enviar</button>
             </form>
         </div>
