@@ -78,7 +78,7 @@ export function EntradaForm() {
         const fetchLastInsertedId = async () => {
             try {
                 // Realiza una solicitud a la API de entradas para obtener todas las entradas
-                const response = await fetch('http://127.0.0.1:8000/api/lastid/');
+                const response = await fetch('http://127.0.0.1:8000/api/lastidentrada/');
                 const data = await response.json();
                 //console.log('Esto es data', data);
                 const lastId = data.lastid + 1;
