@@ -100,39 +100,43 @@ export function EntradaForm() {
 
     const agregarDetalle = () => {
         if (insumo_id && cantidad && precio_unitario) {
-          // Crea un nuevo detalle
-          const nuevoDetalle = {
-            identrada_id: identrada_id,
-            insumo_id: insumo_id,
-            cantidad: cantidad,
-            precio_unitario: precio_unitario,
-          };
-      
-          // Calcula el subtotal del nuevo detalle
-          const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
-      
-          // Inicializa nuevoTotal con 0 si aún no tiene valor
-          var nuevoTotal = nuevoTotal || 0;
-      
-          // Calcula el nuevo total sumando el subtotal al total anterior
-          nuevoTotal = nuevoTotal + subtotal;
-      
-          //var total = nuevoTotal.toString();
-      
-          // Actualiza la lista de detalles y el total
-          setListaDetalle([...listaDetalle, nuevoDetalle]);
-          setMontoTotal((prevTotal) => prevTotal + subtotal);
-      
-          // Reinicia los estados a vacío
-          setInsumoId("");
-          setCantidad("");
-          setPrecioUnitario("");
+            // Crea un nuevo detalle
+            const nuevoDetalle = {
+                identrada_id: identrada_id,
+                insumo_id: insumo_id,
+                cantidad: cantidad,
+                precio_unitario: precio_unitario,
+            };
+    
+            // Calcula el subtotal del nuevo detalle
+            const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
+    
+            // Inicializa nuevoTotal con el valor actual de monto_total o 0 si no tiene valor
+            var nuevoTotal = monto_total || 0;
+    
+            // Calcula el nuevo total sumando el subtotal al total anterior
+            nuevoTotal = nuevoTotal + subtotal;
+    
+            // Actualiza la lista de detalles y el total
+            setListaDetalle([...listaDetalle, nuevoDetalle]);
+            setMontoTotal(nuevoTotal);
+    
+            // Reinicia los estados a vacío
+            setInsumoId("");
+            setCantidad("");
+            setPrecioUnitario("");
+            console.log('Esto es InsumoId despues de agregar detalle', insumo_id);
+            console.log('Esto es Cantidad despues de agregar detalle', cantidad);
+            console.log('Esto es Precio Unitario despues de agregar detalle', precio_unitario);
+
+            document.getElementById("EntradaDetalle").reset();
         } else {
-          // Manejo de la situación en la que falta información
-          console.log('Falta información para agregar un detalle');
+            // Manejo de la situación en la que falta información
+            console.log('Falta información para agregar un detalle');
         }
-      };
-      
+    };
+    
+
     // handleSubmit
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -264,9 +268,26 @@ export function EntradaForm() {
                 <button className="button" type="button" onClick={agregarDetalle}>Agregar insumo</button>
 
                 {/* Tabla con los insumos en el detalle */}
-
-
-
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Insumo</TableCell>
+                                <TableCell>Cantidad</TableCell>
+                                <TableCell>Precio Unitario</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {listaDetalle.map((detalle) => (
+                                <TableRow key={detalle.identrada_id}>
+                                    <TableCell>{detalle.insumo_id}</TableCell>
+                                    <TableCell>{detalle.cantidad}</TableCell>
+                                    <TableCell>{detalle.precio_unitario}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
                 <button className="button" type="submit">Enviar</button>
             </form>
         </div>
