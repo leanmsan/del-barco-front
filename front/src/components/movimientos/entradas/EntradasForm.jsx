@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../../css/form.css";
 
 // imports para la tabla con los insumos que componen el detalle
@@ -97,7 +97,7 @@ export function EntradaForm() {
 
         fetchLastInsertedId();
     }, []);
-
+    const entradaDetalleFormRef = useRef(null)
     const agregarDetalle = () => {
         if (insumo_id && cantidad && precio_unitario) {
             // Crea un nuevo detalle
@@ -129,7 +129,9 @@ export function EntradaForm() {
             console.log('Esto es Cantidad despues de agregar detalle', cantidad);
             console.log('Esto es Precio Unitario despues de agregar detalle', precio_unitario);
 
-            document.getElementById("EntradaDetalle").reset();
+            if (entradaDetalleFormRef.current) {
+                entradaDetalleFormRef.current.reset()
+            }
         } else {
             // Manejo de la situación en la que falta información
             console.log('Falta información para agregar un detalle');
@@ -165,6 +167,13 @@ export function EntradaForm() {
             if (response.ok) {
                 const data = await response.json();
                 setLastInsertedId(data.id); // Actualiza lastInsertedId con el ID de la entrada creada
+                setProveedorId('')
+                setErrorProveedor(false)
+                setFechaEntrada('')
+                setErrorFecha(false)
+                setMontoTotal(0)
+                setListaDetalle([])
+
             } else {
                 console.log('Error al crear la entrada', response);
                 return;
@@ -193,7 +202,7 @@ export function EntradaForm() {
 
     return (
         <div className="container">
-            <form className="form" onSubmit={handleSubmit}>
+            <form  ref={entradaDetalleFormRef} id="EntradaDetalle" className="form" onSubmit={handleSubmit}>
                 <h1 className="title">Nueva entrada</h1>
                 <div className="input-control">
                     {/* entrada */}
