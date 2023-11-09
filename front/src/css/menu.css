@@ -58,6 +58,7 @@ nav .logo-image {
     min-width: 155px;
     height: 190.66px;
     transition: var(--tran-05);
+    margin-bottom: 20px;
 }
 
 nav.close .logo-image {
@@ -78,8 +79,7 @@ nav.close .logo-image img {
 }
 
 nav .menu-items {
-    margin-top: 50px;
-    height: 80%;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -87,7 +87,7 @@ nav .menu-items {
 
 .menu-items .nav-link-item {
     list-style: none;
-
+    margin: -0.5em auto;
 
 }
 

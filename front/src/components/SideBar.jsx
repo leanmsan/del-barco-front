@@ -49,15 +49,14 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
   }
 
   return (
-    <nav>
-      <div className="logo-name">
+    <nav  className="scrollable-sidebar">
+      
         <div className="logo-image">
          <img src={logo} alt="Logo Cervecería Del Barco" onClick={handleLogoClick}/>
         </div>
-      </div>
-
+      
       <div className="menu-items">
-        <div className="scrollable-sidebar">
+        <div>
         <ul className="nav-links">
           <li
             className={`nav-link-item ${
@@ -164,7 +163,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
               </ul>
             )}
           </li>
-          <br />
+          
           <li
             className={`nav-link-item ${
               selectedTab === "recetas" ? "active" : ""
@@ -198,14 +197,14 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           
         </ul>
 
-        <ul className="logout-mod">
+        {/* <ul className="logout-mod">
           <li className="nav-link-item">
             <Link onClick={handleLogout}>
               <i className="fa-solid fa-right-from-bracket nav-link-icon"></i>
               <span className="link-name">Salir</span>
             </Link>
           </li>
-        </ul>
+        </ul> */}
         </div>
         
       </div>
