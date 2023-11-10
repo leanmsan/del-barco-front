@@ -68,13 +68,17 @@ export const TablaSalidasMovimientos = () => {
       <>
         {showSalidasDetalle && (
           <>
+            <h2 style={{
+              "margin-bottom": "0px", "padding": "5px",
+              "color": "#003084", "border": "none", "font-size": "24px", "font-weight": "bold"
+            }}>Salidas Detalle
             <button onClick={handleCloseSalidasDetalle}
               style={{
-                "width": "fit-content", "margin-top": "20px", "padding": "5px",
+                "margin-left": "20px", "width": "fit-content", "margin-top": "20px", "padding": "5px",
                 "color": "white", "background-color": "#003084", "border-radius": "4px", "border": "none",
                 "font-size": "16px", "font-weight": "bold"
               }}>Cerrar Detalles
-            </button>
+            </button></h2>
             <TableContainer component={Paper} style={{"margin-top": "20px", "padding": "5px", "margin-bottom": "2rem"}}>
               <Table>
                 <TableHead>
@@ -114,10 +118,7 @@ export const TablaSalidasMovimientos = () => {
         {renderSalidas()}
         {selectedSalidas && (
           <>
-            <h2 style={{
-              "margin-top": "50px", "margin-bottom": "0px", "padding": "5px",
-              "color": "#003084", "border": "none", "font-size": "24px", "font-weight": "bold"
-            }}>Salidas Detalle</h2>
+            
             {renderSalidasDetalle()}
           </>
         )}
