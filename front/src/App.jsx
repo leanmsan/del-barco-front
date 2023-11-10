@@ -10,7 +10,7 @@ import { RegistroEntradaForm } from "./pages/RegistroEntradaPage";
 import { TablaSalida } from "./pages/TablaSalidasPage";
 import { RegistroSalidaForm } from "./pages/RegistroSalidaForm";
 import { TablaRecetasPage } from "./pages/TablaRecetasPage";
-
+import { TablaCoccionesPage } from "./pages/TablaCoccionesPage";
 
 function App() {
 
@@ -29,6 +29,7 @@ function App() {
           <Route path= '/salidas' element={<TablaSalida/>}/>
           <Route path= '/registrosalidas' element={<RegistroSalidaForm/>}/>
           <Route path= '/recetas' element={<TablaRecetasPage/>}/>
+          <Route path= '/cocciones' element={<TablaCoccionesPage/>}/>
         </Routes>
       </BrowserRouter>
     </div>
