@@ -103,7 +103,7 @@ export function AltaInsumos() {
   };
 
   return (
-    <div className="container">
+    <div className="section-content">
       <form className="form" onSubmit={handleSubmit}>
         <h1 className="title">Alta de Insumos</h1>
         <div className="input-control">
