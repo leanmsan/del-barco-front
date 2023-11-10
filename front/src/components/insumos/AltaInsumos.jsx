@@ -103,7 +103,7 @@ export function AltaInsumos() {
   };
 
   return (
-    <div className="section-content">
+    <div className="section-content" style={{"width": "100%", "max-width": "300px", "min-width": "200px"}}>
       <form className="form" onSubmit={handleSubmit}>
         <h1 className="title">Alta de Insumos</h1>
         <div className="input-control">
@@ -121,7 +121,6 @@ export function AltaInsumos() {
               <div className="error-message">La descripción es requerida</div>
             )}
           </label>
-          <br />
           <label>
             Cantidad disponible
             <input
@@ -138,7 +137,6 @@ export function AltaInsumos() {
               </div>
             )}
           </label>
-          <br />
           <label>
             Tipo de medida
             <select
@@ -161,7 +159,6 @@ export function AltaInsumos() {
               </div>
             )}
           </label>
-          <br />
           <label>
             Categoría
             <input
@@ -176,7 +173,6 @@ export function AltaInsumos() {
               <div className="error-message">La categoría es requerida</div>
             )}
           </label>
-          <br />
           <label>
             Precio Unitario
             <input
@@ -193,7 +189,6 @@ export function AltaInsumos() {
               </div>
             )}
           </label>
-          <br />
           <label>
             Proveedor
             <select
@@ -214,8 +209,6 @@ export function AltaInsumos() {
               <div className="error-message">Selecciona un proveedor</div>
             )}
           </label>
-          <br />
-
           <br />
         </div>
 
