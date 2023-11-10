@@ -169,7 +169,7 @@ export function SalidasForm() {
     };
 
     return (
-        <div className="container">
+        <div className="section-content">
             <form  ref={salidaDetalleFormRef} id="SalidaDetalle" className="form" onSubmit={handleSubmit}>
                 <h1 className="title">Nueva salida</h1>
                 <div className="input-control">

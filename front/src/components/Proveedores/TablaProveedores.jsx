@@ -38,7 +38,7 @@ export const TablaProveedores = () => {
   };
 
   return (
-    <div>
+    <div className='section-content'>
       <div className='search-box'>
       <button className="btn-search"><i className="fas fa-search"></i></button>
         <input 
@@ -46,7 +46,7 @@ export const TablaProveedores = () => {
           value={busqueda} onChange={handleChange}
         />
       </div>
-      <TableContainer style={{"margin-top": "10px", "margin-left": "260px", "padding": "5px"}} component={Paper}>
+      <TableContainer style={{"margin-top": "10px", "padding": "5px"}} component={Paper}>
       <Table>
         <TableHead>
           <TableRow>

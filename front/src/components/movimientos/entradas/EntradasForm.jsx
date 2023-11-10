@@ -201,7 +201,7 @@ export function EntradaForm() {
     };
 
     return (
-        <div className="container">
+        <div className="section-content">
             <form  ref={entradaDetalleFormRef} id="EntradaDetalle" className="form" onSubmit={handleSubmit}>
                 <h1 className="title">Nueva entrada</h1>
                 <div className="input-control">
@@ -270,7 +270,7 @@ export function EntradaForm() {
 
                         }} />
                         {errorPrecioUnitario && (
-                            <div className="error-message">Tienees que especificar el precio</div>
+                            <div className="error-message">Tienes que especificar el precio</div>
                         )}
                     </label>
                 </div>
