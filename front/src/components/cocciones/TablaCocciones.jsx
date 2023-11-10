@@ -14,7 +14,9 @@ export const TablaCocciones = () => {
 
     const filtrar = (terminoBusqueda) => {
         let resultadoBusqueda = tablaCocciones.filter((elemento) => {
-            return elemento.receta_id.toLowerCase().includes(terminoBusqueda.toLowerCase());
+            if(elemento.receta_id.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())) {
+                return elemento.receta_id.toLowerCase().includes(terminoBusqueda.toLowerCase());
+            }
         });
 
         setCocciones(resultadoBusqueda);
@@ -26,9 +28,9 @@ export const TablaCocciones = () => {
 
     const fetchData = async (searchTerm = '') => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/cocciones/');
-            setCocciones(response.data)
-            setTablaCocciones(response.data)
+            const response = await axios.get(`http://127.0.0.1:8000/api/cocciones/?search=${searchTerm}`);
+            setCocciones(response.data.cocciones)
+            setTablaCocciones(response.data.cocciones)
         } catch (error) {
             console.log('Error al obtener los datos:', error);
         }
@@ -55,7 +57,7 @@ export const TablaCocciones = () => {
                         {cocciones.map((row) => (
                             <TableRow key={row.idcoccion}>
                                 <TableCell>{row.receta_id}</TableCell>
-                                <TableCell>{row.fecha_coccio}</TableCell>
+                                <TableCell>{row.fecha_coccion}</TableCell>
                                 <TableCell>{row.volumen_producido}</TableCell>
                             </TableRow>
                         ))}
