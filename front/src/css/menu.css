@@ -58,6 +58,7 @@ nav .logo-image {
     min-width: 155px;
     height: 190.66px;
     transition: var(--tran-05);
+    margin-bottom: 20px;
 }
 
 nav.close .logo-image {
@@ -66,7 +67,8 @@ nav.close .logo-image {
 }
 
 nav .logo-image img{
-    width: 150px;
+    width: 140px;
+    margin-left: 20px;
     object-fit: cover;
     transition: var(--tran-05);
 }
@@ -77,8 +79,7 @@ nav.close .logo-image img {
 }
 
 nav .menu-items {
-    margin-top: 50px;
-    height: 80%;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -86,6 +87,7 @@ nav .menu-items {
 
 .menu-items .nav-link-item {
     list-style: none;
+    margin: 0.5em auto;
 
 }
 
@@ -93,7 +95,7 @@ nav .menu-items {
     display: flex;
     align-items: center;
     text-decoration: none;
-    height: 60px;
+    height: fit-content;
     position: relative;
 }
 
@@ -107,8 +109,8 @@ nav .menu-items {
 }
 
 .menu-items .nav-link-item a .nav-link-icon {
-    min-width: 45px;
-    height: 60px;
+    min-width: 10px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -284,13 +286,41 @@ nav.close ~ .top {
 }
 
   .sub-menu{
-    margin-left: 20px;
+    margin-left: 10px;
   }
 
+
   .sub-menu li{
+    padding: 5px;
     background-color: #7e530f ;
   }
 
   .nav-link-item ul{
     list-style-type: none;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .fade-out {
+    animation: fadeOut 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
   }

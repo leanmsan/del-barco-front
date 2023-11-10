@@ -49,15 +49,14 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
   }
 
   return (
-    <nav>
-      <div className="logo-name">
+    <nav  className="scrollable-sidebar">
+      
         <div className="logo-image">
          <img src={logo} alt="Logo Cervecería Del Barco" onClick={handleLogoClick}/>
         </div>
-      </div>
-
+      
       <div className="menu-items">
-        <div className="scrollable-sidebar">
+        <div>
         <ul className="nav-links">
           <li
             className={`nav-link-item ${
@@ -102,9 +101,9 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           </li>
 
           <li
-            className={`nav-link-item ${
-              selectedTab === "movimientos" ? "active" : ""
-            }`}
+            className={`nav-link-item ${selectedTab === "registroentradas" ? "active" : ""
+          } ${selectedTab === "entradas" ? "active" : ""
+          }`}
           >
             <Link onClick={toggleEntradas}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
@@ -115,14 +114,14 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           <li
             className={`nav-link-item ${
               selectedTab === "movimientos" ? "active" : ""
-            }`}
+            } ${entradasOpen ? "active fade-in" : "fade-out"}`}
           >
             {entradasOpen && (
               <ul className="sub-menu">
                 <li>
                   <Link to="/registroentradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro Entradas</span>
+                    <span className="link-name">Registro de entradas</span>
                   </Link>
                   <Link to="/entradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
@@ -132,6 +131,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
               </ul>
             )}
           </li>
+
 
           <li
             className={`nav-link-item ${
@@ -147,14 +147,14 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           <li
             className={`nav-link-item ${
               selectedTab === "movimientos" ? "active" : ""
-            }`}
+            } ${salidasOpen ? "active fade-in" : "fade-out"}`}
           >
             {salidasOpen && (
               <ul className="sub-menu">
                 <li>
                   <Link to="/registrosalidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro Salidas</span>
+                    <span className="link-name">Registro de salidas</span>
                   </Link>
                   <Link to="/salidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
@@ -164,7 +164,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
               </ul>
             )}
           </li>
-          <br />
+          
           <li
             className={`nav-link-item ${
               selectedTab === "recetas" ? "active" : ""
@@ -178,7 +178,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           <li
             className={`nav-link-item ${
               selectedTab === "recetas" ? "active" : ""
-            }`}
+            } ${recetasOpen ? "active fade-in" : "fade-out"}`}
           >
             {recetasOpen && (
               <ul className="sub-menu">
@@ -198,14 +198,14 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           
         </ul>
 
-        <ul className="logout-mod">
+        {/* <ul className="logout-mod">
           <li className="nav-link-item">
             <Link onClick={handleLogout}>
               <i className="fa-solid fa-right-from-bracket nav-link-icon"></i>
               <span className="link-name">Salir</span>
             </Link>
           </li>
-        </ul>
+        </ul> */}
         </div>
         
       </div>
