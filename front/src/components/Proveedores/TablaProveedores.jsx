@@ -39,6 +39,7 @@ export const TablaProveedores = () => {
 
   return (
     <div className='section-content'>
+      <h1 className="title">Proveedores</h1>
       <div className='search-box'>
       <button className="btn-search"><i className="fas fa-search"></i></button>
         <input 

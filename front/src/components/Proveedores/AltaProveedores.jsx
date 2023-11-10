@@ -100,7 +100,11 @@ export function AltaProveedores () {
             {errorTelefono && <div className='error-message'>El contacto es requerido</div>}
             <br />
           </div>
-        <button className='button' type="submit">Enviar</button>
+        <button className='button' type="submit"  style={{
+                                "padding": "5px",
+                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                                "font-size": "16px", "font-weight": "bold", "width": "100%"
+                            }}>Enviar</button>
       </form>
       </div>
       

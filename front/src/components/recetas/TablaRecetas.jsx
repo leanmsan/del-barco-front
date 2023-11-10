@@ -72,7 +72,7 @@ export const TablaRecetas = () => {
             <button onClick={handleCloseRecetasDetalle}
               style={{
                 "margin-top": "20px", "padding": "5px", "width": "fit-content",
-                "color": "white", "background-color": "#003084", "border-radius": "4px", "border": "none",
+                "color": "white", "background-color": "#7e530f", "border-radius": "4px", "border": "none",
                 "font-size": "16px", "font-weight": "bold"
               }}>Cerrar Detalles
             </button>
@@ -111,7 +111,7 @@ export const TablaRecetas = () => {
       <div>
         <h2 style={{
           "margin-top": "2rem", "margin-bottom": "0px", "padding": "5px",
-          "color": "#003084", "border": "none", "font-size": "24px", "font-weight": "bold"
+          "color": "#7e530f", "border": "none", "font-size": "24px", "font-weight": "bold"
         }}>Recetas
         </h2>
         {renderRecetas()}
@@ -119,7 +119,7 @@ export const TablaRecetas = () => {
           <>
             <h2 style={{
               "margin-top": "50px", "margin-bottom": "0px", "padding": "5px",
-              "color": "#003084", "border": "none", "font-size": "24px", "font-weight": "bold"
+              "color": "#7e530f", "border": "none", "font-size": "24px", "font-weight": "bold"
             }}>Recetas Detalle</h2>
             {renderRecetasDetalle()}
           </>

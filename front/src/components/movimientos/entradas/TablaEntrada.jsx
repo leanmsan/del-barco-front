@@ -71,12 +71,12 @@ export const TablaEntradas = () => {
                     <>
                         <h2 style={{
                             "margin-bottom": "0px", "padding": "5px",
-                            "color": "#003084 ", "border": "none", "font-size": "24px", "font-weight": "bold"
+                            "color": "#7e530f ", "border": "none", "font-size": "24px", "font-weight": "bold"
                         }}>Entradas Detalle
                         <button onClick={handleCloseEntradaDetalle}
                             style={{
                                 "margin-left": "20px", "margin-top": "20px", "padding": "5px", "width": "fit-content",
-                                "color": "white", "background-color": "#003084 ", "border-radius": "4px", "border": "none",
+                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
                                 "font-size": "16px", "font-weight": "bold"
                             }}>Cerrar Detalles
                         </button></h2>
@@ -111,11 +111,7 @@ export const TablaEntradas = () => {
     return (
         <div className="section-content">
             <div>
-                <h2 style={{
-                    "margin-top": "2rem", "margin-bottom": "0px", "padding": "5px",
-                    "color": "#003084 ", "border": "none", "font-size": "24px", "font-weight": "bold"
-                }}>Entradas
-                </h2>
+            <h1 className="title">Entradas</h1>
                 {renderEntradas()}
                 {selectedEntrada && (
                     <>
