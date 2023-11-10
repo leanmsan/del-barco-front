@@ -169,7 +169,7 @@ export function SalidasForm() {
     };
 
     return (
-        <div className="container">
+        <div className="section-content">
             <form  ref={salidaDetalleFormRef} id="SalidaDetalle" className="form" onSubmit={handleSubmit}>
                 <h1 className="title">Nueva salida</h1>
                 <div className="input-control">
@@ -214,7 +214,11 @@ export function SalidasForm() {
                         )}
                     </label>
                 </div>
-                <button className="button" type="button" onClick={agregarDetalle}>Agregar insumo</button>
+                <button className="button" type="button" onClick={agregarDetalle}  style={{
+                                "padding": "5px",
+                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                                "font-size": "16px", "font-weight": "bold", "width": "100%"
+                            }}>Agregar insumo</button>
 
                 {/* Tabla con los insumos en el detalle */}
                 <TableContainer>
@@ -235,7 +239,11 @@ export function SalidasForm() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <button className="button" type="submit">Enviar</button>
+                <button className="button" type="submit"  style={{
+                                "padding": "5px",
+                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                                "font-size": "16px", "font-weight": "bold", "width": "100%"
+                            }}>Enviar</button>
             </form>
         </div>
     )

@@ -30,7 +30,7 @@ export const TablaEntradas = () => {
         };
 
         return (
-            <TableContainer component={Paper} style={{ "margin-top": "10px", "margin-left": "260px", "padding": "5px" }}>
+            <TableContainer component={Paper} style={{ "margin-top": "10px", "padding": "5px" }}>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -69,14 +69,18 @@ export const TablaEntradas = () => {
             <>
                 {showEntradaDetalle && (
                     <>
+                        <h2 style={{
+                            "margin-bottom": "0px", "padding": "5px",
+                            "color": "#7e530f ", "border": "none", "font-size": "24px", "font-weight": "bold"
+                        }}>Entradas Detalle
                         <button onClick={handleCloseEntradaDetalle}
                             style={{
-                                "margin-top": "20px", "margin-left": "260px", "padding": "5px", "width": "15%",
+                                "margin-left": "20px", "margin-top": "20px", "padding": "5px", "width": "fit-content",
                                 "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
                                 "font-size": "16px", "font-weight": "bold"
                             }}>Cerrar Detalles
-                        </button>
-                        <TableContainer component={Paper} style={{ "margin-top": "20px", "margin-left": "260px", "padding": "5px" }}>
+                        </button></h2>
+                        <TableContainer component={Paper} style={{ "margin-top": "20px", "padding": "5px" }}>
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -105,20 +109,13 @@ export const TablaEntradas = () => {
     };
 
     return (
-        <div>
+        <div className="section-content">
             <div>
-                <h2 style={{
-                    "margin-top": "100px", "margin-left": "260px", "margin-bottom": "0px", "padding": "5px",
-                    "color": "#7e530f ", "border": "none", "font-size": "24px", "font-weight": "bold"
-                }}>Entradas
-                </h2>
+            <h1 className="title">Entradas</h1>
                 {renderEntradas()}
                 {selectedEntrada && (
                     <>
-                        <h2 style={{
-                            "margin-top": "50px", "margin-left": "260px", "margin-bottom": "0px", "padding": "5px",
-                            "color": "#7e530f ", "border": "none", "font-size": "24px", "font-weight": "bold"
-                        }}>Entradas Detalle</h2>
+                        
                         {renderEntradasDetalle()}
                     </>
                 )}

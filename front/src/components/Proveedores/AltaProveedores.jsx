@@ -65,7 +65,7 @@ export function AltaProveedores () {
          }
     }
     return (
-        <div className='container'>
+        <div className='section-content' style={{"width": "100%", "max-width": "300px", "min-width": "200px"}}>
           <form className='form' onSubmit={handleSubmit}>
             <h1 className='title' >Alta de Proveedores</h1>
           <div className='input-control'>
@@ -100,7 +100,11 @@ export function AltaProveedores () {
             {errorTelefono && <div className='error-message'>El contacto es requerido</div>}
             <br />
           </div>
-        <button className='button' type="submit">Enviar</button>
+        <button className='button' type="submit"  style={{
+                                "padding": "5px",
+                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                                "font-size": "16px", "font-weight": "bold", "width": "100%"
+                            }}>Enviar</button>
       </form>
       </div>
       

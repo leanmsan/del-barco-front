@@ -103,7 +103,7 @@ export function AltaInsumos() {
   };
 
   return (
-    <div className="container">
+    <div className="section-content" style={{"width": "100%", "max-width": "300px", "min-width": "200px"}}>
       <form className="form" onSubmit={handleSubmit}>
         <h1 className="title">Alta de Insumos</h1>
         <div className="input-control">
@@ -121,7 +121,6 @@ export function AltaInsumos() {
               <div className="error-message">La descripción es requerida</div>
             )}
           </label>
-          <br />
           <label>
             Cantidad disponible
             <input
@@ -138,7 +137,6 @@ export function AltaInsumos() {
               </div>
             )}
           </label>
-          <br />
           <label>
             Tipo de medida
             <select
@@ -161,7 +159,6 @@ export function AltaInsumos() {
               </div>
             )}
           </label>
-          <br />
           <label>
             Categoría
             <input
@@ -176,7 +173,6 @@ export function AltaInsumos() {
               <div className="error-message">La categoría es requerida</div>
             )}
           </label>
-          <br />
           <label>
             Precio Unitario
             <input
@@ -193,7 +189,6 @@ export function AltaInsumos() {
               </div>
             )}
           </label>
-          <br />
           <label>
             Proveedor
             <select
@@ -215,11 +210,13 @@ export function AltaInsumos() {
             )}
           </label>
           <br />
-
-          <br />
         </div>
 
-        <button className="button" type="submit">
+        <button className="button" type="submit" style={{
+                                "padding": "5px", 
+                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                                "font-size": "16px", "font-weight": "bold", "width": "100%"
+                            }}>
           Enviar
         </button>
       </form>
