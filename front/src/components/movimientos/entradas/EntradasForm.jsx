@@ -222,7 +222,7 @@ export function EntradaForm() {
                             <div className="error-message">Selecciona un proveedor</div>
                         )}
                     </label>
-                    <label>
+                    <label>Fecha
                         <input type="date" name="fecha" onChange={(e) => {
                             setFechaEntrada(e.target.value);
                             setErrorFecha(false)
