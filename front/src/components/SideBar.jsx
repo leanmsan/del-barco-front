@@ -101,9 +101,9 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           </li>
 
           <li
-            className={`nav-link-item ${
-              selectedTab === "movimientos" ? "active" : ""
-            }`}
+            className={`nav-link-item ${selectedTab === "registroentradas" ? "active" : ""
+          } ${selectedTab === "entradas" ? "active" : ""
+          }`}
           >
             <Link onClick={toggleEntradas}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
