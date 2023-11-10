@@ -114,7 +114,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           <li
             className={`nav-link-item ${
               selectedTab === "movimientos" ? "active" : ""
-            }`}
+            } ${entradasOpen ? "active fade-in" : "fade-out"}`}
           >
             {entradasOpen && (
               <ul className="sub-menu">
@@ -132,6 +132,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
             )}
           </li>
 
+
           <li
             className={`nav-link-item ${
               selectedTab === "movimientos" ? "active" : ""
@@ -146,7 +147,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           <li
             className={`nav-link-item ${
               selectedTab === "movimientos" ? "active" : ""
-            }`}
+            } ${salidasOpen ? "active fade-in" : "fade-out"}`}
           >
             {salidasOpen && (
               <ul className="sub-menu">
@@ -177,7 +178,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           <li
             className={`nav-link-item ${
               selectedTab === "recetas" ? "active" : ""
-            }`}
+            } ${recetasOpen ? "active fade-in" : "fade-out"}`}
           >
             {recetasOpen && (
               <ul className="sub-menu">

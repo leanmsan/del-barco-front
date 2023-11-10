@@ -287,7 +287,6 @@ nav.close ~ .top {
 
   .sub-menu{
     margin-left: 10px;
-    transition: ease-in-out;
   }
 
 
@@ -298,4 +297,30 @@ nav.close ~ .top {
 
   .nav-link-item ul{
     list-style-type: none;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .fade-out {
+    animation: fadeOut 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
   }
