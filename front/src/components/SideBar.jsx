@@ -9,6 +9,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
   const [salidasOpen, setSalidasOpen] = useState(false);
   const [insumosOpen, setInsumosOpen] = useState(false);
   const [recetasOpen, setRecetasOpen] = useState(false);
+  const [coccionesOpen, setCoccionesOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("authenticated");
@@ -34,6 +35,14 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
     setSalidasOpen(false)
 
   };
+
+  const toggleCocciones = () => {
+    setCoccionesOpen(!coccionesOpen);
+    setEntradasOpen(false);
+    setSalidasOpen(false);
+    setRecetasOpen(false);
+  };
+
   const toggleInsumos = () => {
     setSalidasOpen(!insumosOpen);
     setEntradasOpen(false);
@@ -196,6 +205,37 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
             )}
           </li>
           
+          <li
+            className={`nav-link-item ${
+              selectedTab === "cocciones" ? "active" : ""
+            }`}
+          >
+            <Link onClick={toggleCocciones}>
+              <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
+              <span className="link-name">Cocciones</span>
+            </Link>
+          </li>
+          <li
+            className={`nav-link-item ${
+              selectedTab === "cocciones" ? "active" : ""
+            } ${coccionesOpen ? "active fade-in" : "fade-out"}`}
+          >
+            {coccionesOpen && (
+              <ul className="sub-menu">
+                <li>
+                  <Link to="/nuevacoccion">
+                    <i className="fa-solid fa-cash-register nav-link-icon"></i>
+                    <span className="link-name">Nueva Cocción</span>
+                  </Link>
+                  <Link to="/cocciones">
+                    <i className="fa-solid fa-cash-register nav-link-icon"></i>
+                    <span className="link-name">Cocciones</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+
         </ul>
 
         {/* <ul className="logout-mod">

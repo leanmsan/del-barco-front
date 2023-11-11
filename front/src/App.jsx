@@ -11,6 +11,7 @@ import { TablaSalida } from "./pages/TablaSalidasPage";
 import { RegistroSalidaForm } from "./pages/RegistroSalidaForm";
 import { TablaRecetasPage } from "./pages/TablaRecetasPage";
 import { TablaCoccionesPage } from "./pages/TablaCoccionesPage";
+import { RegistroCoccionesPage } from "./pages/RegistroCoccionesForm";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path= '/registrosalidas' element={<RegistroSalidaForm/>}/>
           <Route path= '/recetas' element={<TablaRecetasPage/>}/>
           <Route path= '/cocciones' element={<TablaCoccionesPage/>}/>
+          <Route path= '/nuevacoccion' element={<RegistroCoccionesPage/>}/>
         </Routes>
       </BrowserRouter>
     </div>
