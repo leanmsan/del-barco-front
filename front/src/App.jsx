@@ -16,7 +16,7 @@ import { RegistroCoccionesPage } from "./pages/RegistroCoccionesForm";
 function App() {
 
   return (
-    <div>
+    <div class="container-fluid">
       <BrowserRouter>
         <Routes>
           <Route path= '/' element={<Menu/>}/>

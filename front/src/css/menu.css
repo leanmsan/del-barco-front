@@ -31,7 +31,7 @@ body {
 }
 
 nav {
-    padding: 15px 30px 0px;
+    padding: 1rem 0px 1rem 0px;
     position: fixed;
     top: 0;
     left: 0;
@@ -58,7 +58,7 @@ nav .logo-image {
     min-width: 155px;
     height: 190.66px;
     transition: var(--tran-05);
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 }
 
 nav.close .logo-image {
@@ -68,7 +68,7 @@ nav.close .logo-image {
 
 nav .logo-image img{
     width: 140px;
-    margin-left: 20px;
+    margin-left: 3rem;
     object-fit: cover;
     transition: var(--tran-05);
 }
@@ -79,15 +79,16 @@ nav.close .logo-image img {
 }
 
 nav .menu-items {
-    margin-top: 10px;
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 0px 15px 0px 0px;
 }
 
 .menu-items .nav-link-item {
     list-style: none;
-    margin: 0.5em auto;
+    margin: 0.5rem auto;
 
 }
 
@@ -123,6 +124,10 @@ nav .menu-items {
     color: var(--title-icon-color);
     transition: var(--tran-05);
     font-family: 'Poppins', sans-serif;
+}
+
+ol, ul{
+    padding-left: 1rem;
 }
 
 nav.close .nav-link-item a .link-name {
@@ -291,7 +296,7 @@ nav.close ~ .top {
 }
 
   .sub-menu{
-    margin-left: 10px;
+    margin-left: 0px;
   }
 
 

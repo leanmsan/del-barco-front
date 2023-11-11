@@ -15,12 +15,17 @@ export function Menu() {
 
   return (
     <div>
-      <SideBar handleTabClick={handleTabClick} selectedTab={selectedTab} />
-      {selectedTab === "insumos" ? (
-        <TablaInsumos />
-      ) : selectedTab === "proveedores" ? (
-        <ProveedoresPage />
-      ) : null}
+      <div class="col-3">
+        <SideBar handleTabClick={handleTabClick} selectedTab={selectedTab} />
+        {selectedTab === "insumos" ? (
+          <TablaInsumos />
+        ) : selectedTab === "proveedores" ? (
+          <ProveedoresPage />
+        ) : null}
+      </div>
+      <div class="col-9">
+
+      </div>
     </div>
   );
 }
