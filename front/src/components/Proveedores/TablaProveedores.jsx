@@ -15,7 +15,7 @@ export const TablaProveedores = () => {
 
   const filtrar = (terminoBusqueda) => {
     let resultadosBusqueda = tablaProveedores.filter((elemento) => {
-      if(elemento.nombre.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())){
+      if(elemento.nombre_proveedor.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())){
         return elemento;
       }
     })

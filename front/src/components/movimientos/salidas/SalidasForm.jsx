@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "../../../css/form.css";
 
 // imports para la tabla con los insumos que componen el detalle
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 
 export function SalidasForm() {
 
@@ -137,7 +137,6 @@ export function SalidasForm() {
             if (response.ok) {
                 const data = await response.json();
                 setLastInsertedId(data.id); // Actualiza lastInsertedId con el ID de la entrada creada
-                setFechaSalida('')
                 setErrorFecha(false)
                 setMontoTotal(0)
                 setListaDetalle([])
@@ -221,7 +220,7 @@ export function SalidasForm() {
                             }}>Agregar insumo</button>
 
                 {/* Tabla con los insumos en el detalle */}
-                <TableContainer>
+                <TableContainer style={{"margin": "10px 20px 0 0", "padding": "5px 5px 5px 5px"}} component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>

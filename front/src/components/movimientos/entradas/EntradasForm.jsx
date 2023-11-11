@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import "../../../css/form.css";
+import RequiredFieldError from "../../../utils/errors";
 
 // imports para la tabla con los insumos que componen el detalle
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 
 export function EntradaForm() {
 
@@ -99,42 +100,51 @@ export function EntradaForm() {
     }, []);
     const entradaDetalleFormRef = useRef(null)
     const agregarDetalle = () => {
-        if (insumo_id && cantidad && precio_unitario) {
-            // Crea un nuevo detalle
-            const nuevoDetalle = {
-                identrada_id: identrada_id,
-                insumo_id: insumo_id,
-                cantidad: cantidad,
-                precio_unitario: precio_unitario,
-            };
+        try {
+            if (insumo_id && cantidad && precio_unitario) {
+                // Crea un nuevo detalle
+                const nuevoDetalle = {
+                    identrada_id: identrada_id,
+                    insumo_id: insumo_id,
+                    cantidad: cantidad,
+                    precio_unitario: precio_unitario,
+                };
+        
+                // Calcula el subtotal del nuevo detalle
+                const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
+        
+                // Inicializa nuevoTotal con el valor actual de monto_total o 0 si no tiene valor
+                var nuevoTotal = monto_total || 0;
+        
+                // Calcula el nuevo total sumando el subtotal al total anterior
+                nuevoTotal = nuevoTotal + subtotal;
+        
+                // Actualiza la lista de detalles y el total
+                setListaDetalle([...listaDetalle, nuevoDetalle]);
+                setMontoTotal(nuevoTotal);
+        
+                // Reinicia los estados a vacío
+                setInsumoId("");
+                setCantidad("");
+                setPrecioUnitario("");
+                console.log('Esto es InsumoId despues de agregar detalle', insumo_id);
+                console.log('Esto es Cantidad despues de agregar detalle', cantidad);
+                console.log('Esto es Precio Unitario despues de agregar detalle', precio_unitario);
     
-            // Calcula el subtotal del nuevo detalle
-            const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
-    
-            // Inicializa nuevoTotal con el valor actual de monto_total o 0 si no tiene valor
-            var nuevoTotal = monto_total || 0;
-    
-            // Calcula el nuevo total sumando el subtotal al total anterior
-            nuevoTotal = nuevoTotal + subtotal;
-    
-            // Actualiza la lista de detalles y el total
-            setListaDetalle([...listaDetalle, nuevoDetalle]);
-            setMontoTotal(nuevoTotal);
-    
-            // Reinicia los estados a vacío
-            setInsumoId("");
-            setCantidad("");
-            setPrecioUnitario("");
-            console.log('Esto es InsumoId despues de agregar detalle', insumo_id);
-            console.log('Esto es Cantidad despues de agregar detalle', cantidad);
-            console.log('Esto es Precio Unitario despues de agregar detalle', precio_unitario);
-
-            if (entradaDetalleFormRef.current) {
-                entradaDetalleFormRef.current.reset()
+                if (entradaDetalleFormRef.current) {
+                    entradaDetalleFormRef.current.reset()
+                }
+            } else {
+                // Manejo de la situación en la que falta información
+                console.log('Falta información para agregar un detalle');
+                throw new RequiredFieldError('Este campo es obligatorio');
             }
-        } else {
-            // Manejo de la situación en la que falta información
-            console.log('Falta información para agregar un detalle');
+        } catch (error) {
+            if (error instanceof RequiredFieldError) {
+                console.log('Faltan completar datos requeridos', error.message)
+            } else {
+                console.log('Error de red', error);
+            }
         }
     };
     
@@ -143,19 +153,26 @@ export function EntradaForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!proveedor_id || !fecha_entrada) {
-            setErrorProveedor(!proveedor_id);
-            setErrorFecha(!fecha_entrada);
-            return;
-        }
-
-        const entrada = {
-            proveedor_id,
-            fecha_entrada,
-            monto_total,
-        };
-
         try {
+            if (!insumo_id || !cantidad || !precio_unitario) {
+                setErrorInsumoId(true);
+                setErrorCantidad(true);
+                setErrorPrecioUnitario(true);
+                throw new RequiredFieldError('Este campo es obligatorio');
+            }
+
+            if (!proveedor_id || !fecha_entrada) {
+                setErrorProveedor(!proveedor_id);
+                setErrorFecha(!fecha_entrada);
+                throw new RequiredFieldError('Este campo es obligatorio');
+            }
+    
+            const entrada = {
+                proveedor_id,
+                fecha_entrada,
+                monto_total,
+            };
+
             const response = await fetch('http://127.0.0.1:8000/api/entradas/', {
                 method: 'POST',
                 headers: {
@@ -167,9 +184,7 @@ export function EntradaForm() {
             if (response.ok) {
                 const data = await response.json();
                 setLastInsertedId(data.id); // Actualiza lastInsertedId con el ID de la entrada creada
-                setProveedorId('')
                 setErrorProveedor(false)
-                setFechaEntrada('')
                 setErrorFecha(false)
                 setMontoTotal(0)
                 setListaDetalle([])
@@ -281,7 +296,7 @@ export function EntradaForm() {
                             }}>Agregar insumo</button>
 
                 {/* Tabla con los insumos en el detalle */}
-                <TableContainer>
+                <TableContainer style={{"margin": "10px 20px 0 0", "padding": "5px 5px 5px 5px"}} component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
