@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "../../../css/form.css";
 import RequiredFieldError from "../../../utils/errors";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
+import Swal from "sweetalert2";
 
 export function EntradaForm() {
     // entrada
@@ -180,6 +181,7 @@ export function EntradaForm() {
                 setLastInsertedId(data.id);
                 setErrorProveedor(false);
                 setErrorFecha(false);
+                setProveedorId("");
                 setMontoTotal(0);
                 setListaDetalle([]);
             } else {
@@ -199,14 +201,27 @@ export function EntradaForm() {
 
             await Promise.all(promises);
 
+            Swal.fire({
+                title: 'Éxito',
+                text: 'La entrada se registró correctamente!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+              });
+
             console.log("Entrada y detalles creados exitosamente");
         } catch (error) {
             if (error instanceof RequiredFieldError) {
-
                 console.log('Error de validación', error.message);
             } else {
                 console.log("Error de red", error);
             }
+
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al enviar el formulario',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
         }
     };
 
