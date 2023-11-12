@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/img/logo1.png'
 
-export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
+export function SideBar(selectedTab) {
   const navigate = useNavigate();
   const [entradasOpen, setEntradasOpen] = useState(false);
   const [salidasOpen, setSalidasOpen] = useState(false);
@@ -11,12 +11,6 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
   const [proveedoresOpen, setProveedoresOpen] = useState(false);
   const [recetasOpen, setRecetasOpen] = useState(false);
   const [coccionesOpen, setCoccionesOpen] = useState(false);
-
-  const handleLogout = () => {
-    localStorage.removeItem("authenticated");
-    handleAuthentication(false);
-    navigate("/login");
-  };
 
   const toggleEntradas = () => {
     setEntradasOpen(!entradasOpen);
