@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../css/form.css";
+import Swal from "sweetalert2";
 
 export function AltaInsumos() {
   const [nombre_insumo, setNombre_insumo] = useState("");
@@ -93,19 +94,38 @@ export function AltaInsumos() {
       console.log(response)
       if (response.ok) {
         console.log("El formulario se envió correctamente");
+
+        Swal.fire({
+          title: 'Éxito',
+          text: 'El insumo se registró correctamente!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
       } else {
         console.log("Error al enviar el formulario");
+        Swal.fire({
+          title: 'Error',
+          text: 'Error. El insumo ya exite.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
       console.log("esto es insumos", insumo)
     } catch (error) {
       console.log("Error en la solicitud POST", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al enviar el formulario',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   };
 
   return (
     <div className="section-content" style={{"width": "30%", "max-width": "600px", "min-width": "250px"}}>
       <form className="form" onSubmit={handleSubmit}>
-        <h1 className="title">Alta de Insumos</h1>
+        <h1 className="title">Nuevo insumo</h1>
         <div className="input-control">
           <label>
             Nombre Insumo
