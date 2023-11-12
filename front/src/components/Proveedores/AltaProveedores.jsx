@@ -2,6 +2,7 @@ import { useState } from "react";
 import navegate from "react";
 import "../../css/form.css"
 import RequiredFieldError from "../../utils/errors";
+import Swal from "sweetalert2";
 
 export function AltaProveedores() {
 
@@ -68,8 +69,14 @@ export function AltaProveedores() {
       })
 
       if (response.ok) {
-        console.log(response, "esto es response")
-        console.log('proveedor creado exitosamente')
+        Swal.fire({
+          title: 'Éxito',
+          text: 'La cocción se registró correctamente!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        //console.log(response, "esto es response")
+        //console.log('proveedor creado exitosamente')
         navegate('/proveedores')
       } else {
         console.log('error al crear el proveedor')
@@ -80,19 +87,24 @@ export function AltaProveedores() {
       } else {
         console.log('error de red', error)
       }
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al enviar el formulario',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
     }
   }
   return (
     <div className='section-content' style={{ "width": "100%", "max-width": "300px", "min-width": "200px" }}>
       <form className='form' onSubmit={handleSubmit}>
-        <h1 className='title' >Alta de Proveedores</h1>
+        <h1 className='title' >Nuevo proveedor</h1>
         <div className='input-control'>
 
           <label>Nombre</label>
           <input
             type='text'
             name='nombre'
-            required
             onChange={(e) => {
               setNombre(e.target.value)
               setErrorNombre(false)
@@ -105,7 +117,6 @@ export function AltaProveedores() {
           <input
             type='email'
             name='mail'
-            required
             onChange={(e) => {
               setMail(e.target.value)
               setErrorMail(false)
@@ -118,7 +129,6 @@ export function AltaProveedores() {
           <input
             type='text'
             name='telefono'
-            required
             onChange={(e) => {
               setTelefono(e.target.value)
               setErrorTelefono(false)
