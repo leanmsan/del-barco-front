@@ -25,8 +25,8 @@ export const TablaRecetas = () => {
   };
 
   const renderRecetas = () => {
-    const handleRecetasClick = (idreceta) => {
-      setSelectedRecetas(idreceta);
+    const handleRecetasClick = (nombre_receta) => {
+      setSelectedRecetas(nombre_receta);
       setShowRecetasDetalle(true);
     };
 
@@ -42,7 +42,7 @@ export const TablaRecetas = () => {
           </TableHead>
           <TableBody>
             {recetas.map((receta) => (
-              <TableRow key={receta.idreceta} onClick={() => handleRecetasClick(receta.idreceta)}>
+              <TableRow key={receta.nombre_receta} onClick={() => handleRecetasClick(receta.nombre_receta)}>
                 
                 <TableCell>{receta.nombre_receta}</TableCell>
                 <TableCell>{receta.tipo}</TableCell>
@@ -57,7 +57,7 @@ export const TablaRecetas = () => {
 
   const renderRecetasDetalle = () => {
     const filteredRecetasDetalle = recetasDetalle.filter(
-      (recetasDetalle) => recetasDetalle.idrecetadetalle === selectedRecetas
+      (recetasDetalle) => recetasDetalle.receta_id === selectedRecetas
     );
 
     const handleCloseRecetasDetalle = () => {
@@ -88,7 +88,7 @@ export const TablaRecetas = () => {
                 </TableHead>
                 <TableBody>
                   {filteredRecetasDetalle.map((e) => (
-                    <TableRow key={`${e.idsalida_id}-${e.idinsumo_id}`}>
+                    <TableRow key={`${e.receta_id}-${e.insumo_id}`}>
                       
                       <TableCell>{e.insumo_id}</TableCell>
                       <TableCell>{e.cantidad}</TableCell>

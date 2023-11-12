@@ -13,6 +13,8 @@ import { TablaRecetasPage } from "./pages/TablaRecetasPage";
 import { TablaCoccionesPage } from "./pages/TablaCoccionesPage";
 import { RegistroCoccionesPage } from "./pages/RegistroCoccionesForm";
 
+import { RegistroRecetasForm } from "./pages/RegistroRecetas";
+
 function App() {
 
   return (
@@ -32,6 +34,7 @@ function App() {
           <Route path= '/recetas' element={<TablaRecetasPage/>}/>
           <Route path= '/cocciones' element={<TablaCoccionesPage/>}/>
           <Route path= '/nuevacoccion' element={<RegistroCoccionesPage/>}/>
+          <Route path= '/registrorecetas' element={<RegistroRecetasForm/>}/>
         </Routes>
       </BrowserRouter>
     </div>
