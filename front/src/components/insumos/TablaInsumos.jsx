@@ -50,7 +50,7 @@ setData(resultadosBusqueda);
           value={busqueda} onChange={handleChange}
         />
       </div>
-      <TableContainer style={{"margin": "10px 20px 0 0", "padding": "5px 5px 5px 5px"}} component={Paper}>
+      <TableContainer style={{"margin": "10px 20px 10px 0", "padding": "5px 5px 5px 5px", "max-width": "800px", "width": "95%"}} component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
