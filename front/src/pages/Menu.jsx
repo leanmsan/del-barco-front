@@ -14,13 +14,13 @@ export function Menu() {
   };
 
   return (
-    <div>
-      <SideBar handleTabClick={handleTabClick} selectedTab={selectedTab} />
-      {selectedTab === "insumos" ? (
-        <TablaInsumos />
-      ) : selectedTab === "proveedores" ? (
-        <ProveedoresPage />
-      ) : null}
-    </div>
+      <div>
+        <SideBar handleTabClick={handleTabClick} selectedTab={selectedTab} />
+        {selectedTab === "insumos" ? (
+          <TablaInsumos />
+        ) : selectedTab === "proveedores" ? (
+          <ProveedoresPage />
+        ) : null}
+      </div>
   );
 }

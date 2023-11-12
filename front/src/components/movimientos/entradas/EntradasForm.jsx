@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import "../../../css/form.css";
 import RequiredFieldError from "../../../utils/errors";
-
-// imports para la tabla con los insumos que componen el detalle
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
+import Swal from "sweetalert2";
 
 export function EntradaForm() {
-
     // entrada
     const [proveedor_id, setProveedorId] = useState("");
     const [errorProveedor, setErrorProveedor] = useState(false);
@@ -20,6 +18,7 @@ export function EntradaForm() {
 
     // entrada detalle
     const [identrada_id, setIdEntradaId] = useState("");
+
     const [seleccionarInsumo, setSeleccionarInsumo] = useState([]);
 
     const [insumo_id, setInsumoId] = useState("");
@@ -31,217 +30,244 @@ export function EntradaForm() {
     const [precio_unitario, setPrecioUnitario] = useState("");
     const [errorPrecioUnitario, setErrorPrecioUnitario] = useState(false);
 
-    const [detalle, setDetalle] = useState("")
     const [listaDetalle, setListaDetalle] = useState([]);
     const [lastInsertedId, setLastInsertedId] = useState(null);
 
-    // listado de proveedores 
     useEffect(() => {
         const fetchProveedores = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/proveedores/');
+                const response = await fetch("http://127.0.0.1:8000/api/proveedores/");
                 const data = await response.json();
 
                 if (response.ok) {
                     setProveedores(data.proveedores);
                 } else {
-                    console.log('Error al obtener los proveedores', response)
+                    console.log("Error al obtener los proveedores", response);
                 }
             } catch (error) {
-                console.log('Error de red', error)
+                console.log("Error de red", error);
             }
         };
+
         fetchProveedores();
     }, []);
 
-    // listado de insumos
     useEffect(() => {
         const fetchInsumos = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/insumos/');
+                const response = await fetch("http://127.0.0.1:8000/api/insumos/");
                 const data = await response.json();
 
                 if (response.ok) {
                     setSeleccionarInsumo(data.insumos);
                 } else {
-                    console.log('Error al obtener los insumos', response);
+                    console.log("Error al obtener los insumos", response);
                 }
             } catch (error) {
-                console.log('Error de red', error)
+                console.log("Error de red", error);
             }
-        }
+        };
 
         fetchInsumos();
     }, []);
 
-    // obtenemos el ultimo id insertado en la tabla entrada
     useEffect(() => {
         const fetchLastInsertedId = async () => {
             try {
-                // Realiza una solicitud a la API de entradas para obtener todas las entradas
-                const response = await fetch('http://127.0.0.1:8000/api/lastidentrada/');
+                const response = await fetch("http://127.0.0.1:8000/api/lastidentrada/");
                 const data = await response.json();
-                //console.log('Esto es data', data);
                 const lastId = data.lastid + 1;
-                //console.log('Esto es ultimo id', lastId);
 
                 if (response.ok) {
                     setLastInsertedId(lastId);
                     setIdEntradaId(lastId);
                 } else {
-                    console.log('Error al obtener el último id de entrada', response);
+                    console.log("Error al obtener el último id de entrada", response);
                 }
             } catch (error) {
-                console.log('Error de red', error);
+                console.log("Error de red", error);
             }
         };
 
         fetchLastInsertedId();
     }, []);
-    const entradaDetalleFormRef = useRef(null)
+
+    const entradaDetalleFormRef = useRef(null);
+
     const agregarDetalle = () => {
         try {
-            if (insumo_id && cantidad && precio_unitario) {
-                // Crea un nuevo detalle
+            if (!insumo_id || !cantidad || !precio_unitario) {
+                throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
+            } else {
+                const insumoExistente = listaDetalle.some(
+                    (detalle) => detalle.insumo_id === insumo_id
+                );
+
+                if (insumoExistente) {
+                    //console.log("El insumo ya está en la lista de detalles");
+                    throw new RequiredFieldError("El insumo ya está en la lista");
+                }
+
                 const nuevoDetalle = {
                     identrada_id: identrada_id,
                     insumo_id: insumo_id,
                     cantidad: cantidad,
                     precio_unitario: precio_unitario,
                 };
-        
-                // Calcula el subtotal del nuevo detalle
+
                 const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
-        
-                // Inicializa nuevoTotal con el valor actual de monto_total o 0 si no tiene valor
                 var nuevoTotal = monto_total || 0;
-        
-                // Calcula el nuevo total sumando el subtotal al total anterior
                 nuevoTotal = nuevoTotal + subtotal;
-        
-                // Actualiza la lista de detalles y el total
+
                 setListaDetalle([...listaDetalle, nuevoDetalle]);
                 setMontoTotal(nuevoTotal);
-        
-                // Reinicia los estados a vacío
+
                 setInsumoId("");
                 setCantidad("");
                 setPrecioUnitario("");
-                console.log('Esto es InsumoId despues de agregar detalle', insumo_id);
-                console.log('Esto es Cantidad despues de agregar detalle', cantidad);
-                console.log('Esto es Precio Unitario despues de agregar detalle', precio_unitario);
-    
+
                 if (entradaDetalleFormRef.current) {
-                    entradaDetalleFormRef.current.reset()
+                    entradaDetalleFormRef.current.reset();
+                    setErrorInsumoId(false);
+                    setErrorCantidad(false);
+                    setErrorPrecioUnitario(false);
                 }
-            } else {
-                // Manejo de la situación en la que falta información
-                console.log('Falta información para agregar un detalle');
-                throw new RequiredFieldError('Este campo es obligatorio');
             }
         } catch (error) {
             if (error instanceof RequiredFieldError) {
-                console.log('Faltan completar datos requeridos', error.message)
+                console.log("Faltan completar datos requeridos", error.message);
             } else {
-                console.log('Error de red', error);
+                console.log("Error de red", error);
             }
         }
     };
-    
 
-    // handleSubmit
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            if (!insumo_id || !cantidad || !precio_unitario) {
+            if (!proveedor_id || !fecha_entrada) {
+                setErrorProveedor(true);
+                setErrorFecha(true);
+                throw new RequiredFieldError("Este campo es obligatorio");
+            }
+
+            if (listaDetalle.length === 0) {
                 setErrorInsumoId(true);
                 setErrorCantidad(true);
                 setErrorPrecioUnitario(true);
-                throw new RequiredFieldError('Este campo es obligatorio');
+                console.log("Debes agregar al menos un detalle.");
+                throw new RequiredFieldError("Debes agregar al menos un detalle");
             }
 
-            if (!proveedor_id || !fecha_entrada) {
-                setErrorProveedor(!proveedor_id);
-                setErrorFecha(!fecha_entrada);
-                throw new RequiredFieldError('Este campo es obligatorio');
-            }
-    
+            agregarDetalle();
+
             const entrada = {
                 proveedor_id,
                 fecha_entrada,
                 monto_total,
             };
 
-            const response = await fetch('http://127.0.0.1:8000/api/entradas/', {
-                method: 'POST',
+            const response = await fetch("http://127.0.0.1:8000/api/entradas/", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(entrada),
             });
 
             if (response.ok) {
                 const data = await response.json();
-                setLastInsertedId(data.id); // Actualiza lastInsertedId con el ID de la entrada creada
-                setErrorProveedor(false)
-                setErrorFecha(false)
-                setMontoTotal(0)
-                setListaDetalle([])
-
+                setLastInsertedId(data.id);
+                setErrorProveedor(false);
+                setErrorFecha(false);
+                setProveedorId("");
+                setMontoTotal(0);
+                setListaDetalle([]);
             } else {
-                console.log('Error al crear la entrada', response);
+                console.log("Error al crear la entrada", response);
                 return;
             }
 
-            // Envía detalles de entrada
             const promises = listaDetalle.map((detalle) =>
-                fetch('http://127.0.0.1:8000/api/entrada_detalles/', {
-                    method: 'POST',
+                fetch("http://127.0.0.1:8000/api/entrada_detalles/", {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify(detalle),
                 })
             );
 
-            // Espera a que se completen todas las solicitudes
-            console.log(promises);
             await Promise.all(promises);
 
-            console.log('Entrada y detalles creados exitosamente');
+            Swal.fire({
+                title: 'Éxito',
+                text: 'La entrada se registró correctamente!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+              });
+
+            console.log("Entrada y detalles creados exitosamente");
         } catch (error) {
-            console.log('Error de red', error);
+            if (error instanceof RequiredFieldError) {
+                console.log('Error de validación', error.message);
+            } else {
+                console.log("Error de red", error);
+            }
+
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al enviar el formulario',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
         }
     };
 
     return (
         <div className="section-content">
-            <form  ref={entradaDetalleFormRef} id="EntradaDetalle" className="form" onSubmit={handleSubmit}>
+            <form
+                ref={entradaDetalleFormRef}
+                id="EntradaDetalle"
+                className="form"
+                onSubmit={handleSubmit}
+            >
                 <h1 className="title">Nueva entrada</h1>
                 <div className="input-control">
-                    {/* entrada */}
-                    <label>Proveedor
-                        <select value={proveedor_id} onChange={(e) => {
-                            setProveedorId(e.target.value);
-                            setErrorProveedor(false)
-                        }}>
+                    <label>
+                        Proveedor
+                        <select
+                            value={proveedor_id}
+                            onChange={(e) => {
+                                setProveedorId(e.target.value);
+                                setErrorProveedor(false);
+                            }}
+                        >
                             <option value="">Seleccione un proveedor</option>
                             {proveedores.map((proveedor) => (
-                                <option key={proveedor.idproveedor} value={proveedor.nombre_proveedor}>
+                                <option
+                                    key={proveedor.idproveedor}
+                                    value={proveedor.nombre_proveedor}
+                                >
                                     {proveedor.nombre_proveedor}
                                 </option>
                             ))}
                         </select>
                         {errorProveedor && (
-                            <div className="error-message">Selecciona un proveedor</div>
+                            <div className="error-message">Tienes que selecciona un proveedor</div>
                         )}
                     </label>
-                    <label>Fecha
-                        <input type="date" name="fecha" onChange={(e) => {
-                            setFechaEntrada(e.target.value);
-                            setErrorFecha(false)
-                        }} />
+                    <label>
+                        Fecha
+                        <input
+                            type="date"
+                            name="fecha"
+                            onChange={(e) => {
+                                setFechaEntrada(e.target.value);
+                                setErrorFecha(false);
+                            }}
+                        />
                         {errorFecha && (
                             <div className="error-message">Tienes que seleccionar una fecha</div>
                         )}
@@ -250,16 +276,21 @@ export function EntradaForm() {
                     <p>{monto_total}</p>
                 </div>
 
-                {/* entrada detalle*/}
                 <div className="input-control">
                     <label name="insumo_id">Insumo
-                        <select value={insumo_id} onChange={(e) => {
-                            setInsumoId(e.target.value);
-                            setErrorInsumoId(false);
-                        }}>
+                        <select
+                            value={insumo_id}
+                            onChange={(e) => {
+                                setInsumoId(e.target.value);
+                                setErrorInsumoId(false);
+                            }}
+                        >
                             <option value="">Seleccione un insumo</option>
                             {seleccionarInsumo.map((insumo) => (
-                                <option key={insumo.insumo_id} value={insumo.nombre_insumo}>
+                                <option
+                                    key={insumo.insumo_id}
+                                    value={insumo.nombre_insumo}
+                                >
                                     {insumo.nombre_insumo}
                                 </option>
                             ))}
@@ -269,34 +300,51 @@ export function EntradaForm() {
                         )}
                     </label>
                     <label>Cantidad
-                        <input type="number" name="cantidad" onChange={(e) => {
-                            setCantidad(e.target.value);
-                            setErrorCantidad(false);
-
-                        }} />
+                        <input
+                            type="number"
+                            name="cantidad"
+                            onChange={(e) => {
+                                setCantidad(e.target.value);
+                                setErrorCantidad(false);
+                            }}
+                        />
                         {errorCantidad && (
                             <div className="error-message">Tienes que especificar la cantidad</div>
                         )}
                     </label>
                     <label>Precio Unitario
-                        <input type="number" name="precio_unitario" onChange={(e) => {
-                            setPrecioUnitario(e.target.value);
-                            setErrorPrecioUnitario(false);
-
-                        }} />
+                        <input
+                            type="number"
+                            name="precio_unitario"
+                            onChange={(e) => {
+                                setPrecioUnitario(e.target.value);
+                                setErrorPrecioUnitario(false);
+                            }}
+                        />
                         {errorPrecioUnitario && (
                             <div className="error-message">Tienes que especificar el precio</div>
                         )}
                     </label>
                 </div>
-                <button className="button" type="button" onClick={agregarDetalle}  style={{
-                                "padding": "5px",
-                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                                "font-size": "16px", "font-weight": "bold", "width": "100%"
-                            }}>Agregar insumo</button>
+                <button
+                    className="button"
+                    type="button"
+                    onClick={agregarDetalle}
+                    style={{
+                        padding: "5px",
+                        color: "white",
+                        backgroundColor: "#7e530f",
+                        borderRadius: "4px",
+                        border: "none",
+                        fontSize: "16px",
+                        fontWeight: "bold",
+                        width: "100%",
+                    }}
+                >
+                    Agregar insumo
+                </button>
 
-                {/* Tabla con los insumos en el detalle */}
-                <TableContainer style={{"margin": "10px 20px 0 0", "padding": "5px 5px 5px 5px"}} component={Paper}>
+                <TableContainer style={{ margin: "10px 20px 0 0", padding: "5px 5px 5px 5px", }} component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -316,12 +364,23 @@ export function EntradaForm() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <button className="button" type="submit"  style={{
-                                "padding": "5px",
-                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                                "font-size": "16px", "font-weight": "bold", "width": "100%"
-                            }}>Enviar</button>
+                <button
+                    className="button"
+                    type="submit"
+                    style={{
+                        padding: "5px",
+                        color: "white",
+                        backgroundColor: "#7e530f",
+                        borderRadius: "4px",
+                        border: "none",
+                        fontSize: "16px",
+                        fontWeight: "bold",
+                        width: "100%",
+                    }}
+                >
+                    Enviar
+                </button>
             </form>
         </div>
-    )
+    );
 }

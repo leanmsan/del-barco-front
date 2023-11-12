@@ -1,39 +1,42 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/img/logo1.png'
 
-export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
+export function SideBar(selectedTab) {
   const navigate = useNavigate();
   const [entradasOpen, setEntradasOpen] = useState(false);
   const [salidasOpen, setSalidasOpen] = useState(false);
   const [insumosOpen, setInsumosOpen] = useState(false);
+  const [proveedoresOpen, setProveedoresOpen] = useState(false);
   const [recetasOpen, setRecetasOpen] = useState(false);
   const [coccionesOpen, setCoccionesOpen] = useState(false);
-
-  const handleLogout = () => {
-    localStorage.removeItem("authenticated");
-    handleAuthentication(false);
-    navigate("/login");
-  };
 
   const toggleEntradas = () => {
     setEntradasOpen(!entradasOpen);
     setSalidasOpen(false);
-    setRecetasOpen(false)
+    setRecetasOpen(false);
+    setCoccionesOpen(false);
+    setProveedoresOpen(false);
+    setInsumosOpen(false)
   };
 
   const toggleSalidas = () => {
     setSalidasOpen(!salidasOpen);
     setEntradasOpen(false);
-    setRecetasOpen(false)
+    setRecetasOpen(false);
+    setCoccionesOpen(false);
+    setProveedoresOpen(false);
+    setInsumosOpen(false)
   };
 
   const toogleRecetas = () => {
     setRecetasOpen(!recetasOpen);
     setEntradasOpen(false);
-    setSalidasOpen(false)
-
+    setSalidasOpen(false);
+    setCoccionesOpen(false);
+    setProveedoresOpen(false);
+    setInsumosOpen(false)
   };
 
   const toggleCocciones = () => {
@@ -41,16 +44,26 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
     setEntradasOpen(false);
     setSalidasOpen(false);
     setRecetasOpen(false);
+    setProveedoresOpen(false);
+    setInsumosOpen(false)
   };
 
   const toggleInsumos = () => {
-    setSalidasOpen(!insumosOpen);
+    setInsumosOpen(!insumosOpen);
+    setCoccionesOpen(false);
     setEntradasOpen(false);
+    setSalidasOpen(false);
+    setRecetasOpen(false);
+    setProveedoresOpen(false)
   };
 
   const toggleProveedores = () => {
-    setSalidasOpen(!productosOpen);
+    setProveedoresOpen(!proveedoresOpen);
+    setCoccionesOpen(false);
     setEntradasOpen(false);
+    setSalidasOpen(false);
+    setRecetasOpen(false);
+    setInsumosOpen(false)
   };
 
   const handleLogoClick = () => {
@@ -67,32 +80,47 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
       <div className="menu-items">
         <div>
         <ul className="nav-links">
+
+          {/* Insumos */}
           <li
-            className={`nav-link-item ${
-              selectedTab === "productos" ? "active" : ""
-            }`}
+            className={`nav-link-item ${selectedTab === "registroentradas" ? "active" : ""
+          } ${selectedTab === "entradas" ? "active" : ""
+          }`}
           >
-            <Link to="/tablainsumos">
-              <i className="fa-solid fa-cart-flatbed nav-link-icon"></i>
+            <Link onClick={toggleInsumos}>
+              <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
               <span className="link-name">Insumos</span>
             </Link>
           </li>
+
           <li
             className={`nav-link-item ${
-              selectedTab === "altaInsumos" ? "active" : ""
-            }`}
+              selectedTab === "insumos" ? "active" : ""
+            } ${insumosOpen ? "active fade-in" : "fade-out"}`}
           >
-            <Link to="/altainsumos">
-              <i className="fa-solid fa-square-plus nav-link-icon"></i>
-              <span className="link-name">Alta de insumos</span>
-            </Link>
+            {insumosOpen && (
+              <ul className="sub-menu">
+                <li>
+                  <Link to="/altainsumos">
+                    <i className="fa-solid fa-cash-register nav-link-icon"></i>
+                    <span className="link-name">Nuevo insumo</span>
+                  </Link>
+                  <Link to="/tablainsumos">
+                    <i className="fa-solid fa-cash-register nav-link-icon"></i>
+                    <span className="link-name">Insumos</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
+          
+          {/* Proveedores */}
           <li
-            className={`nav-link-item ${
-              selectedTab === "proveedores" ? "active" : ""
-            }`}
+            className={`nav-link-item ${selectedTab === "registroentradas" ? "active" : ""
+          } ${selectedTab === "entradas" ? "active" : ""
+          }`}
           >
-            <Link to="/proveedores">
+            <Link onClick={toggleProveedores}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
               <span className="link-name">Proveedores</span>
             </Link>
@@ -101,12 +129,22 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           <li
             className={`nav-link-item ${
               selectedTab === "proveedores" ? "active" : ""
-            }`}
+            } ${proveedoresOpen ? "active fade-in" : "fade-out"}`}
           >
-            <Link to="/altaproveedores">
-              <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
-              <span className="link-name">Alta de Proveedores</span>
-            </Link>
+            {proveedoresOpen && (
+              <ul className="sub-menu">
+                <li>
+                  <Link to="/altaproveedores">
+                    <i className="fa-solid fa-cash-register nav-link-icon"></i>
+                    <span className="link-name">Nuevo proveedor</span>
+                  </Link>
+                  <Link to="/proveedores">
+                    <i className="fa-solid fa-cash-register nav-link-icon"></i>
+                    <span className="link-name">Proveedores</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
 
           <li
@@ -130,17 +168,16 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/registroentradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro de entradas</span>
+                    <span className="link-name">Nueva entrada</span>
                   </Link>
                   <Link to="/entradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Tabla Entradas</span>
+                    <span className="link-name">Entradas</span>
                   </Link>
                 </li>
               </ul>
             )}
           </li>
-
 
           <li
             className={`nav-link-item ${
@@ -163,11 +200,11 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/registrosalidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro de salidas</span>
+                    <span className="link-name">Nueva salida</span>
                   </Link>
                   <Link to="/salidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Tabla Salidas</span>
+                    <span className="link-name">Salidas</span>
                   </Link>
                 </li>
               </ul>
@@ -194,11 +231,11 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/registrorecetas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro Recetas</span>
+                    <span className="link-name">Nueva receta</span>
                   </Link>
                   <Link to="/recetas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Tabla Recetas</span>
+                    <span className="link-name">Tabla de recetas</span>
                   </Link>
                 </li>
               </ul>
@@ -225,7 +262,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/nuevacoccion">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Nueva Cocción</span>
+                    <span className="link-name">Nueva cocción</span>
                   </Link>
                   <Link to="/cocciones">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
