@@ -3,7 +3,6 @@ import "../../css/form.css";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
 
 export function AltaInsumos() {
   const [nombre_insumo, setNombre_insumo] = useState("");
