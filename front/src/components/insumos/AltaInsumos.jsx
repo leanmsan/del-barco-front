@@ -103,7 +103,7 @@ export function AltaInsumos() {
   };
 
   return (
-    <div className="section-content" style={{"width": "100%", "max-width": "300px", "min-width": "200px"}}>
+    <div className="section-content" style={{"width": "30%", "max-width": "600px", "min-width": "250px"}}>
       <form className="form" onSubmit={handleSubmit}>
         <h1 className="title">Alta de Insumos</h1>
         <div className="input-control">
@@ -124,7 +124,7 @@ export function AltaInsumos() {
           <label>
             Cantidad disponible
             <input
-              type="text"
+              type="number"
               value={cantidad_disponible}
               onChange={(e) => {
                 setCantidad_disponible(e.target.value);
@@ -176,7 +176,7 @@ export function AltaInsumos() {
           <label>
             Precio Unitario
             <input
-              type="text"
+              type="number"
               value={precio_unitario}
               onChange={(e) => {
                 setPrecio_unitario(e.target.value);

@@ -14,8 +14,7 @@ export function Menu() {
   };
 
   return (
-    <div>
-      <div class="col-3">
+      <div>
         <SideBar handleTabClick={handleTabClick} selectedTab={selectedTab} />
         {selectedTab === "insumos" ? (
           <TablaInsumos />
@@ -23,9 +22,5 @@ export function Menu() {
           <ProveedoresPage />
         ) : null}
       </div>
-      <div class="col-9">
-
-      </div>
-    </div>
   );
 }
