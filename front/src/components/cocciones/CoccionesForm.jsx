@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../../css/form.css";
 import RequiredFieldError from "../../utils/errors";
+import Swal from "sweetalert2";
 
 export function CoccionesForm() {
     const [fecha_coccion, setFechaCoccion] = useState("");
@@ -71,8 +72,21 @@ export function CoccionesForm() {
 
             if (response.ok) {
                 console.log("El formulario se envió correctamente");
+
+                Swal.fire({
+                    title: 'Éxito',
+                    text: 'La cocción se registró correctamente!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                  });
             } else {
                 console.log("Error al enviar el formulario");
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Hubo un problema al enviar el formulario',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                  });
             }
             
         } catch (error) {
@@ -81,6 +95,12 @@ export function CoccionesForm() {
             } else {
                 console.log('Error en la solicitud POST', error);
             }
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al enviar el formulario',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
         }
     };
 
