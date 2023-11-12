@@ -8,6 +8,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
   const [entradasOpen, setEntradasOpen] = useState(false);
   const [salidasOpen, setSalidasOpen] = useState(false);
   const [insumosOpen, setInsumosOpen] = useState(false);
+  const [proveedoresOpen, setProveedoresOpen] = useState(false);
   const [recetasOpen, setRecetasOpen] = useState(false);
   const [coccionesOpen, setCoccionesOpen] = useState(false);
 
@@ -20,20 +21,28 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
   const toggleEntradas = () => {
     setEntradasOpen(!entradasOpen);
     setSalidasOpen(false);
-    setRecetasOpen(false)
+    setRecetasOpen(false);
+    setCoccionesOpen(false);
+    setProveedoresOpen(false);
+    setInsumosOpen(false)
   };
 
   const toggleSalidas = () => {
     setSalidasOpen(!salidasOpen);
     setEntradasOpen(false);
-    setRecetasOpen(false)
+    setRecetasOpen(false);
+    setCoccionesOpen(false);
+    setProveedoresOpen(false);
+    setInsumosOpen(false)
   };
 
   const toogleRecetas = () => {
     setRecetasOpen(!recetasOpen);
     setEntradasOpen(false);
-    setSalidasOpen(false)
-
+    setSalidasOpen(false);
+    setCoccionesOpen(false);
+    setProveedoresOpen(false);
+    setInsumosOpen(false)
   };
 
   const toggleCocciones = () => {
@@ -41,16 +50,26 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
     setEntradasOpen(false);
     setSalidasOpen(false);
     setRecetasOpen(false);
+    setProveedoresOpen(false);
+    setInsumosOpen(false)
   };
 
   const toggleInsumos = () => {
-    setSalidasOpen(!insumosOpen);
+    setInsumosOpen(!insumosOpen);
+    setCoccionesOpen(false);
     setEntradasOpen(false);
+    setSalidasOpen(false);
+    setRecetasOpen(false);
+    setProveedoresOpen(false)
   };
 
   const toggleProveedores = () => {
-    setSalidasOpen(!productosOpen);
+    setProveedoresOpen(!proveedoresOpen);
+    setCoccionesOpen(false);
     setEntradasOpen(false);
+    setSalidasOpen(false);
+    setRecetasOpen(false);
+    setInsumosOpen(false)
   };
 
   const handleLogoClick = () => {
@@ -84,7 +103,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           >
             <Link to="/altainsumos">
               <i className="fa-solid fa-square-plus nav-link-icon"></i>
-              <span className="link-name">Alta de insumos</span>
+              <span className="link-name">Nuevo insumo</span>
             </Link>
           </li>
           <li
@@ -105,7 +124,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
           >
             <Link to="/altaproveedores">
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
-              <span className="link-name">Alta de Proveedores</span>
+              <span className="link-name">Nuevo proveedor</span>
             </Link>
           </li>
 
@@ -130,11 +149,11 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/registroentradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro de entradas</span>
+                    <span className="link-name">Nueva entrada</span>
                   </Link>
                   <Link to="/entradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Tabla Entradas</span>
+                    <span className="link-name">Tabla de entradas</span>
                   </Link>
                 </li>
               </ul>
@@ -163,11 +182,11 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/registrosalidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro de salidas</span>
+                    <span className="link-name">Nueva salida</span>
                   </Link>
                   <Link to="/salidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Tabla Salidas</span>
+                    <span className="link-name">Tabla de salidas</span>
                   </Link>
                 </li>
               </ul>
@@ -194,11 +213,11 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/registrorecetas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Registro Recetas</span>
+                    <span className="link-name">Nueva receta</span>
                   </Link>
                   <Link to="/recetas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Tabla Recetas</span>
+                    <span className="link-name">Tabla de recetas</span>
                   </Link>
                 </li>
               </ul>
@@ -225,7 +244,7 @@ export function SideBar({ handleTabClick, selectedTab, handleAuthentication }) {
                 <li>
                   <Link to="/nuevacoccion">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Nueva Cocción</span>
+                    <span className="link-name">Nueva cocción</span>
                   </Link>
                   <Link to="/cocciones">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
