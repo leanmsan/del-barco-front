@@ -3,40 +3,39 @@ import Swal from 'sweetalert2';
 import '../../css/form.css';
 
 export function RecetasForm() {
-
   const [nombreReceta, setNombreReceta] = useState('');
   const [tipoReceta, setTipoReceta] = useState('');
   const [insumoId, setInsumoId] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [tipoMedida, setTipoMedida] = useState('');
   const [listaDetalles, setListaDetalles] = useState([]);
-  const [lastInsertedId, setLastInsertedId] = useState(null);
-  const [idRecetasId, setIdRecetasId] = useState(null);
+  const [listaInsumos, setListaInsumos] = useState([]);
 
   useEffect(() => {
-    const fetchLastInsertedId = async () => {
-      try {
-        // Realiza una solicitud a la API de entradas para obtener todas las entradas
-        const response = await fetch('http://127.0.0.1:8000/api/lastidreceta/');
-        const data = await response.json();
-        //console.log('Esto es data', data);
-        const lastId = data.lastid + 1;
-        //console.log('Esto es ultimo id', lastId);
-
-        if (response.ok) {
-          setLastInsertedId(lastId);
-          setIdRecetasId(lastId);
-        } else {
-          console.log('Error al obtener el último id de entrada', response);
-        }
-      } catch (error) {
-        console.log('Error de red', error);
-      }
-    };
-
-    fetchLastInsertedId();
+    fetchInsumos();
   }, []);
 
+  const fetchInsumos = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/insumos/');
+      const data = await response.json();
+      setListaInsumos(data.insumos);
+    } catch (error) {
+      console.error('Error al obtener los insumos:', error);
+    }
+  };
+
+  const validarFormulario = () => {
+    if (!nombreReceta.trim() || !tipoReceta.trim() || listaDetalles.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Formulario incompleto',
+        text: 'Por favor, completa todos los campos del formulario antes de enviarlo.',
+      });
+      return false;
+    }
+    return true;
+  };
 
   const handleNombreRecetaChange = (e) => {
     setNombreReceta(e.target.value);
@@ -61,7 +60,6 @@ export function RecetasForm() {
   const handleAgregarDetalle = () => {
     if (insumoId && cantidad && tipoMedida) {
       const nuevoDetalle = {
-        
         insumoId: insumoId,
         cantidad: cantidad,
         tipoMedida: tipoMedida,
@@ -89,6 +87,10 @@ export function RecetasForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!validarFormulario()) {
+      return;
+    }
+
     const recetasApiUrl = 'http://127.0.0.1:8000/api/recetas/';
     const recetasDetallesApiUrl = 'http://127.0.0.1:8000/api/receta_detalles/';
 
@@ -107,16 +109,14 @@ export function RecetasForm() {
       });
 
       const recetasResult = await recetasResponse.json();
-      console.log('esto es recetas result',recetasResult)
 
       if (recetasResponse.ok) {
         // Receta creada con éxito, ahora agregar detalles
         const recetaId = recetasResult.last_inserted_receta;
-        console.log('recetasId', recetaId)
 
-        const promises = listaDetalles.map(async (detalle) => {
+        const promises = listaDetalles.map(async (detalle, index) => {
           const recetasDetallesData = {
-            idrecetadetalle: listaDetalles.idrecetadetalle +  1,
+            idrecetadetalle: index + 1,
             receta_id: recetaId,
             insumo_id: detalle.insumoId,
             cantidad: detalle.cantidad,
@@ -135,7 +135,6 @@ export function RecetasForm() {
         });
 
         const detallesResults = await Promise.all(promises);
-        console.log('Detalles creados:', detallesResults);
 
         Swal.fire({
           icon: 'success',
@@ -176,7 +175,14 @@ export function RecetasForm() {
           <input type='text' className='form-input' value={tipoReceta} onChange={handleTipoRecetaChange} />
           <br />
           <label className='form-label'>Insumo ID:</label>
-          <input type='text' className='form-input' value={insumoId} onChange={handleInsumoIdChange} />
+          <select className='form-input' value={insumoId} onChange={handleInsumoIdChange}>
+            <option value=''>Seleccionar Insumo</option>
+            {listaInsumos.map((insumo) => (
+              <option key={insumo.id} value={insumo.id}>
+                {insumo.nombre}
+              </option>
+            ))}
+          </select>
           <label className='form-label'>Cantidad:</label>
           <input type='number' className='form-input' value={cantidad} onChange={handleCantidadChange} />
           <br />
