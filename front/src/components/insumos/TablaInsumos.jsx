@@ -120,13 +120,13 @@ export const TablaInsumos = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Nombre insumo</TableCell>
-            <TableCell>Cantidad disponible</TableCell>
-            <TableCell>Tipo de medida</TableCell>
-            <TableCell>Categoria</TableCell>
-            <TableCell>Precio unitario</TableCell>
-            <TableCell>Proveedor</TableCell>
-            <TableCell>Acciones</TableCell>
+            <TableCell class="cell-head-TableContainer">Nombre insumo</TableCell>
+            <TableCell class="cell-head-TableContainer">Cantidad disponible</TableCell>
+            <TableCell class="cell-head-TableContainer">Tipo de medida</TableCell>
+            <TableCell class="cell-head-TableContainer">Categoria</TableCell>
+            <TableCell class="cell-head-TableContainer">Precio unitario</TableCell>
+            <TableCell class="cell-head-TableContainer">Proveedor</TableCell>
+            <TableCell class="cell-head-TableContainer">Acciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

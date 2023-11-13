@@ -151,13 +151,13 @@ export const TablaProveedores = () => {
       </div>
       <TableContainer class="table-container-format" component={Paper}>
         <Table>
-          <TableHead>
+          <TableHead >
             <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Mail</TableCell>
-              <TableCell>Contacto</TableCell>
-              <TableCell>Estado</TableCell>
-              <TableCell colSpan={2} style={{ textAlign: 'center' }}>Acciones</TableCell>
+              <TableCell class="cell-head-TableContainer">Nombre</TableCell>
+              <TableCell class="cell-head-TableContainer">Mail</TableCell>
+              <TableCell class="cell-head-TableContainer">Contacto</TableCell>
+              <TableCell class="cell-head-TableContainer">Estado</TableCell>
+              <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

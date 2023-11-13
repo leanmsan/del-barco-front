@@ -36,8 +36,8 @@ export const TablaSalidasMovimientos = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Id Salida</TableCell>
-              <TableCell>Fecha</TableCell>
+              <TableCell class="cell-head-TableContainer">Id Salida</TableCell>
+              <TableCell class="cell-head-TableContainer">Fecha</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -83,9 +83,9 @@ export const TablaSalidasMovimientos = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>ID Salidas</TableCell>
-                    <TableCell>ID Insumo</TableCell>
-                    <TableCell>Cantidad</TableCell>
+                    <TableCell class="cell-head-TableContainer">ID Salidas</TableCell>
+                    <TableCell class="cell-head-TableContainer">ID Insumo</TableCell>
+                    <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
