@@ -7,9 +7,9 @@ export const TablaInsumos = () => {
   const [insumos, setData] = useState([]);
   const [tablaInsumos, setTablaInsumos] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  const [proveedores, setProveedores] = useState([]);
 
   const handleChange = (event) => {
-    console.log(event.target.value);
     setBusqueda(event.target.value);
     filtrar(event.target.value);
   };
@@ -23,88 +23,107 @@ export const TablaInsumos = () => {
     setData(resultadosBusqueda);
   };
 
-  const handleModificar = (idInsumo) => {
+  useEffect(() => {
+    const fetchData = async (searchTerm = '') => {
+      try {
+        const insumosResponse = await axios.get(`http://127.0.0.1:8000/api/insumos/?search=${searchTerm}`);
+        const proveedoresResponse = await axios.get('http://127.0.0.1:8000/api/proveedores/');
+        setData(insumosResponse.data.insumos);
+        setTablaInsumos(insumosResponse.data.insumos);
+        setProveedores(proveedoresResponse.data.proveedores);
+      } catch (error) {
+        console.error('Error al obtener los datos:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleModificarInsumo = (index) => {
+    console.log('esto es proveedores', proveedores)
+    const insumoActual = tablaInsumos.find((e) => e.idinsumo === index);
     Swal.fire({
-      title: 'Modificar insumo',
+      title: 'Modificar proveedor',
       html: `<form id="form-modificar">
-              <label for="nombre">Nuevo nombre:</label>
-              <input type="text" id="nombre" name="nombre" value="" required>
-              <br>
-              <label for="cantidad">Nueva cantidad:</label>
-              <input type="text" id="cantidad" name="cantidad" value="" required>
-              <br>
-              <label for="medida">Nueva medida:</label>
-              <input type="text" id="medida" name="medida" value="" required>
-              <br>
-              <label for="categoria">Nueva categoría:</label>
-              <input type="text" id="categoria" name="categoria" value="" required>
-              <br>
-              <label for="precio">Nuevo precio:</label>
-              <input type="text" id="precio" name="precio" value="" required>
+              <label htmlFor="nombre_insumo">Nuevo nombre: </label>
+              <input type="text" id="nombre_insumo" name="nombre_insumo" value="${insumoActual.nombre_insumo}" required>
+              <br/>
+              <label htmlFor="cantidad_disponible">Nueva cantidad :</label>
+              <input type="text" id="cantidad_disponible" name="cantidad_disponible" value="${insumoActual.cantidad_disponible}" required>
+              <br/>
+              <label htmlFor="tipo_medida">Nueva Medida:</label>
+              <input type="text" id="tipo_medida" name="tipo_medida" value="${insumoActual.tipo_medida}" required>
+              <br/>
+              <label htmlFor="categoria">Nueva Categoria:</label>
+              <input type="text" id="categoria" name="categoria" value="${insumoActual.categoria}" required>
+              <br/>
+              <label htmlFor="precio_unitario">Nuevo precio:</label>
+              <input type="number" id="precio_unitario" name="precio_unitario" value="${insumoActual.precio_unitario}" required>
+              <br/>
+              <label htmlFor="proveedor_id">Nuevo proveedor:</label>
+              <select id="proveedor_id" name="proveedor_id" value="${insumoActual.proveedor_id}" required>
+                ${proveedores.map((proveedor) => `
+                  <option key="${proveedor.nombre_proveedor}" value="${proveedor.nombre_proveedor}">
+                    ${proveedor.nombre_proveedor}
+                  </option>
+                `).join('')}
+              </select>
             </form>`,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Guardar cambios',
       cancelButtonText: 'Cancelar',
-      preConfirm: () => {
+    }).then(async (result) => {
+      if (result.isConfirmed) {
         const form = document.getElementById('form-modificar');
-        const nuevoNombre = form.elements['nombre'].value;
-        const nuevaCantidad = form.elements['cantidad'].value;
-        const nuevaMedida = form.elements['medida'].value;
+        const idinsumo = index;
+        const nuevoNombre = form.elements['nombre_insumo'].value;
+        const nuevaCantidad = form.elements['cantidad_disponible'].value;
+        const nuevaMedidas = form.elements['tipo_medida'].value;
         const nuevaCategoria = form.elements['categoria'].value;
-        const nuevoPrecio = form.elements['precio'].value;
+        const nuevoPrecio = form.elements['precio_unitario'].value;
+        const nuevoProveedor = form.elements['proveedor_id'].value;
 
         // Verificar que los campos no estén vacíos
-        if (!nuevoNombre || !nuevaCantidad || !nuevaMedida || !nuevaCategoria || !nuevoPrecio) {
-          Swal.showValidationMessage('Todos los campos son obligatorios');
-        } else {
-          return {
-            nuevoNombre,
-            nuevaCantidad,
-            nuevaMedida,
-            nuevaCategoria,
-            nuevoPrecio,
-          };
+        if (!nuevoNombre || !nuevaCantidad || !nuevaMedidas || !nuevaCategoria || !nuevoPrecio || !nuevoProveedor) {
+          Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
+          return;
         }
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const { nuevoNombre, nuevaCantidad, nuevaMedida, nuevaCategoria, nuevoPrecio } = result.value;
-        // Actualizar la fila en la tabla con los nuevos valores
-        const nuevaTablaInsumos = tablaInsumos.map((insumo) =>
-          insumo.idinsumo === idInsumo
-            ? {
+
+        try {
+          await axios.patch(`http://127.0.0.1:8000/api/insumos/${idinsumo}/`, {
+            nombre_insumo: nuevoNombre,
+            cantidad_disponible: nuevaCantidad,
+            tipo_medida: nuevaMedidas,
+            categoria: nuevaCategoria,
+            precio_unitario: nuevoPrecio,
+            proveedor_id: nuevoProveedor,
+          });
+
+          const nuevaTablaInsumo = tablaInsumos.map((insumo) =>
+            insumo.idinsumo === index
+              ? {
                 ...insumo,
                 nombre_insumo: nuevoNombre,
                 cantidad_disponible: nuevaCantidad,
-                tipo_medida: nuevaMedida,
+                tipo_medida: nuevaMedidas,
                 categoria: nuevaCategoria,
                 precio_unitario: nuevoPrecio,
+                proveedor_id: nuevoProveedor,
               }
-            : insumo
-        );
-        setTablaInsumos(nuevaTablaInsumos);
-        setData(nuevaTablaInsumos);
-        Swal.fire('Modificado', 'El insumo ha sido modificado correctamente', 'success');
+              : insumo
+          );
+          console.log('esto es nueva tabla insumo', nuevaTablaInsumo)
+          setTablaInsumos(nuevaTablaInsumo);
+          setData(nuevaTablaInsumo);
+          Swal.fire('Modificado', 'El insumo ha sido modificado correctamente', 'success');
+        } catch (error) {
+          
+          console.log('Error al realizar la solicitud PATCH:', error);
+          Swal.fire('Error', 'Error al actualizar el insumo', 'error');
+        }
       }
     });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async (searchTerm = '') => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/insumos/?search=${searchTerm}`);
-
-      setData(response.data.insumos);
-      setTablaInsumos(response.data.insumos);
-      console.log('response', response.data.insumos);
-    } catch (error) {
-      console.error('Error al obtener los datos:', error);
-    }
   };
 
   return (
@@ -117,31 +136,31 @@ export const TablaInsumos = () => {
         <input className="input-search" type="text" placeholder="Buscar..." value={busqueda} onChange={handleChange} />
       </div>
       <TableContainer class="table-container-format" component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Nombre insumo</TableCell>
-            <TableCell>Cantidad disponible</TableCell>
-            <TableCell>Tipo de medida</TableCell>
-            <TableCell>Categoria</TableCell>
-            <TableCell>Precio unitario</TableCell>
-            <TableCell>Proveedor</TableCell>
-            <TableCell>Acciones</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {insumos.map((row) => (
-            <TableRow key={row.idinsumo}>
-              <TableCell>{row.nombre_insumo}</TableCell>
-              <TableCell style={{ textTransform: 'capitalize'}}>{row.cantidad_disponible}</TableCell>
-              <TableCell>{row.tipo_medida}</TableCell>
-              <TableCell>{row.categoria}</TableCell>
-              <TableCell>{row.precio_unitario}</TableCell>
-              <TableCell>{row.proveedor_id}</TableCell>
-              <TableCell>
-                  <Button variant="contained" size='small' onClick={() => handleModificar(row.idinsumo)}>Modificar</Button>
-              </TableCell>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nombre insumo</TableCell>
+              <TableCell>Cantidad disponible</TableCell>
+              <TableCell>Tipo de medida</TableCell>
+              <TableCell>Categoria</TableCell>
+              <TableCell>Precio unitario</TableCell>
+              <TableCell>Proveedor</TableCell>
+              <TableCell>Acciones</TableCell>
             </TableRow>
+          </TableHead>
+          <TableBody>
+            {insumos.map((row) => (
+              <TableRow key={row.idinsumo}>
+                <TableCell>{row.nombre_insumo}</TableCell>
+                <TableCell style={{ textTransform: 'capitalize'}}>{row.cantidad_disponible}</TableCell>
+                <TableCell>{row.tipo_medida}</TableCell>
+                <TableCell>{row.categoria}</TableCell>
+                <TableCell>{row.precio_unitario}</TableCell>
+                <TableCell>{row.proveedor_id}</TableCell>
+                <TableCell>
+                  <Button variant="contained" size='small' onClick={() => handleModificarInsumo(row.idinsumo)}>Modificar</Button>
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
