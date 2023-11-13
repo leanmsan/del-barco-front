@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@mui/material';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -103,6 +103,34 @@ export const TablaProveedores = () => {
     });
   };
 
+  const handleEliminarProveedor = async (index, proveedor) => {
+    const idproveedor = index;
+    try {
+      const result = await Swal.fire({
+        title: `¿Estás seguro que quieres dar de baja a ${proveedor}?`,
+        showDenyButton: true,
+        confirmButtonText: 'Dar de Baja',
+        denyButtonText: `Cancelar`,
+      });
+
+      if (result.isConfirmed) {
+        const response = await axios.patch(`http://127.0.0.1:8000/api/proveedores/${idproveedor}/`, {
+          estado: 'I',
+        });
+        
+        Swal.fire('Dado de baja exitosamente!', '', 'success');
+        console.log('Solicitud PATCH exitosa', response.data);
+
+        // Actualizar los datos utilizando fetchData
+        fetchData();
+      } else if (result.isDenied) {
+        Swal.fire('Cancelado!', '', 'info');
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud PATCH:', error.message);
+    }
+  };
+
   return (
     <div className='section-content'>
       <h1 className="title">Proveedores</h1>
@@ -114,27 +142,32 @@ export const TablaProveedores = () => {
         />
       </div>
       <TableContainer class="table-container-format" component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Mail</TableCell>
-            <TableCell>Contacto</TableCell>
-            <TableCell>Estado</TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {proveedores.map((row) => (
-            <TableRow key={row.idproveedor}>
-              <TableCell>{row.nombre_proveedor}</TableCell>
-              <TableCell>{row.mail}</TableCell>
-              <TableCell>{row.telefono}</TableCell>              
-              <TableCell>{row.estado}</TableCell>
-              <TableCell><button type='button' onClick={() => handleModificarProveedor(row.idproveedor)}>
-                  Modificar
-                </button></TableCell>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Mail</TableCell>
+              <TableCell>Contacto</TableCell>
+              <TableCell>Estado</TableCell>
+              <TableCell colSpan={2} style={{ textAlign: 'center' }}>Acciones</TableCell>
             </TableRow>
+          </TableHead>
+          <TableBody>
+            {proveedores.map((row) => (
+              <TableRow key={row.idproveedor}>
+                <TableCell>{row.nombre_proveedor}</TableCell>
+                <TableCell>{row.mail}</TableCell>
+                <TableCell>{row.telefono}</TableCell>
+                <TableCell>{row.estado}</TableCell>
+                <TableCell>
+                  <Button variant="contained" size='small' type='button' onClick={() => handleModificarProveedor(row.idproveedor)}>
+                    Modificar
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button variant="contained" color="error" size='small' type='button' onClick={() => handleEliminarProveedor(row.idproveedor, row.nombre_proveedor.toString())}>Dar de Baja</Button>
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

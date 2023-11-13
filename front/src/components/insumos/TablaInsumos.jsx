@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@mui/material';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -139,7 +139,7 @@ export const TablaInsumos = () => {
               <TableCell>{row.precio_unitario}</TableCell>
               <TableCell>{row.proveedor_id}</TableCell>
               <TableCell>
-                  <button onClick={() => handleModificar(row.idinsumo)}>Modificar</button>
+                  <Button variant="contained" size='small' onClick={() => handleModificar(row.idinsumo)}>Modificar</Button>
               </TableCell>
             </TableRow>
             ))}
