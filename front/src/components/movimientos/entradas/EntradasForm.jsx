@@ -34,7 +34,6 @@ export function EntradaForm() {
     const [errorPrecioUnitario, setErrorPrecioUnitario] = useState(false);
 
     const [listaDetalle, setListaDetalle] = useState([]);
-    const [lastInsertedId, setLastInsertedId] = useState(null);
 
     useEffect(() => {
         const fetchProveedores = async () => {
@@ -82,7 +81,6 @@ export function EntradaForm() {
                 const lastId = data.lastid + 1;
 
                 if (response.ok) {
-                    setLastInsertedId(lastId);
                     setIdEntradaId(lastId);
                 } else {
                     console.log("Error al obtener el último id de entrada", response);
@@ -97,11 +95,39 @@ export function EntradaForm() {
 
     const entradaDetalleFormRef = useRef(null);
 
+    const isPositiveNumber = (value) => {
+        return !isNaN(value) && value > 0;
+    };
+
     const agregarDetalle = () => {
         try {
             if (!insumo_id || !cantidad || !precio_unitario) {
+                if (!insumo_id) {
+                    setErrorInsumoId(true);
+                }
+                if (!cantidad) {
+                    setErrorCantidad(true);
+                }
+                if (!precio_unitario) {
+                    setErrorPrecioUnitario(true);
+                }
+
+                const cantidadNumero = parseFloat(cantidad);
+                const precioNumero = parseFloat(precio_unitario);
+
+                if (!isPositiveNumber(cantidadNumero) || !isPositiveNumber(precioNumero)) {
+                    if (!isPositiveNumber(cantidadNumero)) {
+                        setErrorCantidad(true)
+                    }
+                    if (!isPositiveNumber(precioNumero)) {
+                        setErrorPrecioUnitario(true);
+                    }
+
+                    throw new RequiredFieldError('Cantidad y precio unitario deben ser números positivos');
+                }
+
                 throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
-            } else {
+            } else { 
                 const insumoExistente = listaDetalle.some(
                     (detalle) => detalle.insumo_id === insumo_id
                 );
@@ -181,7 +207,7 @@ export function EntradaForm() {
 
             if (response.ok) {
                 const data = await response.json();
-                setLastInsertedId(data.id);
+                setIdEntradaId(data.id);
                 setErrorProveedor(false);
                 setErrorFecha(false);
                 setProveedorId("");
@@ -209,7 +235,7 @@ export function EntradaForm() {
                 text: 'La entrada se registró correctamente!',
                 icon: 'success',
                 confirmButtonText: 'OK'
-              });
+            });
 
             console.log("Entrada y detalles creados exitosamente");
         } catch (error) {
@@ -224,7 +250,7 @@ export function EntradaForm() {
                 text: 'Hubo un problema al enviar el formulario',
                 icon: 'error',
                 confirmButtonText: 'OK'
-              });
+            });
         }
     };
 

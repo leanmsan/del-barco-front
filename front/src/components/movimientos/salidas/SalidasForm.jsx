@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import "../../../css/form.css";
+import Swal from "sweetalert2";
+import RequiredFieldError from "../../../utils/errors";
 
 // imports para la tabla con los insumos que componen el detalle
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
@@ -26,9 +28,7 @@ export function SalidasForm() {
     const [cantidad, setCantidad] = useState("");
     const [errorCantidad, setErrorCantidad] = useState(false);
 
-    const [detalle, setDetalle] = useState("")
     const [listaDetalle, setListaDetalle] = useState([]);
-    const [lastInsertedId, setLastInsertedId] = useState(null);
 
     // listado de insumos
     useEffect(() => {
@@ -62,7 +62,6 @@ export function SalidasForm() {
                 //console.log('Esto es ultimo id', lastId);
 
                 if (response.ok) {
-                    setLastInsertedId(lastId);
                     setIdSalidaId(lastId);
                 } else {
                     console.log('Error al obtener el último id de entrada', response);
@@ -77,40 +76,67 @@ export function SalidasForm() {
 
 
     const salidaDetalleFormRef = useRef(null)
-    const agregarDetalle = () => {
-        if (insumo_id && cantidad) {
-            // Crea un nuevo detalle
-            const nuevoDetalle = {
-                idsalida_id: idsalida_id,
-                insumo_id: insumo_id,
-                cantidad: cantidad,
-            };
-    
-            // Calcula el subtotal del nuevo detalle
-            const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
-    
-            // Inicializa nuevoTotal con el valor actual de monto_total o 0 si no tiene valor
-            var nuevoTotal = monto_total || 0;
-    
-            // Calcula el nuevo total sumando el subtotal al total anterior
-            nuevoTotal = nuevoTotal + subtotal;
-    
-            // Actualiza la lista de detalles y el total
-            setListaDetalle([...listaDetalle, nuevoDetalle]);
-            setMontoTotal(nuevoTotal);
-    
-            // Reinicia los estados a vacío
-            setInsumoId("");
-            setCantidad("");
-            console.log('Esto es InsumoId despues de agregar detalle', insumo_id);
-            console.log('Esto es Cantidad despues de agregar detalle', cantidad);
 
-            if (salidaDetalleFormRef.current) {
-                salidaDetalleFormRef.current.reset()
+    const isPositiveNumber = (value) => {
+        return !isNaN(value) && value > 0;
+    };
+
+    const agregarDetalle = () => {
+        try {
+            if (!insumo_id || !cantidad) {
+                if (!insumo_id) {
+                    setErrorInsumoId(true);
+                }
+                if (!cantidad) {
+                    setErrorCantidad(true);
+                }
+
+                const cantidadNumero = parseFloat(cantidad);
+
+                if (!isPositiveNumber(cantidadNumero)) {
+                    setErrorCantidad(true);
+                    throw new RequiredFieldError('Cantidad debe ser un número positivo');
+                }
+
+                throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
+            } else {
+                const insumoExistente = listaDetalle.some(
+                    (detalle) => detalle.insumo_id === insumo_id
+                );
+
+                if (insumoExistente) {
+                    //console.log("El insumo ya está en la lista de detalles");
+                    throw new RequiredFieldError("El insumo ya está en la lista");
+                }
+
+                const nuevoDetalle = {
+                    idsalida_id: idsalida_id,
+                    insumo_id: insumo_id,
+                    cantidad: cantidad,
+                };
+
+                const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
+                var nuevoTotal = monto_total || 0;
+                nuevoTotal = nuevoTotal + subtotal;
+
+                setListaDetalle([...listaDetalle, nuevoDetalle]);
+                setMontoTotal(nuevoTotal);
+
+                setInsumoId("");
+                setCantidad("");
+
+                if (salidaDetalleFormRef.current) {
+                    salidaDetalleFormRef.current.reset();
+                    setErrorInsumoId(false);
+                    setErrorCantidad(false);
+                }
             }
-        } else {
-            // Manejo de la situación en la que falta información
-            console.log('Falta información para agregar un detalle');
+        } catch (error) {
+            if (error instanceof RequiredFieldError) {
+                console.log("Faltan completar datos requeridos", error.message);
+            } else {
+                console.log("Error de red", error);
+            }
         }
     };
     
@@ -118,17 +144,17 @@ export function SalidasForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!fecha_salida) {
-            setErrorFecha(!fecha_salida);
-            return;
-        }
-
         const salida = {
             fecha_salida,
             monto_total,
         };
 
         try {
+            if (!fecha_salida) {
+                setErrorFecha(!fecha_salida);
+                throw new RequiredFieldError("Este campo es obligatorio");
+            }
+
             const response = await fetch('http://127.0.0.1:8000/api/salidas/', {
                 method: 'POST',
                 headers: {
@@ -139,11 +165,10 @@ export function SalidasForm() {
 
             if (response.ok) {
                 const data = await response.json();
-                setLastInsertedId(data.id); // Actualiza lastInsertedId con el ID de la entrada creada
+                setIdSalidaId(data.id)
                 setErrorFecha(false)
                 setMontoTotal(0)
                 setListaDetalle([])
-
             } else {
                 console.log('Error al crear la entrada', response);
                 return;
@@ -163,10 +188,23 @@ export function SalidasForm() {
             // Espera a que se completen todas las solicitudes
             console.log(promises);
             await Promise.all(promises);
+            
+            Swal.fire({
+                title: 'Éxito',
+                text: 'La salida se registró correctamente!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
 
             console.log('Entrada y detalles creados exitosamente');
         } catch (error) {
             console.log('Error de red', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al enviar el formulario',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         }
     };
 
