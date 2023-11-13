@@ -67,7 +67,7 @@ export function SideBar(selectedTab) {
   };
 
   const handleLogoClick = () => {
-    navigate("/inicio");
+    navigate("/");
   }
 
   return (
