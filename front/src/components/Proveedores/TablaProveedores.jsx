@@ -121,6 +121,7 @@ export const TablaProveedores = () => {
               <TableCell>Mail</TableCell>
               <TableCell>Contacto</TableCell>
               <TableCell>Estado</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
