@@ -178,8 +178,8 @@ export function RecetasForm() {
           <select className='form-input' value={insumoId} onChange={handleInsumoIdChange}>
             <option value=''>Seleccionar Insumo</option>
             {listaInsumos.map((insumo) => (
-              <option key={insumo.id} value={insumo.id}>
-                {insumo.nombre}
+              <option key={insumo.insumoId} value={insumo.insumoId}>
+                {insumo.nombre_insumo}
               </option>
             ))}
           </select>
