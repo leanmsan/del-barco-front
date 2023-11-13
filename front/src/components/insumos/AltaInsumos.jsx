@@ -271,7 +271,7 @@ export function AltaInsumos() {
       autoComplete="off"
       onSubmit={handleSubmit}
     >
-      <h1 className="title">Alta de Insumos</h1>
+      <h1 className="title">Nuevo insumo</h1>
       <div>
         <TextField
           required
