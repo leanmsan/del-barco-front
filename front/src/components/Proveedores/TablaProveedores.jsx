@@ -103,33 +103,41 @@ export const TablaProveedores = () => {
     });
   };
 
-  const handleEliminarProveedor = async (index, proveedor) => {
-    const idproveedor = index;
+  const handleEliminarProveedor = async (idproveedor, proveedor) => {
     try {
       const result = await Swal.fire({
         title: `¿Estás seguro que quieres dar de baja a ${proveedor}?`,
-        showDenyButton: true,
-        confirmButtonText: 'Dar de Baja',
-        denyButtonText: `Cancelar`,
+        text: "Esta acción no se puede revertir.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: 'Sí, dar de baja',
+        cancelButtonText: 'Cancelar',
       });
-
+  
       if (result.isConfirmed) {
         const response = await axios.patch(`http://127.0.0.1:8000/api/proveedores/${idproveedor}/`, {
           estado: 'I',
         });
-        
-        Swal.fire('Dado de baja exitosamente!', '', 'success');
-        console.log('Solicitud PATCH exitosa', response.data);
-
-        // Actualizar los datos utilizando fetchData
+  
         fetchData();
+  
+        Swal.fire({
+          title: 'Dado de baja exitosamente!',
+          text: 'El proveedor ha sido eliminado.',
+          icon: 'success',
+        });
+  
+        console.log('Solicitud PATCH exitosa', response.data);
       } else if (result.isDenied) {
         Swal.fire('Cancelado!', '', 'info');
       }
     } catch (error) {
       console.error('Error al realizar la solicitud PATCH:', error.message);
+      Swal.fire('Error al dar de baja', '', 'error');
     }
-  };
+  };  
 
   return (
     <div className='section-content'>
@@ -165,7 +173,7 @@ export const TablaProveedores = () => {
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button variant="contained" color="error" size='small' type='button' onClick={() => handleEliminarProveedor(row.idproveedor, row.nombre_proveedor.toString())}>Dar de Baja</Button>
+                  <Button variant="contained" color="error" size='small' type='button' onClick={() => handleEliminarProveedor(row.idproveedor, row.nombre_proveedor)}>Dar de Baja</Button>
                 </TableCell>
               </TableRow>
             ))}
