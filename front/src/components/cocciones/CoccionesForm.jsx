@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import "../../css/form.css";
 import RequiredFieldError from "../../utils/errors";
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2";
 
 export function CoccionesForm() {
@@ -105,8 +109,8 @@ export function CoccionesForm() {
     };
 
     return (
-        <div className="section-content" style={{"width": "100%", "max-width": "300px", "min-width": "200px"}}>
-            <form className="form" onSubmit={handleSubmit}>
+        <div className="section-content-form">
+            {/* <form className="form" onSubmit={handleSubmit}>
                 <h1>Nueva Cocción</h1>
                 <div className="input-control">
                     <label>Fecha
@@ -149,7 +153,90 @@ export function CoccionesForm() {
                                 "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
                                 "font-size": "16px", "font-weight": "bold", "width": "100%"
                             }}>Enviar</button>
-            </form>
+            </form> */}
+
+            <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmit}
+                >
+                <h1 className="title">Nueva coccion</h1>
+                <div>
+                <TextField
+                    required
+                    id="outlined-required"
+                    label="Fecha"
+                    type="date"
+                    InputLabelProps={{
+                        shrink: true, // Esto evita la superposición del label
+                      }}
+                    value={fecha_coccion}
+                    onChange={(e) => {
+                            setFechaCoccion(e.target.value);
+                            setErrorFechaCoccion(false);
+                        }}
+                    error={errorFechaCoccion}
+                    helperText={errorFechaCoccion ? 'La fecha es requerida' : ''}
+                    />
+
+                <TextField
+                    required
+                    id="outlined-select-currency"
+                    select
+                    label="Receta"
+                    value={receta_id}
+                    onChange={(e) => {
+                        setRecetaId(e.target.value);
+                        setErrorRecetaId(false);
+                    }} 
+                    error={errorRecetaId}
+                    helperText={errorRecetaId && 'La receta es requerida'}
+                    >
+                    <MenuItem value="" disabled>
+                        Selecciona una receta
+                    </MenuItem>
+                    {seleccionarReceta.map((receta) => (
+                                <MenuItem key={receta.idreceta} value={receta.nombre_receta}>
+                                    {receta.nombre_receta}
+                                </MenuItem>
+                            ))}
+                    </TextField>
+
+                    <TextField
+                    required
+                    id="outlined-number"
+                    label="Volumen producido en litros"
+                    type="number"
+                    value={volumen_producido}
+                    onChange={(e) => {
+                        setVolumenProducido(e.target.value);
+                        setErrorVolumenProducido(false);
+                    }}
+                    error={errorVolumenProducido}
+                    helperText={errorVolumenProducido ? 'La cantidad es requerida' : ''}
+                    />
+                    
+                    <br />
+                </div>
+                <br />
+                
+                <button
+                    className="button"
+                    type="submit"
+                    style={{
+                        "padding": "5px", 
+                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                        "font-size": "16px", "font-weight": "bold", "width": "150px"
+                    }}
+                >
+                    Enviar
+                </button>
+                </Box>
+
         </div>
     );
 }
