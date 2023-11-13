@@ -116,7 +116,6 @@ export function RecetasForm() {
 
         const promises = listaDetalles.map(async (detalle, index) => {
           const recetasDetallesData = {
-            idrecetadetalle: index + 1,
             receta_id: recetaId,
             insumo_id: detalle.insumoId,
             cantidad: detalle.cantidad,
@@ -178,7 +177,7 @@ export function RecetasForm() {
           <select className='form-input' value={insumoId} onChange={handleInsumoIdChange}>
             <option value=''>Seleccionar Insumo</option>
             {listaInsumos.map((insumo) => (
-              <option key={insumo.insumoId} value={insumo.insumoId}>
+              <option key={insumo.insumo_id} value={insumo.insumo_id}>
                 {insumo.nombre_insumo}
               </option>
             ))}
