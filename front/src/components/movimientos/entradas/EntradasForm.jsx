@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2";
+import moment from "moment";
+import 'moment/locale/es'; 
 
 export function EntradaForm() {
     // entrada
@@ -34,6 +36,8 @@ export function EntradaForm() {
     const [errorPrecioUnitario, setErrorPrecioUnitario] = useState(false);
 
     const [listaDetalle, setListaDetalle] = useState([]);
+
+    moment.locale('es');
 
     useEffect(() => {
         const fetchProveedores = async () => {
@@ -173,6 +177,20 @@ export function EntradaForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const input = fecha_entrada;
+        const dateString = input.valueOf();
+
+        if (!moment(dateString, 'YYYY-MM-DD').isValid()) {
+        // La fecha no está en el formato correcto
+        setErrorFecha(true);
+        return;
+        }
+
+        const date = new Date(dateString);
+        const formattedDate = moment(date).format('DD/MM/YYYY');
+
+        setFechaEntrada(formattedDate);
 
         try {
             if (!proveedor_id || !fecha_entrada) {
