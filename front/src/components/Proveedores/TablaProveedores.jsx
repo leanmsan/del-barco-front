@@ -55,8 +55,8 @@ export const TablaProveedores = () => {
               <input type="text" id="contacto" name="contacto" value="${proveedorActual.telefono}" required>
             </form>`,
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#51FF48',
+      cancelButtonColor: '#FF3434',
       confirmButtonText: 'Guardar cambios',
       cancelButtonText: 'Cancelar',
     }).then(async (result) => {

@@ -39,10 +39,9 @@ export const TablaInsumos = () => {
   }, []);
 
   const handleModificarInsumo = (index) => {
-    console.log('esto es proveedores', proveedores)
     const insumoActual = tablaInsumos.find((e) => e.idinsumo === index);
     Swal.fire({
-      title: 'Modificar proveedor',
+      title: 'Modificar insumo',
       html: `<form id="form-modificar">
               <label htmlFor="nombre_insumo">Nuevo nombre: </label>
               <input type="text" id="nombre_insumo" name="nombre_insumo" value="${insumoActual.nombre_insumo}" required>
@@ -69,8 +68,8 @@ export const TablaInsumos = () => {
               </select>
             </form>`,
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#51FF48',
+      cancelButtonColor: '#FF3434',
       confirmButtonText: 'Guardar cambios',
       cancelButtonText: 'Cancelar',
     }).then(async (result) => {
