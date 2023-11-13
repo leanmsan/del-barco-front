@@ -140,7 +140,7 @@ export function AltaInsumos() {
 
   return (
 
-    <div className="section-content" style={{"width": "50%", "max-width": "1000px", "min-width": "250px"}}>
+    <div className="section-content-form">
       {/* <form className="form" onSubmit={handleSubmit}>
         <h1 className="title">Alta de Insumos</h1>
     <div className="section-content" style={{"width": "30%", "max-width": "600px", "min-width": "250px"}}>

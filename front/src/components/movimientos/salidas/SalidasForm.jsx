@@ -171,7 +171,7 @@ export function SalidasForm() {
     };
 
     return (
-        <div className="section-content" style={{"width": "50%", "max-width": "1000px", "min-width": "250px"}}>
+        <div className="section-content-form">
             {/* <form  ref={salidaDetalleFormRef} id="SalidaDetalle" className="form" onSubmit={handleSubmit}>
                 <h1 className="title">Nueva salida</h1>
                 <div className="input-control">
@@ -327,7 +327,7 @@ export function SalidasForm() {
                     }}>Agregar insumo</button>
 
                 {/* Tabla con los insumos en el detalle */}
-                <TableContainer style={{"margin": "10px 20px 10px 0", "padding": "5px 5px 5px 5px", "max-width": "800px", "width": "95%"}} component={Paper}>
+                <TableContainer class="table-container-format" component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>

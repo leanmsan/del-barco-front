@@ -47,7 +47,7 @@ export const TablaProveedores = () => {
           value={busqueda} onChange={handleChange}
         />
       </div>
-      <TableContainer style={{"margin-top": "10px", "padding": "5px"}} component={Paper}>
+      <TableContainer class="table-container-format" component={Paper}>
       <Table>
         <TableHead>
           <TableRow>

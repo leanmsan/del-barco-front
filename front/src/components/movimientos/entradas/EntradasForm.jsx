@@ -229,7 +229,7 @@ export function EntradaForm() {
     };
 
     return (
-        <div className="section-content" style={{"width": "50%", "max-width": "1000px", "min-width": "250px"}}>
+        <div className="section-content-form">
             {/* <form
                 ref={entradaDetalleFormRef}
                 id="EntradaDetalle"
@@ -516,7 +516,7 @@ export function EntradaForm() {
                     Agregar insumo
                 </button>
 
-                <TableContainer style={{"margin": "10px 20px 10px 0", "padding": "5px 5px 5px 5px", "max-width": "800px", "width": "95%"}} component={Paper}>
+                <TableContainer class="table-container-format" component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
