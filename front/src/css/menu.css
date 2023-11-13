@@ -359,6 +359,13 @@ nav.close ~ .top {
     color: #000;
 }
 
+.button-on-table-modificar:focus, .button-on-table-modificar:active, .button-on-table-modificar::after, .button-on-table-modificar:focus-visible {
+    font-weight: bold;
+    border-radius: 20px;
+    background-color: #FCC840;
+    color: #000;
+}
+
 .button-on-table-baja {
     font-weight: bold;
     border-radius: 20px;

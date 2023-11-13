@@ -139,7 +139,7 @@ export const TablaInsumos = () => {
               <TableCell>{row.precio_unitario}</TableCell>
               <TableCell>{row.proveedor_id}</TableCell>
               <TableCell>
-                  <Button variant="contained" size='small' class="button-on-table-modificar" onClick={() => handleModificar(row.idinsumo)}>Modificar</Button>
+                  <button type='button' class="button-on-table-modificar" onClick={() => handleModificar(row.idinsumo)}>Modificar</button>
               </TableCell>
             </TableRow>
             ))}
