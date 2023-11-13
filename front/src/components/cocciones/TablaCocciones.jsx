@@ -45,13 +45,13 @@ export const TablaCocciones = () => {
                 value={busqueda} onChange={handleChange}
                 />
             </div>
-            <TableContainer style={{"margin-top": "10px", "margin-left": "260px", "padding": "5px"}} component={Paper}>
+            <TableContainer component={Paper} class="table-container-format">
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Receta</TableCell>
-                            <TableCell>Fecha</TableCell>
-                            <TableCell>Volumen Producido</TableCell>
+                            <TableCell class="cell-head-TableContainer">Receta</TableCell>
+                            <TableCell class="cell-head-TableContainer">Fecha</TableCell>
+                            <TableCell class="cell-head-TableContainer">Volumen Producido</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
