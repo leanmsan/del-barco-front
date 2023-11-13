@@ -84,7 +84,7 @@ export const TablaSalidasMovimientos = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell class="cell-head-TableContainer">ID Salidas</TableCell>
-                    <TableCell class="cell-head-TableContainer">ID Insumo</TableCell>
+                    <TableCell class="cell-head-TableContainer">Nombre insumo</TableCell>
                     <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
                   </TableRow>
                 </TableHead>
