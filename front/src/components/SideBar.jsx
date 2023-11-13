@@ -107,7 +107,7 @@ export function SideBar(selectedTab) {
                   </Link>
                   <Link to="/tablainsumos">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Insumos</span>
+                    <span className="link-name">Lista de insumos</span>
                   </Link>
                 </li>
               </ul>
@@ -140,7 +140,7 @@ export function SideBar(selectedTab) {
                   </Link>
                   <Link to="/proveedores">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Proveedores</span>
+                    <span className="link-name">Lista de proveedores</span>
                   </Link>
                 </li>
               </ul>
@@ -172,7 +172,7 @@ export function SideBar(selectedTab) {
                   </Link>
                   <Link to="/entradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Entradas</span>
+                    <span className="link-name">Lista de entradas</span>
                   </Link>
                 </li>
               </ul>
@@ -204,7 +204,7 @@ export function SideBar(selectedTab) {
                   </Link>
                   <Link to="/salidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Salidas</span>
+                    <span className="link-name">Lista de salidas</span>
                   </Link>
                 </li>
               </ul>
@@ -235,7 +235,7 @@ export function SideBar(selectedTab) {
                   </Link>
                   <Link to="/recetas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Tabla de recetas</span>
+                    <span className="link-name">Lista de recetas</span>
                   </Link>
                 </li>
               </ul>
@@ -266,7 +266,7 @@ export function SideBar(selectedTab) {
                   </Link>
                   <Link to="/cocciones">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Cocciones</span>
+                    <span className="link-name">Lista de cocciones</span>
                   </Link>
                 </li>
               </ul>

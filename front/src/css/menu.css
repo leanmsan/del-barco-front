@@ -225,10 +225,7 @@ nav.close ~ .top {
     overflow-x: auto;
 }
 
-.home {
-    margin-left: 300px;
-    margin-top: 70px;
-}
+
 
 .home .title, .home .subtitle {
     font-family: 'Poppins', sans-serif;

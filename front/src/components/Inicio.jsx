@@ -3,7 +3,7 @@ import 'slick-carousel/slick/slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css'
 import { SideBar } from './SideBar';
-//import '../css/inicio.css'
+import '../css/inicio.css'
 
 // importacion de imagenes para el slider
 import img1 from '../assets/img/img-1.png';
@@ -20,12 +20,12 @@ export const Inicio = () => {
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 2000,
   };
 
   return (
-    <div>
+    <div class="section-content">
       <SideBar />
       <div className="home">
         <div className='home-title'>
