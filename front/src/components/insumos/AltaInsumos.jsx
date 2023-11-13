@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import "../../css/form.css";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2";
 
 export function AltaInsumos() {
@@ -15,10 +18,10 @@ export function AltaInsumos() {
   const [categoria, setCategoria] = useState("");
   const [errorCategoria, setErrorCategoria] = useState(false);
 
-  const [precio_unitario, setPrecio_unitario] = useState(0);
+  const [precio_unitario, setPrecio_unitario] = useState("");
   const [errorPrecio_unitario, setErrorPrecio_unitario] = useState(false);
 
-  const [proveedor_id, setProveedor_id] = useState({});
+  const [proveedor_id, setProveedor_id] = useState("");
   const [errorProveedor_id, setErrorProveedor_id] = useState(false);
 
   const [proveedores, setProveedores] = useState([]);
@@ -91,6 +94,19 @@ export function AltaInsumos() {
       } else {
         setErrorCategoria(false);
       }
+
+      if (precio_unitario.trim() === "") {
+        setErrorPrecio_unitario(true);
+      } else {
+        setErrorPrecio_unitario(false);
+      }
+
+      if (proveedor_id.trim() === "") {
+        setErrorProveedor_id(true);
+      } else {
+        setErrorProveedor_id(false);
+      }
+
       console.log(response)
       if (response.ok) {
         console.log("El formulario se envió correctamente");
@@ -123,6 +139,10 @@ export function AltaInsumos() {
   };
 
   return (
+
+    <div className="section-content" style={{"width": "50%", "max-width": "1000px", "min-width": "250px"}}>
+      {/* <form className="form" onSubmit={handleSubmit}>
+        <h1 className="title">Alta de Insumos</h1>
     <div className="section-content" style={{"width": "30%", "max-width": "600px", "min-width": "250px"}}>
       <form className="form" onSubmit={handleSubmit}>
         <h1 className="title">Nuevo insumo</h1>
@@ -239,7 +259,128 @@ export function AltaInsumos() {
                             }}>
           Enviar
         </button>
-      </form>
+      </form> */}
+
+                           
+    <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+      onSubmit={handleSubmit}
+    >
+      <h1 className="title">Nuevo insumo</h1>
+      <div>
+        <TextField
+          required
+          id="outlined-required"
+          label="Nombre de insumo"
+          type="text"
+          value={nombre_insumo}
+          onChange={(e) => {
+                setNombre_insumo(e.target.value);
+                setErrorNombre_insumo(false);
+              }}
+          error={errorNombre_insumo}
+          helperText={errorNombre_insumo ? 'El nombre de insumo es requerido' : ''}
+        />
+        <TextField
+          required
+          id="outlined-number"
+          label="Cantidad disponible"
+          type="number"
+          value={cantidad_disponible}
+          onChange={(e) => {
+            setCantidad_disponible(e.target.value);
+            setErrorCantidad_disponible(false);
+          }}
+          error={errorCantidad_disponible}
+          helperText={errorCantidad_disponible ? 'La cantidad disponible es requerida' : ''}
+        />
+        <TextField
+          required
+          id="outlined-select-currency"
+          select
+          label="Tipo de medida"
+          value={tipo_medida}
+          onChange={(e) => {
+            setTipo_medida(e.target.value);
+            setErrorTipo_medida(false);
+          }}
+          error={errorTipo_medida}
+          helperText={errorTipo_medida && 'La unidad de medida es requerida'}
+        >
+          <MenuItem value="" disabled>
+            Selecciona la unidad de medida
+          </MenuItem>
+          {unidadesDeMedida.map((unidad, index) => (
+            <MenuItem key={index} value={unidad}>
+              {unidad}
+            </MenuItem>
+          ))}
+        </TextField>
+        
+        <TextField
+          required
+          id="outlined-disabled"
+          label="Categoria"
+          value={categoria}
+          onChange={(e) => {
+                setCategoria(e.target.value);
+                setErrorCategoria(false);
+              }}
+          error={errorCategoria}
+          helperText={errorCategoria ? 'La categoría es requerida' : ''}
+        />
+        <TextField
+          required
+          id="outlined-number"
+          label="Precio unitario"
+          type="number"
+          value={precio_unitario}
+          onChange={(e) => {
+            setPrecio_unitario(e.target.value);
+            setErrorPrecio_unitario(false);
+          }}
+          error={errorPrecio_unitario}
+          helperText={errorPrecio_unitario ? 'El precio unitario es requerido' : ''}
+        />
+
+        <TextField
+          required
+          id="outlined-select-currency"
+          select
+          label="Proveedor"
+          value={proveedor_id}
+          onChange={(e) => {
+            setProveedor_id(e.target.value);
+            setErrorProveedor_id(false);
+          }} 
+          error={errorProveedor_id}
+          helperText={errorProveedor_id && 'El proveedor es requerido'}
+        >
+          <MenuItem value="" disabled>
+            Selecciona un proveedor
+          </MenuItem>
+          {proveedores.map((proveedor) => (
+                <MenuItem key={proveedor.idproveedor} value={proveedor.nombre_proveedor}>
+                  {proveedor.nombre_proveedor}
+                </MenuItem>
+              ))}
+        </TextField>
+        <br />
+      </div>
+      <br />
+      <button className="button" type="submit" style={{
+                                "padding": "5px", 
+                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                                "font-size": "16px", "font-weight": "bold", "width": "150px"
+                            }}>
+          Enviar
+        </button>
+    </Box>
     </div>
   );
 }

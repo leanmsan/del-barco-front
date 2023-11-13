@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import navegate from "react";
 import "../../css/form.css"
 import RequiredFieldError from "../../utils/errors";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import Swal from "sweetalert2";
 
 export function AltaProveedores() {
@@ -9,7 +11,7 @@ export function AltaProveedores() {
   const [nombre_proveedor, setNombre] = useState("");
   const [errorNombre, setErrorNombre] = useState(false);
 
-  const [mail, setMail] = useState("");
+  const [mail, setMail] = useState("email@gmail.com");
   const [errorMail, setErrorMail] = useState(false);
 
   const [telefono, setTelefono] = useState("");
@@ -53,12 +55,14 @@ export function AltaProveedores() {
       }
 
       if (telefono.trim() === '') {
-        setTelefono("");
         setErrorTelefono(true);
-        throw new Error('Este campo es obligatorio');
+        setTelefono("");
+        throw new RequiredFieldError('Este campo es obligatorio');
       } else {
-        setErrorTelefono(false)
+        setErrorTelefono(false);
       }
+
+      
 
       const response = await fetch('http://127.0.0.1:8000/api/proveedores/', {
         method: 'POST',
@@ -96,8 +100,8 @@ export function AltaProveedores() {
     }
   }
   return (
-    <div className='section-content' style={{ "width": "100%", "max-width": "300px", "min-width": "200px" }}>
-      <form className='form' onSubmit={handleSubmit}>
+    <div className='section-content' style={{"width": "50%", "max-width": "1000px", "min-width": "250px"}}>
+      {/* <form className='form' onSubmit={handleSubmit}>
         <h1 className='title' >Nuevo proveedor</h1>
         <div className='input-control'>
 
@@ -142,7 +146,73 @@ export function AltaProveedores() {
           "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
           "font-size": "16px", "font-weight": "bold", "width": "100%"
         }}>Enviar</button>
-      </form>
+      </form> */}
+   
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <h1 className="title">Nuevo proveedor</h1>
+        <div>  
+          <TextField
+            required
+            id="outlined-required"
+            label="Nombre de proveedor"
+            type="text"
+            value={nombre_proveedor}
+            onChange={(e) => {
+                  setNombre(e.target.value);
+                  setErrorNombre(false);
+                }}
+            error={errorNombre}
+            helperText={errorNombre ? 'El nombre de proveedor es requerido' : ''}
+          />
+          
+          <TextField
+            required
+            id="outlined-disabled"
+            label="Email"
+            value={mail}
+            onChange={(e) => {
+                  setMail(e.target.value);
+                  setErrorMail(false);
+                }}
+            error={errorMail}
+            helperText={errorMail ? 'El email es requerido' : ''}
+          />
+
+          <TextField
+          required
+          id="outlined-number"
+          label="Número de contacto"
+          type="number"
+          value={telefono}
+          onChange={(e) => {
+            setTelefono(e.target.value);
+            setErrorTelefono(false);
+          }}
+          error={errorTelefono}
+          helperText={errorTelefono ? 'El contacto es requerido' : ''}
+        />
+            
+         
+          <br />
+        </div>
+        <br />
+        <button className="button" type="submit" style={{
+                                  "padding": "5px", 
+                                  "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                                  "font-size": "16px", "font-weight": "bold", "width": "150px"
+                              }}>
+            Enviar
+          </button>
+      </Box>
+    
     </div>
 
   )
