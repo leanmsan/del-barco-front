@@ -32,7 +32,7 @@ export const TablaSalidasMovimientos = () => {
     };
 
     return (
-      <TableContainer component={Paper} style={{ "margin-top": "10px", "padding": "5px" }}>
+      <TableContainer component={Paper} class="table-container-format">
         <Table>
           <TableHead>
             <TableRow>
@@ -79,7 +79,7 @@ export const TablaSalidasMovimientos = () => {
                 "font-size": "16px", "font-weight": "bold"
               }}>Cerrar Detalles
             </button></h2>
-            <TableContainer component={Paper} style={{"margin-top": "20px", "padding": "5px", "margin-bottom": "2rem"}}>
+            <TableContainer component={Paper} class="table-container-format">
               <Table>
                 <TableHead>
                   <TableRow>

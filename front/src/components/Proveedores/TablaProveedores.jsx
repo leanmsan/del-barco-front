@@ -113,28 +113,28 @@ export const TablaProveedores = () => {
           value={busqueda} onChange={handleChange}
         />
       </div>
-      <TableContainer style={{ "margin-top": "10px", "padding": "5px" }} component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Mail</TableCell>
-              <TableCell>Contacto</TableCell>
-              <TableCell>Estado</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {proveedores.map((row) => (
-              <TableRow key={row.idproveedor}>
-                <TableCell>{row.nombre_proveedor}</TableCell>
-                <TableCell>{row.mail}</TableCell>
-                <TableCell>{row.telefono}</TableCell>
-                <TableCell>{row.estado}</TableCell>
-                <TableCell><button type='button' onClick={() => handleModificarProveedor(row.idproveedor)}>
+      <TableContainer class="table-container-format" component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Nombre</TableCell>
+            <TableCell>Mail</TableCell>
+            <TableCell>Contacto</TableCell>
+            <TableCell>Estado</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {proveedores.map((row) => (
+            <TableRow key={row.idproveedor}>
+              <TableCell>{row.nombre_proveedor}</TableCell>
+              <TableCell>{row.mail}</TableCell>
+              <TableCell>{row.telefono}</TableCell>              
+              <TableCell>{row.estado}</TableCell>
+              <TableCell><button type='button' onClick={() => handleModificarProveedor(row.idproveedor)}>
                   Modificar
                 </button></TableCell>
-              </TableRow>
+            </TableRow>
             ))}
           </TableBody>
         </Table>

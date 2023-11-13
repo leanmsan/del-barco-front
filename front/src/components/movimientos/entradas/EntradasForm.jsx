@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import "../../../css/form.css";
 import RequiredFieldError from "../../../utils/errors";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2";
 
 export function EntradaForm() {
@@ -226,8 +229,8 @@ export function EntradaForm() {
     };
 
     return (
-        <div className="section-content">
-            <form
+        <div className="section-content-form">
+            {/* <form
                 ref={entradaDetalleFormRef}
                 id="EntradaDetalle"
                 className="form"
@@ -380,7 +383,172 @@ export function EntradaForm() {
                 >
                     Enviar
                 </button>
-            </form>
+            </form> */}
+
+            <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmit}
+                >
+                <h1 className="title">Nueva entrada</h1>
+                <div>
+                <TextField
+                    required
+                    id="outlined-select-currency"
+                    select
+                    label="Proveedor"
+                    value={proveedor_id}
+                    onChange={(e) => {
+                        setProveedorId(e.target.value);
+                        setErrorProveedor(false);
+                    }} 
+                    error={errorProveedor}
+                    helperText={errorProveedor && 'El proveedor es requerido'}
+                    >
+                    <MenuItem value="" disabled>
+                        Selecciona un proveedor
+                    </MenuItem>
+                    {proveedores.map((proveedor) => (
+                            <MenuItem key={proveedor.idproveedor} value={proveedor.nombre_proveedor}>
+                            {proveedor.nombre_proveedor}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+
+                    <TextField
+                    required
+                    id="outlined-required"
+                    label="Fecha"
+                    type="date"
+                    InputLabelProps={{
+                        shrink: true, // Esto evita la superposición del label
+                      }}
+                    value={fecha_entrada}
+                    onChange={(e) => {
+                            setFechaEntrada(e.target.value);
+                            setErrorFecha(false);
+                        }}
+                    error={errorFecha}
+                    helperText={errorFecha ? 'La fecha es requerida' : ''}
+                    />
+                    <TextField
+                        id="outlined-read-only-input"
+                        label="Monto Total"
+                        value={monto_total}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                    />
+
+                    <TextField
+                    required
+                    id="outlined-select-currency"
+                    select
+                    label="Insumo"
+                    type="text"
+                    value={insumo_id}
+                    onChange={(e) => {
+                        setInsumoId(e.target.value);
+                        setErrorInsumoId(false);
+                    }}
+                    error={errorInsumoId}
+                    helperText={errorInsumoId ? 'Tienes que seleccionar un insumo' : ''}
+                    >
+                    <MenuItem value="" disabled>
+                        Selecciona un insumo
+                    </MenuItem>
+                    {seleccionarInsumo.map((insumo) => (
+                                <MenuItem
+                                    key={insumo.insumo_id}
+                                    value={insumo.nombre_insumo}
+                                >
+                                    {insumo.nombre_insumo}
+                                </MenuItem>
+                            ))}
+                    </TextField>
+
+                    <TextField
+                    required
+                    id="outlined-number"
+                    label="Cantidad"
+                    type="number"
+                    value={cantidad}
+                    onChange={(e) => {
+                        setCantidad(e.target.value);
+                        setErrorCantidad(false);
+                    }}
+                    error={errorCantidad}
+                    helperText={errorCantidad ? 'La cantidad es requerida' : ''}
+                    />
+                    
+                    <TextField
+                    required
+                    id="outlined-number"
+                    label="Precio unitario"
+                    type="number"
+                    value={precio_unitario}
+                    onChange={(e) => {
+                        setPrecioUnitario(e.target.value);
+                        setErrorPrecioUnitario(false);
+                    }}
+                    error={errorPrecioUnitario}
+                    helperText={errorPrecioUnitario ? 'El precio unitario es requerido' : ''}
+                    />
+
+                    
+                    <br />
+                </div>
+                <br />
+                <button
+                    className="button"
+                    type="button"
+                    onClick={agregarDetalle}
+                    style={{
+                        "padding": "5px", 
+                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                        "font-size": "16px", "font-weight": "bold", "width": "150px"
+                    }}
+                >
+                    Agregar insumo
+                </button>
+
+                <TableContainer class="table-container-format" component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Insumo</TableCell>
+                                <TableCell>Cantidad</TableCell>
+                                <TableCell>Precio Unitario</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {listaDetalle.map((detalle) => (
+                                <TableRow key={detalle.identrada_id}>
+                                    <TableCell>{detalle.insumo_id}</TableCell>
+                                    <TableCell>{detalle.cantidad}</TableCell>
+                                    <TableCell>{detalle.precio_unitario}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <button
+                    className="button"
+                    type="submit"
+                    style={{
+                        "padding": "5px", 
+                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                        "font-size": "16px", "font-weight": "bold", "width": "150px"
+                    }}
+                >
+                    Enviar
+                </button>
+                </Box>
+
         </div>
     );
 }

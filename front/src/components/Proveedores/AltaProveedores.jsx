@@ -100,7 +100,7 @@ export function AltaProveedores() {
     }
   }
   return (
-    <div className='section-content' style={{"width": "50%", "max-width": "1000px", "min-width": "250px"}}>
+    <div className='section-content-form'>
       {/* <form className='form' onSubmit={handleSubmit}>
         <h1 className='title' >Nuevo proveedor</h1>
         <div className='input-control'>

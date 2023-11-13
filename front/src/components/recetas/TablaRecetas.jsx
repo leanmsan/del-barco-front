@@ -76,7 +76,7 @@ export const TablaRecetas = () => {
                 "font-size": "16px", "font-weight": "bold"
               }}>Cerrar Detalles
             </button>
-            <TableContainer component={Paper} style={{ "margin-top": "20px", "padding": "5px" }}>
+            <TableContainer component={Paper} class="table-container-format">
               <Table>
                 <TableHead>
                   <TableRow>
