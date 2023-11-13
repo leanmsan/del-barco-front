@@ -118,10 +118,10 @@ export function AltaInsumos() {
           confirmButtonText: 'OK'
         });
       } else {
-        console.log("Error al enviar el formulario");
+        console.log("Error al enviar el formulario.");
         Swal.fire({
           title: 'Error',
-          text: 'Error. El insumo ya exite.',
+          text: 'Hubo un problema al enviar el formulario.',
           icon: 'error',
           confirmButtonText: 'OK'
         });
@@ -131,7 +131,7 @@ export function AltaInsumos() {
       console.log("Error en la solicitud POST", error);
       Swal.fire({
         title: 'Error',
-        text: 'Hubo un problema al enviar el formulario',
+        text: 'Hubo un problema al enviar el formulario.',
         icon: 'error',
         confirmButtonText: 'OK'
       });

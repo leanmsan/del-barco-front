@@ -21,8 +21,8 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path= '/' element={<Menu/>}/>
-          <Route path="/inicio" element={<Inicio/>}/>
+          <Route path= '/' element={<Inicio/>}/>
+          {/* <Route path="/inicio" element={<Inicio/>}/> */}
           <Route path="/proveedores" element={<ProveedoresPage/>}/>
           <Route path= '/altaproveedores' element={<AltaProvPage/>}/>
           <Route path= '/tablainsumos' element={<TablaInsumosPage/>}/>
