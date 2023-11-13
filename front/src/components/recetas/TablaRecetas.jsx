@@ -31,13 +31,13 @@ export const TablaRecetas = () => {
     };
 
     return (
-      <TableContainer component={Paper} style={{ "margin-top": "10px", "padding": "5px" }}>
+      <TableContainer component={Paper} class="table-container-format">
         <Table>
           <TableHead>
             <TableRow>
               
-              <TableCell>Nombre</TableCell>
-              <TableCell>Tipo</TableCell>
+              <TableCell class="cell-head-TableContainer">Nombre</TableCell>
+              <TableCell class="cell-head-TableContainer">Tipo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -69,21 +69,25 @@ export const TablaRecetas = () => {
       <>
         {showRecetasDetalle && (
           <>
+            <h2 style={{
+                            "margin-bottom": "0px", "padding": "5px",
+                            "color": "#7e530f ", "border": "none", "font-size": "24px", "font-weight": "bold"
+                        }}>Recetas Detalle
             <button onClick={handleCloseRecetasDetalle}
               style={{
-                "margin-top": "20px", "padding": "5px", "width": "fit-content",
-                "color": "white", "background-color": "#7e530f", "border-radius": "4px", "border": "none",
+                "margin-left": "20px", "margin-top": "20px", "padding": "5px", "width": "fit-content",
+                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
                 "font-size": "16px", "font-weight": "bold"
-              }}>Cerrar Detalles
-            </button>
+            }}>Cerrar Detalles
+            </button></h2>
             <TableContainer component={Paper} class="table-container-format">
               <Table>
                 <TableHead>
                   <TableRow>
                     
-                    <TableCell>Insumo</TableCell>
-                    <TableCell>Cantidad</TableCell>
-                    <TableCell>Tipo Medida</TableCell>
+                    <TableCell class="cell-head-TableContainer">Insumo</TableCell>
+                    <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
+                    <TableCell class="cell-head-TableContainer">Tipo Medida</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -109,18 +113,12 @@ export const TablaRecetas = () => {
     <div className='section-content'>
 
       <div>
-        <h2 style={{
-          "margin-top": "2rem", "margin-bottom": "0px", "padding": "5px",
-          "color": "#7e530f", "border": "none", "font-size": "24px", "font-weight": "bold"
-        }}>Recetas
-        </h2>
+        <h1 className="title">Recetas
+        </h1>
         {renderRecetas()}
         {selectedRecetas && (
           <>
-            <h2 style={{
-              "margin-top": "50px", "margin-bottom": "0px", "padding": "5px",
-              "color": "#7e530f", "border": "none", "font-size": "24px", "font-weight": "bold"
-            }}>Recetas Detalle</h2>
+            
             {renderRecetasDetalle()}
           </>
         )}

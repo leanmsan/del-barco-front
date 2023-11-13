@@ -136,30 +136,31 @@ export const TablaInsumos = () => {
         <input className="input-search" type="text" placeholder="Buscar..." value={busqueda} onChange={handleChange} />
       </div>
       <TableContainer class="table-container-format" component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Nombre insumo</TableCell>
-              <TableCell>Cantidad disponible</TableCell>
-              <TableCell>Tipo de medida</TableCell>
-              <TableCell>Categoria</TableCell>
-              <TableCell>Precio unitario</TableCell>
-              <TableCell>Proveedor</TableCell>
-              <TableCell>Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {insumos.map((row) => (
-              <TableRow key={row.idinsumo}>
-                <TableCell>{row.nombre_insumo}</TableCell>
-                <TableCell style={{ textTransform: 'capitalize'}}>{row.cantidad_disponible}</TableCell>
-                <TableCell>{row.tipo_medida}</TableCell>
-                <TableCell>{row.categoria}</TableCell>
-                <TableCell>{row.precio_unitario}</TableCell>
-                <TableCell>{row.proveedor_id}</TableCell>
-                <TableCell>
-                  <Button variant="contained" size='small' onClick={() => handleModificarInsumo(row.idinsumo)}>Modificar</Button>
-                </TableCell>
+
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell class="cell-head-TableContainer">Nombre insumo</TableCell>
+            <TableCell class="cell-head-TableContainer">Cantidad disponible</TableCell>
+            <TableCell class="cell-head-TableContainer">Tipo de medida</TableCell>
+            <TableCell class="cell-head-TableContainer">Categoria</TableCell>
+            <TableCell class="cell-head-TableContainer">Precio unitario</TableCell>
+            <TableCell class="cell-head-TableContainer">Proveedor</TableCell>
+            <TableCell class="cell-head-TableContainer">Acciones</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {insumos.map((row) => (
+            <TableRow key={row.idinsumo}>
+              <TableCell>{row.nombre_insumo}</TableCell>
+              <TableCell style={{ textTransform: 'capitalize'}}>{row.cantidad_disponible}</TableCell>
+              <TableCell>{row.tipo_medida}</TableCell>
+              <TableCell>{row.categoria}</TableCell>
+              <TableCell>{row.precio_unitario}</TableCell>
+              <TableCell>{row.proveedor_id}</TableCell>
+              <TableCell>
+                  <button type='button' class="button-on-table-modificar" onClick={() => handleModificar(row.idinsumo)}>Modificar</button>
+              </TableCell>
               </TableRow>
             ))}
           </TableBody>

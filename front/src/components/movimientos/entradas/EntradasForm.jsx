@@ -435,14 +435,7 @@ export function EntradaForm() {
                     error={errorFecha}
                     helperText={errorFecha ? 'La fecha es requerida' : ''}
                     />
-                    <TextField
-                        id="outlined-read-only-input"
-                        label="Monto Total"
-                        value={monto_total}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                    />
+                    
 
                     <TextField
                     required
@@ -499,6 +492,14 @@ export function EntradaForm() {
                     helperText={errorPrecioUnitario ? 'El precio unitario es requerido' : ''}
                     />
 
+                    <TextField
+                        id="outlined-read-only-input"
+                        label="Monto Total"
+                        value={monto_total}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                    />
                     
                     <br />
                 </div>

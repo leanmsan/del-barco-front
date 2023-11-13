@@ -1,15 +1,34 @@
 import React, { useState, useEffect } from 'react';
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import Swal from 'sweetalert2';
 import '../../css/form.css';
 
 export function RecetasForm() {
   const [nombreReceta, setNombreReceta] = useState('');
+  const [errorNombreReceta, setErrorNombreReceta] = useState(false);
+
   const [tipoReceta, setTipoReceta] = useState('');
+  const [errorTipoReceta, setErrorTipoReceta] = useState(false);
+
   const [insumoId, setInsumoId] = useState('');
+  const [errorInsumoId, setErrorInsumoId] = useState(false);
+
   const [cantidad, setCantidad] = useState('');
+  const [errorCantidad, setErrorCantidad] = useState(false);
+
   const [tipoMedida, setTipoMedida] = useState('');
+  const [errorTipoMedida, setErrorTipoMedida] = useState(false);
+
   const [listaDetalles, setListaDetalles] = useState([]);
+  const [errorListaDetalles, setErrorListaDetalles] = useState(false);
+
   const [listaInsumos, setListaInsumos] = useState([]);
+  const [errorListaInsumos, setErrorListaInsumos] = useState(false);
+  
+  const [editable, setEditable] = useState(true);
 
   useEffect(() => {
     fetchInsumos();
@@ -26,39 +45,71 @@ export function RecetasForm() {
   };
 
   const validarFormulario = () => {
-    if (!nombreReceta.trim() || !tipoReceta.trim() || listaDetalles.length === 0) {
+    var aux = true;
+    if (nombreReceta.trim() === "") {
+      setErrorNombreReceta(true);
+    } else {
+      setErrorNombreReceta(false);
+      aux = false;
+    }
+
+    if (tipoReceta.trim() === "") {
+      setErrorTipoReceta(true);
+    } else {
+      setErrorTipoReceta(false);
+      aux = false;
+    }
+    
+    if (aux || listaDetalles.length === 0) {
       Swal.fire({
         icon: 'error',
         title: 'Formulario incompleto',
         text: 'Por favor, completa todos los campos del formulario antes de enviarlo.',
       });
       return false;
+    } else {
+      return true;
     }
-    return true;
+    
   };
 
   const handleNombreRecetaChange = (e) => {
     setNombreReceta(e.target.value);
+    setErrorNombreReceta(false);
   };
+  
 
   const handleTipoRecetaChange = (e) => {
     setTipoReceta(e.target.value);
+    setErrorTipoMedida(false);
   };
 
   const handleInsumoIdChange = (e) => {
     setInsumoId(e.target.value);
+    setErrorInsumoId(false);
+
+    const auxInsumo = e.target.value;
+    
+    const selectedInsumo = listaInsumos.find((insumo) => insumo.nombre_insumo === auxInsumo);
+
+    setTipoMedida(selectedInsumo.tipo_medida);
+    setErrorTipoMedida(false);
+    
   };
 
   const handleCantidadChange = (e) => {
     setCantidad(e.target.value);
+    setErrorCantidad(false);
   };
 
   const handleTipoMedidaChange = (e) => {
     setTipoMedida(e.target.value);
+    setErrorTipoMedida(false);
   };
 
   const handleAgregarDetalle = () => {
     if (insumoId && cantidad && tipoMedida) {
+      
       const nuevoDetalle = {
         insumoId: insumoId,
         cantidad: cantidad,
@@ -82,6 +133,11 @@ export function RecetasForm() {
     const nuevasDetalles = [...listaDetalles];
     nuevasDetalles.splice(index, 1);
     setListaDetalles(nuevasDetalles);
+  };
+
+  const handleButtonPress = () => {
+    // Puedes agregar lógica adicional aquí antes de deshabilitar la edición
+    setEditable(false);
   };
 
   const handleSubmit = async (e) => {
@@ -162,18 +218,24 @@ export function RecetasForm() {
   };
 
   return (
-    <div className='section-content'>
-      <form className='form' onSubmit={handleSubmit}>
+    <div className='section-content-form'>
+      {/* <form className='form' onSubmit={handleSubmit}>
         <h1 className='title'>Nueva Receta</h1>
         <div className='input-control'>
-          <label className='form-label'>Nombre de la Receta:</label>
-          <br />
+          <label className='form-label'>Nombre de la Receta:
           <input type='text' value={nombreReceta} onChange={handleNombreRecetaChange} />
-          <label>Tipo de Receta: </label>
-          <br />
+          {errorNombreReceta && (
+              <div className="error-message">El nombre es requerido</div>
+            )}
+            </label>
+          <label>Tipo de Receta: 
+          
           <input type='text' className='form-input' value={tipoReceta} onChange={handleTipoRecetaChange} />
-          <br />
-          <label className='form-label'>Insumo ID:</label>
+          {errorTipoReceta && (
+              <div className="error-message">El tipo de receta es requerido</div>
+            )}
+          </label>
+          <label className='form-label'>Insumo ID:
           <select className='form-input' value={insumoId} onChange={handleInsumoIdChange}>
             <option value=''>Seleccionar Insumo</option>
             {listaInsumos.map((insumo) => (
@@ -182,11 +244,22 @@ export function RecetasForm() {
               </option>
             ))}
           </select>
-          <label className='form-label'>Cantidad:</label>
+            {errorInsumoId && (
+              <div className="error-message">El insumo es requerido</div>
+            )}
+          </label>
+          <label className='form-label'>Cantidad:
           <input type='number' className='form-input' value={cantidad} onChange={handleCantidadChange} />
-          <br />
-          <label className='form-label'>Tipo de Medida:</label>
+          {errorCantidad && (
+              <div className="error-message">La cantidad es requerida</div>
+            )}
+          </label>
+          <label className='form-label'>Tipo de Medida:
           <input type='text' className='form-input' value={tipoMedida} onChange={handleTipoMedidaChange} />
+          {errorTipoMedida && (
+              <div className="error-message">El tipo de medida es requerido</div>
+            )}
+          </label>
           <button
             type='button'
             onClick={handleAgregarDetalle}
@@ -236,7 +309,162 @@ export function RecetasForm() {
             Enviar
           </button>
         </div>
-      </form>
+      </form> */}
+
+      <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmit}
+                >
+                <h1 className="title">Nueva receta</h1>
+                <div>
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="Nombre de receta"
+                  type="text"
+                  value={nombreReceta}
+                  onChange={handleNombreRecetaChange}
+                  error={errorNombreReceta}
+                  helperText={errorNombreReceta ? 'El nombre de receta es requerido' : ''}
+                  InputProps={{
+                    readOnly: !editable, // Establecer readOnly en función del estado editable
+                  }}
+                />
+
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="Tipo de receta"
+                  type="text"
+                  value={tipoReceta}
+                  onChange={handleTipoRecetaChange}
+                  error={errorTipoReceta}
+                  helperText={errorTipoReceta ? 'El tipo de receta es requerido' : ''}
+                  InputProps={{
+                    readOnly: !editable, // Establecer readOnly en función del estado editable
+                  }}
+                />
+
+
+                    <TextField
+                    required
+                    id="outlined-select-currency"
+                    select
+                    label="Insumo"
+                    type="text"
+                    value={insumoId}
+                    onChange={handleInsumoIdChange}
+                    error={errorInsumoId}
+                    helperText={errorInsumoId ? 'Tienes que seleccionar un insumo' : ''}
+                    >
+                    <MenuItem value="" disabled>
+                        Selecciona un insumo
+                    </MenuItem>
+                    {listaInsumos.map((insumo) => (
+                                <MenuItem
+                                    key={insumo.insumo_id}
+                                    value={insumo.nombre_insumo}
+
+                                >
+                                    {insumo.nombre_insumo}
+                                </MenuItem>
+                            ))}
+                    </TextField>
+
+                    
+                <TextField
+                        id="outlined-read-only-input"
+                        label="Tipo de medida"
+                        value={tipoMedida}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                    />
+                  
+                    <TextField
+                    required
+                    id="outlined-number"
+                    label="Cantidad"
+                    type="number"
+                    value={cantidad}
+                    onChange={(e) => {
+                        setCantidad(e.target.value);
+                        setErrorCantidad(false);
+                    }}
+                    error={errorCantidad}
+                    helperText={errorCantidad ? 'La cantidad es requerida' : ''}
+                    />
+                    
+
+                    
+                    <br />
+                </div>
+                <br />
+                <button
+                    className="button"
+                    type="button"
+                    onClick={handleAgregarDetalle}
+                    style={{
+                        "padding": "5px", 
+                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                        "font-size": "16px", "font-weight": "bold", "width": "150px"
+                    }}
+                >
+                    Agregar insumo
+                </button>
+                <h3>Detalles Agregados:</h3>
+                {listaDetalles.length >= 0 && (
+                  <div>
+                    
+                    <TableContainer class="table-container-format" component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell class="cell-head-TableContainer">Insumo</TableCell>
+                                <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
+                                <TableCell class="cell-head-TableContainer">Tipo Medida</TableCell>
+                                <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">Acciones</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {listaDetalles.map((detalle, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>{detalle.insumoId}</TableCell>
+                                    <TableCell>{detalle.cantidad}</TableCell>
+                                    <TableCell>{detalle.tipoMedida}</TableCell>
+                                    <TableCell><button type='button' class="button-on-table-modificar" onClick={() => handleQuitarDetalle(index)}>
+                            Modificar
+                          </button>
+                          </TableCell>
+                          <TableCell>
+                          <button type='button' class="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
+                            Quitar
+                          </button></TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer> 
+                </div>
+                )}
+                <button
+                    className="button"
+                    type="submit"
+                    style={{
+                        "padding": "5px", 
+                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                        "font-size": "16px", "font-weight": "bold", "width": "150px"
+                    }}
+                >
+                    Enviar
+                </button>
+                </Box>
+
     </div>
   );
 }

@@ -34,10 +34,10 @@ export const TablaEntradas = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID Entrada</TableCell>
-                            <TableCell>Proveedor</TableCell>
-                            <TableCell>Fecha</TableCell>
-                            <TableCell>Monto Total</TableCell>
+                            <TableCell class="cell-head-TableContainer">ID Entrada</TableCell>
+                            <TableCell class="cell-head-TableContainer">Proveedor</TableCell>
+                            <TableCell class="cell-head-TableContainer">Fecha</TableCell>
+                            <TableCell class="cell-head-TableContainer">Monto Total</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -84,10 +84,10 @@ export const TablaEntradas = () => {
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>ID Entrada</TableCell>
-                                        <TableCell>Insumo</TableCell>
-                                        <TableCell>Cantidad</TableCell>
-                                        <TableCell>Precio Unitario</TableCell>
+                                        <TableCell class="cell-head-TableContainer">ID Entrada</TableCell>
+                                        <TableCell class="cell-head-TableContainer">Insumo</TableCell>
+                                        <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
+                                        <TableCell class="cell-head-TableContainer">Precio Unitario</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>

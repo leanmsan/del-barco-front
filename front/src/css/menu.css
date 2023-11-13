@@ -338,6 +338,41 @@ nav.close ~ .top {
     animation: fadeOut 0.5s ease-in-out;
   }
   
+.cell-head-TableContainer {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: bold;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    letter-spacing: 0.01071em;
+    display: table-cell;
+    vertical-align: inherit;
+    border-bottom: 1px solid rgba(224, 224, 224, 1);
+    text-align: left;
+    padding: 16px;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.button-on-table-modificar {
+    font-weight: bold;
+    border-radius: 20px;
+    background-color: #FCC840;
+    color: #000;
+}
+
+.button-on-table-modificar:focus, .button-on-table-modificar:active, .button-on-table-modificar::after, .button-on-table-modificar:focus-visible {
+    font-weight: bold;
+    border-radius: 20px;
+    background-color: #FCC840;
+    color: #000;
+}
+
+.button-on-table-baja {
+    font-weight: bold;
+    border-radius: 20px;
+    background-color: #FF3434;
+    color: #fff;
+}
+
   @keyframes fadeIn {
     0% {
       opacity: 0;
