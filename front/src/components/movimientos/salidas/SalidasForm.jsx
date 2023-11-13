@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import "../../../css/form.css";
 
 // imports para la tabla con los insumos que componen el detalle
@@ -168,12 +171,12 @@ export function SalidasForm() {
     };
 
     return (
-        <div className="section-content">
-            <form  ref={salidaDetalleFormRef} id="SalidaDetalle" className="form" onSubmit={handleSubmit}>
+        <div className="section-content" style={{"width": "50%", "max-width": "1000px", "min-width": "250px"}}>
+            {/* <form  ref={salidaDetalleFormRef} id="SalidaDetalle" className="form" onSubmit={handleSubmit}>
                 <h1 className="title">Nueva salida</h1>
                 <div className="input-control">
-                    {/* salida */}
-                    <label>Fecha
+                    */} {/* salida */}
+                    {/* <label>Fecha
                         <input type="date" name="fecha" onChange={(e) => {
                             setFechaSalida(e.target.value);
                             setErrorFecha(false)
@@ -182,10 +185,10 @@ export function SalidasForm() {
                             <div className="error-message">Tienes que seleccionar una fecha</div>
                         )}
                     </label>
-                </div>
+                </div> */}
 
                 {/* salida detalle*/}
-                <div className="input-control">
+               {/*  <div className="input-control">
                     <label name="insumo_id">Insumo
                         <select value={insumo_id} onChange={(e) => {
                             setInsumoId(e.target.value);
@@ -217,10 +220,10 @@ export function SalidasForm() {
                                 "padding": "5px",
                                 "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
                                 "font-size": "16px", "font-weight": "bold", "width": "100%"
-                            }}>Agregar insumo</button>
+                            }}>Agregar insumo</button> */}
 
                 {/* Tabla con los insumos en el detalle */}
-                <TableContainer style={{"margin": "10px 20px 0 0", "padding": "5px 5px 5px 5px"}} component={Paper}>
+               {/*  <TableContainer style={{"margin": "10px 20px 0 0", "padding": "5px 5px 5px 5px"}} component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -243,7 +246,113 @@ export function SalidasForm() {
                                 "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
                                 "font-size": "16px", "font-weight": "bold", "width": "100%"
                             }}>Enviar</button>
-            </form>
+            </form> */}
+
+            <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmit}
+                >
+                <h1 className="title">Nueva salida</h1>
+                <div>
+                <TextField
+                    required
+                    id="outlined-required"
+                    label="Fecha"
+                    type="date"
+                    InputLabelProps={{
+                        shrink: true, // Esto evita la superposición del label
+                      }}
+                    value={fecha_salida}
+                    onChange={(e) => {
+                            setFechaSalida(e.target.value);
+                            setErrorFecha(false);
+                        }}
+                    error={errorFecha}
+                    helperText={errorFecha ? 'La fecha es requerida' : ''}
+                    />
+
+                    <TextField
+                    required
+                    id="outlined-select-currency"
+                    select
+                    label="Insumo"
+                    type="text"
+                    value={insumo_id}
+                    onChange={(e) => {
+                        setInsumoId(e.target.value);
+                        setErrorInsumoId(false);
+                    }}
+                    error={errorInsumoId}
+                    helperText={errorInsumoId ? 'Tienes que seleccionar un insumo' : ''}
+                    >
+                    <MenuItem value="" disabled>
+                        Selecciona un insumo
+                    </MenuItem>
+                    {seleccionarInsumo.map((insumo) => (
+                                <MenuItem
+                                    key={insumo.insumo_id}
+                                    value={insumo.nombre_insumo}
+                                >
+                                    {insumo.nombre_insumo}
+                                </MenuItem>
+                            ))}
+                    </TextField>
+
+                    <TextField
+                    required
+                    id="outlined-number"
+                    label="Cantidad"
+                    type="number"
+                    value={cantidad}
+                    onChange={(e) => {
+                        setCantidad(e.target.value);
+                        setErrorCantidad(false);
+                    }}
+                    error={errorCantidad}
+                    helperText={errorCantidad ? 'La cantidad es requerida' : ''}
+                    />
+                    
+                    
+                    <br />
+                </div>
+                <button className="button" type="button" onClick={agregarDetalle}  style={{
+                        "padding": "5px", 
+                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                        "font-size": "16px", "font-weight": "bold", "width": "150px"
+                    }}>Agregar insumo</button>
+
+                {/* Tabla con los insumos en el detalle */}
+                <TableContainer style={{"margin": "10px 20px 10px 0", "padding": "5px 5px 5px 5px", "max-width": "800px", "width": "95%"}} component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Insumo</TableCell>
+                                <TableCell>Cantidad</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {listaDetalle.map((detalle) => (
+                                <TableRow key={detalle.identrada_id}>
+                                    <TableCell>{detalle.insumo_id}</TableCell>
+                                    <TableCell>{detalle.cantidad}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <button className="button" type="submit"  style={{
+                        "padding": "5px", 
+                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
+                        "font-size": "16px", "font-weight": "bold", "width": "150px"
+                    }}>Enviar</button>
+
+                </Box>
+
         </div>
     )
 }
