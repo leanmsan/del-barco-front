@@ -135,6 +135,7 @@ export const TablaProveedores = () => {
                   Modificar
                 </button></TableCell>
             </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
