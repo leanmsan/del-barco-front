@@ -17,6 +17,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/material": "^5.13.7",
     "axios": "^1.4.0",
+    "date-fns": "^2.30.0",
     "formik": "^2.4.5",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
