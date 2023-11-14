@@ -111,7 +111,7 @@ export const TablaSalidasMovimientos = () => {
     <div className='section-content'>
 
       <div>
-      <h1 className="title">Salidas</h1>
+      <h1 className="title">Egresos</h1>
         {renderSalidas()}
         {selectedSalidas && (
           <>

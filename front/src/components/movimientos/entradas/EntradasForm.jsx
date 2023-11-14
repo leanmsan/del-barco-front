@@ -423,7 +423,7 @@ export function EntradaForm() {
                 autoComplete="off"
                 onSubmit={handleSubmit}
                 >
-                <h1 className="title">Nueva entrada</h1>
+                <h1 className="title">Nuevo ingreso</h1>
                 <div>
                 <TextField
                     required

@@ -113,7 +113,7 @@ export const TablaEntradas = () => {
     return (
         <div className="section-content">
             <div>
-            <h1 className="title">Entradas</h1>
+            <h1 className="title">Ingresos</h1>
                 {renderEntradas()}
                 {selectedEntrada && (
                     <>
