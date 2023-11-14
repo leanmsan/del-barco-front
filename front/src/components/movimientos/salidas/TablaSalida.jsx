@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { format } from "date-fns";
+import esLocale from 'date-fns/locale/es';
 
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 
@@ -44,7 +45,7 @@ export const TablaSalidasMovimientos = () => {
             {salidas.map((salida) => (
               <TableRow key={salida.idsalida} onClick={() => handleSalidasClick(salida.idsalida)}>
                 <TableCell>{salida.idsalida}</TableCell>
-                <TableCell>{salida.fecha_salida}</TableCell>
+                <TableCell>{format(new Date(salida.fecha_salida), 'EEEE dd MMMM yyyy', { locale: esLocale })}</TableCell>
                 
               </TableRow>
             ))}
@@ -110,7 +111,7 @@ export const TablaSalidasMovimientos = () => {
     <div className='section-content'>
 
       <div>
-      <h1 className="title">Salidas</h1>
+      <h1 className="title">Egresos</h1>
         {renderSalidas()}
         {selectedSalidas && (
           <>

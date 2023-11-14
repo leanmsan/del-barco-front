@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import { format } from "date-fns";
+import esLocale from 'date-fns/locale/es';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 
 export const TablaEntradas = () => {
@@ -45,7 +47,7 @@ export const TablaEntradas = () => {
                             <TableRow key={entrada.identrada} onClick={() => handleEntradaClick(entrada.identrada)}>
                                 <TableCell>{entrada.identrada}</TableCell>
                                 <TableCell>{entrada.proveedor_id}</TableCell>
-                                <TableCell>{entrada.fecha_entrada}</TableCell>
+                                <TableCell>{format(new Date(entrada.fecha_entrada), 'EEEE dd MMMM yyyy', { locale: esLocale })}</TableCell>
                                 <TableCell>{entrada.monto_total}</TableCell>
                             </TableRow>
                         ))}
@@ -111,7 +113,7 @@ export const TablaEntradas = () => {
     return (
         <div className="section-content">
             <div>
-            <h1 className="title">Entradas</h1>
+            <h1 className="title">Ingresos</h1>
                 {renderEntradas()}
                 {selectedEntrada && (
                     <>
