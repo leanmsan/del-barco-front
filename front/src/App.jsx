@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { Menu } from "./pages/Menu";
+//import { Menu } from "./pages/Menu";
 import { LoginPage } from "./pages/LoginPage";
 import { Inicio } from "./components/Inicio";
 import ProveedoresPage from "./pages/ProveedoresPage";
