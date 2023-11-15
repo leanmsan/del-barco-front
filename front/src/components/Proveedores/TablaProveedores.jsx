@@ -68,6 +68,13 @@ export const TablaProveedores = () => {
         const nuevoContacto = form.elements['contacto'].value;
 
         // Verificar que los campos no estén vacíos
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+        if(!emailRegex.test(nuevoMail)){
+          Swal.fire('Error', 'Por favor, introduce un correo electronico valido', 'error')
+          return
+        }
+
         if (!nuevoNombre || !nuevoMail || !nuevoContacto) {
           Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
           return;
