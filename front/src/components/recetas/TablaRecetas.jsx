@@ -116,7 +116,7 @@ export const TablaRecetas = () => {
         <h1 className="title">Recetas
         </h1>
         <Link to='/registrorecetas'>
-          <button className='btn-create'> + Nueva Recetas</button>
+          <button className='btn-create-sin-searchbox'> + Nueva Recetas</button>
         </Link>
         {renderRecetas()}
         {selectedRecetas && (

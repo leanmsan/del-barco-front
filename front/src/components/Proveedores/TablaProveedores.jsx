@@ -151,14 +151,15 @@ export const TablaProveedores = () => {
     <div className='section-content'>
       <h1 className="title">Proveedores</h1>
       <div className='search-box'>
-      <Link to='/altaproveedores'>
-          <button className='btn-create'> + Nuevo Proveedor</button>
-        </Link>
+      
         <button className="btn-search"><i className="fas fa-search"></i></button>
         <input
           className='input-search' type="text" placeholder="Buscar..."
           value={busqueda} onChange={handleChange}
         />
+        <Link to='/altaproveedores'>
+          <button className='btn-create'> + Nuevo Proveedor</button>
+        </Link>
       </div>
       <TableContainer class="table-container-format" component={Paper}>
         <Table>

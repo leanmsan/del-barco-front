@@ -40,14 +40,15 @@ export const TablaCocciones = () => {
     return (
         <div className="section-content">
             <h1 className="title">Cocciones</h1>
-            <Link to='/nuevacoccion'>
-          <button className='btn-create'> + Nueva Coccion</button>
-        </Link>
+            
             <div className="search-box">
                 <button className="btn-search"><i className="fas fa-search"></i></button>
                 <input className="input-search" type="text" placeholder="Buscar..." 
                 value={busqueda} onChange={handleChange}
                 />
+                <Link to='/nuevacoccion'>
+                    <button className='btn-create'> + Nueva Coccion</button>
+                </Link>
             </div>
             <TableContainer component={Paper} class="table-container-format">
                 <Table>

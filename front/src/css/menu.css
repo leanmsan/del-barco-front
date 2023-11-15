@@ -257,7 +257,6 @@ nav.close ~ .top {
     width: 400px;
     margin-top: 1rem;
     margin-left: 0;
-    margin-bottom: 50px;
     padding-bottom: 25px;
     font-size: 16px;
     border-radius: 3px;
@@ -310,6 +309,17 @@ nav.close ~ .top {
     border-radius: 3px;
     background-color: transparent;
     transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+
+.btn-create {
+    margin-left: 350px;
+    width: max-content;
+    padding: 10px 5px;
+}
+
+.btn-create-sin-searchbox {
+    width: 150px;
+    padding: 10px 5px;
 }
 
 .scrollable-sidebar {
