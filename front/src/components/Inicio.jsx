@@ -4,6 +4,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css'
 import { SideBar } from './SideBar';
 import '../css/inicio.css'
+import '../css/menu.css'
 
 // importacion de imagenes para el slider
 import img1 from '../assets/img/img-1.png';
