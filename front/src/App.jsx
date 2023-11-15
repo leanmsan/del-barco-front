@@ -14,15 +14,31 @@ import { TablaRecetasPage } from "./pages/TablaRecetasPage";
 import { TablaCoccionesPage } from "./pages/TablaCoccionesPage";
 import { RegistroCoccionesPage } from "./pages/RegistroCoccionesForm";
 import { RegistroRecetasForm } from "./pages/RegistroRecetas";
+import { useState } from "react";
+
+function ProtectedRoute({ element: Component, authenticated, ...rest }) {
+  return authenticated ? (
+    <Component {...rest} />
+  ) : (
+    <Navigate to="/" replace={true} />
+  );
+}
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(
+    localStorage.getItem("authenticated") === "true" // Recuperar el estado de autenticación desde localStorage
+  );
+
+  const handleAuthentication = (status) => {
+    setAuthenticated(status);
+  };
 
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path= '/login' element={<LoginPage/>}/>
-          <Route path= '/' element={<Inicio/>} exact />
+          <Route path= '/login' element={<LoginPage handleAuthentication={handleAuthentication} />}/>
+          <Route path= '/' element={<ProtectedRoute element={<Inicio/>} authenticated={authenticated}/>} exact />
           {/* <Route path="/inicio" element={<Inicio/>}/> */}
           <Route path="/proveedores" element={<ProveedoresPage/>}/>
           <Route path= '/altaproveedores' element={<AltaProvPage/>}/>
