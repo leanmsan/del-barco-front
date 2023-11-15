@@ -286,6 +286,10 @@ export function SideBar(selectedTab) {
         </div>
         
       </div>
+
+      <div className="info-the-five">
+        <p className="txt-the-five">Desarrollado por The Five</p>
+      </div>
     </nav>
   );
 }

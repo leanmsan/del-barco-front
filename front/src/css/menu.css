@@ -194,6 +194,19 @@ nav.close ~ .top {
     display: none;
 }
 
+.info-the-five {
+    position: fixed;
+    bottom: 0;
+    width: 250px;
+}
+
+.txt-the-five {
+    color: #7e6500;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    padding: 1rem;
+}
+
 @media (max-width: 800px){
     .dashboard .top .sidebar-toggle{
         display: block;
