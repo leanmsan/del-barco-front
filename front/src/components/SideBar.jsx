@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import logo from '../assets/img/logo1.png'
+import logo from '../assets/img/Logo1.png'
 
 export function SideBar(selectedTab) {
   const navigate = useNavigate();
