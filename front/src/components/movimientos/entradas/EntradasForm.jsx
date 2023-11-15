@@ -212,9 +212,6 @@ export function EntradaForm() {
             setErrorFecha(false);
             setProveedorId("");
             setMontoTotal(0);
-            setErrorInsumoId(false);
-            setErrorCantidad(false);
-            setErrorPrecioUnitario(false);
             setListaDetalle([]);
           } else {
             console.log("Error al crear la entrada", response);
