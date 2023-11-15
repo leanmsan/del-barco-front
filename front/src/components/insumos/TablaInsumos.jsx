@@ -130,13 +130,14 @@ export const TablaInsumos = () => {
     <div className="section-content">
       <h1 className="title">Insumos</h1>
       <div className="search-box">
-        <Link to='/altainsumos'>
-          <button className='btn-create'> + Nuevo Insumo</button>
-        </Link>
         <button className="btn-search">
           <i className="fas fa-search"></i>
         </button>
         <input className="input-search" type="text" placeholder="Buscar..." value={busqueda} onChange={handleChange} />
+      
+        <Link to='/altainsumos'>
+          <button className='btn-create'>+ Nuevo Insumo</button>
+        </Link>
       </div>
       <TableContainer class="table-container-format" component={Paper}>
 

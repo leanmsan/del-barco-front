@@ -116,7 +116,7 @@ export const TablaEntradas = () => {
             <div>
             <h1 className="title">Ingresos</h1>
             <Link to='/registroentradas'>
-          <button className='btn-create'> + Nuevo Ingreso</button>
+          <button className='btn-create-sin-searchbox'> + Nuevo Ingreso</button>
         </Link>
                 {renderEntradas()}
                 {selectedEntrada && (
