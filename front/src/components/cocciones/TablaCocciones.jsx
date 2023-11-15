@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const TablaCocciones = () => {
     const [cocciones, setCocciones] = useState([]);
@@ -39,6 +40,9 @@ export const TablaCocciones = () => {
     return (
         <div className="section-content">
             <h1 className="title">Cocciones</h1>
+            <Link to='/nuevacoccion'>
+          <button className='btn-create'> + Nueva Coccion</button>
+        </Link>
             <div className="search-box">
                 <button className="btn-search"><i className="fas fa-search"></i></button>
                 <input className="input-search" type="text" placeholder="Buscar..." 

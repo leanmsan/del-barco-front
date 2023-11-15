@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@mui/material';
+import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -150,6 +151,9 @@ export const TablaProveedores = () => {
     <div className='section-content'>
       <h1 className="title">Proveedores</h1>
       <div className='search-box'>
+      <Link to='/altaproveedores'>
+          <button className='btn-create'> + Nuevo Proveedor</button>
+        </Link>
         <button className="btn-search"><i className="fas fa-search"></i></button>
         <input
           className='input-search' type="text" placeholder="Buscar..."

@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import esLocale from 'date-fns/locale/es';
 
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export const TablaSalidasMovimientos = () => {
   const [salidas, setSalidas] = useState([]);
@@ -112,6 +113,9 @@ export const TablaSalidasMovimientos = () => {
 
       <div>
       <h1 className="title">Egresos</h1>
+      <Link to='/registrosalidas'>
+          <button className='btn-create'> + Nuevo Egreso</button>
+        </Link>
         {renderSalidas()}
         {selectedSalidas && (
           <>
