@@ -3,6 +3,7 @@ import axios from 'axios';
 import { format } from "date-fns";
 import esLocale from 'date-fns/locale/es';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import { Link } from 'react-router-dom'; 
 
 export const TablaEntradas = () => {
     const [entradas, setEntradas] = useState([]);
@@ -114,6 +115,9 @@ export const TablaEntradas = () => {
         <div className="section-content">
             <div>
             <h1 className="title">Ingresos</h1>
+            <Link to='/registroentradas'>
+          <button className='btn-create'> + Nuevo Ingreso</button>
+        </Link>
                 {renderEntradas()}
                 {selectedEntrada && (
                     <>

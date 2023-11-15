@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import {Link} from 'react-router-dom';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@mui/material';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -129,6 +130,9 @@ export const TablaInsumos = () => {
     <div className="section-content">
       <h1 className="title">Insumos</h1>
       <div className="search-box">
+        <Link to='/altainsumos'>
+          <button className='btn-create'> + Nuevo Insumo</button>
+        </Link>
         <button className="btn-search">
           <i className="fas fa-search"></i>
         </button>

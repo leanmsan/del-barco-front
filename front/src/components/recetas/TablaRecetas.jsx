@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
-
+import { Link } from 'react-router-dom';
 export const TablaRecetas = () => {
   const [recetas, setRecetas] = useState([]);
   const [recetasDetalle, setRecetaDetalle] = useState([]);
@@ -115,6 +115,9 @@ export const TablaRecetas = () => {
       <div>
         <h1 className="title">Recetas
         </h1>
+        <Link to='/registrorecetas'>
+          <button className='btn-create'> + Nueva Recetas</button>
+        </Link>
         {renderRecetas()}
         {selectedRecetas && (
           <>
