@@ -136,7 +136,7 @@ export const TablaInsumos = () => {
         <input className="input-search" type="text" placeholder="Buscar..." value={busqueda} onChange={handleChange} />
       
         <Link to='/altainsumos'>
-          <button className='btn-create'>+ Nuevo Insumo</button>
+          <button className='btn-create'>+ Nuevo insumo</button>
         </Link>
       </div>
       <TableContainer class="table-container-format" component={Paper}>

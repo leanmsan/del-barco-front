@@ -373,12 +373,8 @@ export function AltaInsumos() {
         <br />
       </div>
       <br />
-      <button className="button" type="submit" style={{
-                                "padding": "5px", 
-                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                                "font-size": "16px", "font-weight": "bold", "width": "150px"
-                            }}>
-          Enviar
+      <button className="button-guardar" type="submit">
+          Guardar
         </button>
     </Box>
     </div>

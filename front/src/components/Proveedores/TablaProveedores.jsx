@@ -158,7 +158,7 @@ export const TablaProveedores = () => {
           value={busqueda} onChange={handleChange}
         />
         <Link to='/altaproveedores'>
-          <button className='btn-create'> + Nuevo Proveedor</button>
+          <button className='btn-create'>+ Nuevo proveedor</button>
         </Link>
       </div>
       <TableContainer class="table-container-format" component={Paper}>

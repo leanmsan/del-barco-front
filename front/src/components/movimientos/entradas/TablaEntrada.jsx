@@ -76,13 +76,11 @@ export const TablaEntradas = () => {
                             "margin-bottom": "0px", "padding": "5px",
                             "color": "#7e530f ", "border": "none", "font-size": "24px", "font-weight": "bold"
                         }}>Entradas Detalle
-                        <button onClick={handleCloseEntradaDetalle}
-                            style={{
-                                "margin-left": "20px", "margin-top": "20px", "padding": "5px", "width": "fit-content",
-                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                                "font-size": "16px", "font-weight": "bold"
-                            }}>Cerrar Detalles
-                        </button></h2>
+                        
+                        <button className="button-cerrar-detalles" onClick={handleCloseEntradaDetalle}>
+                            Cerrar detalles
+                        </button>
+                        </h2>
                         <TableContainer component={Paper} class="table-container-format">
                             <Table>
                                 <TableHead>
@@ -116,7 +114,7 @@ export const TablaEntradas = () => {
             <div>
             <h1 className="title">Ingresos</h1>
             <Link to='/registroentradas'>
-          <button className='btn-create-sin-searchbox'> + Nuevo Ingreso</button>
+          <button className='btn-create-sin-searchbox'>+ Nuevo ingreso</button>
         </Link>
                 {renderEntradas()}
                 {selectedEntrada && (

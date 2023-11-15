@@ -154,7 +154,7 @@ export function SideBar(selectedTab) {
           >
             <Link onClick={toggleEntradas}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
-              <span className="link-name">Entradas</span>
+              <span className="link-name">Ingresos</span>
             </Link>
           </li>
 
@@ -168,11 +168,11 @@ export function SideBar(selectedTab) {
                 <li>
                   <Link to="/registroentradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Nueva entrada</span>
+                    <span className="link-name">Nuevo ingreso</span>
                   </Link>
                   <Link to="/entradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Lista de entradas</span>
+                    <span className="link-name">Lista de ingresos</span>
                   </Link>
                 </li>
               </ul>
@@ -186,7 +186,7 @@ export function SideBar(selectedTab) {
           >
             <Link onClick={toggleSalidas}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
-              <span className="link-name">Salidas</span>
+              <span className="link-name">Egresos</span>
             </Link>
           </li>
 
@@ -200,11 +200,11 @@ export function SideBar(selectedTab) {
                 <li>
                   <Link to="/registrosalidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Nueva salida</span>
+                    <span className="link-name">Nuevo egreso</span>
                   </Link>
                   <Link to="/salidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Lista de salidas</span>
+                    <span className="link-name">Lista de egresos</span>
                   </Link>
                 </li>
               </ul>

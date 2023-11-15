@@ -315,11 +315,25 @@ nav.close ~ .top {
     margin-left: 350px;
     width: max-content;
     padding: 10px 5px;
+    color: white;
+    background-color: #7e530f;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
 }
 
 .btn-create-sin-searchbox {
-    width: 150px;
+    width: max-content;
     padding: 10px 5px;
+    color: white;
+    background-color: #7e530f;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
 }
 
 .scrollable-sidebar {
@@ -391,6 +405,32 @@ nav.close ~ .top {
     border-radius: 20px;
     background-color: #FF3434;
     color: #fff;
+}
+
+.button-guardar {
+    padding: 5px;
+    color: white;
+    background-color: #7e530f;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    width: 150px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 1rem;
+}
+
+.button-cerrar-detalles {
+    padding: 5px;
+    color: white;
+    background-color: #7e530f;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    width: 150px;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 20px;
 }
 
   @keyframes fadeIn {
