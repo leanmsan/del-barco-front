@@ -56,7 +56,7 @@ export const TablaProveedores = () => {
               <input type="text" id="contacto" name="contacto" value="${proveedorActual.telefono}" required>
             </form>`,
       showCancelButton: true,
-      confirmButtonColor: '#51FF48',
+      confirmButtonColor: '#1450C9',
       cancelButtonColor: '#FF3434',
       confirmButtonText: 'Guardar cambios',
       cancelButtonText: 'Cancelar',
@@ -158,7 +158,7 @@ export const TablaProveedores = () => {
           value={busqueda} onChange={handleChange}
         />
         <Link to='/altaproveedores'>
-          <button className='btn-create'> + Nuevo Proveedor</button>
+          <button className='btn-create'>+ Nuevo proveedor</button>
         </Link>
       </div>
       <TableContainer class="table-container-format" component={Paper}>

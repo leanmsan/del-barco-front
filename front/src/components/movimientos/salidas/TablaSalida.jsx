@@ -70,17 +70,10 @@ export const TablaSalidasMovimientos = () => {
       <>
         {showSalidasDetalle && (
           <>
-            <h2 style={{
-              "margin-bottom": "0px", "padding": "5px",
-              "color": "#7e530f", "border": "none", "font-size": "24px", "font-weight": "bold"
-            }}>Salidas Detalle
-            <button onClick={handleCloseSalidasDetalle}
-              style={{
-                "margin-left": "20px", "width": "fit-content", "margin-top": "20px", "padding": "5px",
-                "color": "white", "background-color": "#7e530f", "border-radius": "4px", "border": "none",
-                "font-size": "16px", "font-weight": "bold"
-              }}>Cerrar Detalles
-            </button></h2>
+            <h2 className="subtitulo-tablas">Detalles de egresos
+            <button className="button-cerrar-detalles" onClick={handleCloseSalidasDetalle}>
+                            Cerrar detalles
+                        </button></h2>
             <TableContainer component={Paper} class="table-container-format">
               <Table>
                 <TableHead>
@@ -114,7 +107,7 @@ export const TablaSalidasMovimientos = () => {
       <div>
       <h1 className="title">Egresos</h1>
       <Link to='/registrosalidas'>
-          <button className='btn-create-sin-searchbox'> + Nuevo Egreso</button>
+          <button className='btn-create-sin-searchbox'>+ Nuevo egreso</button>
         </Link>
         {renderSalidas()}
         {selectedSalidas && (

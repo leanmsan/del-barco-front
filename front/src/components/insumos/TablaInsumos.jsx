@@ -69,7 +69,7 @@ export const TablaInsumos = () => {
               </select>
             </form>`,
       showCancelButton: true,
-      confirmButtonColor: '#51FF48',
+      confirmButtonColor: '#1450C9',
       cancelButtonColor: '#FF3434',
       confirmButtonText: 'Guardar cambios',
       cancelButtonText: 'Cancelar',
@@ -136,7 +136,7 @@ export const TablaInsumos = () => {
         <input className="input-search" type="text" placeholder="Buscar..." value={busqueda} onChange={handleChange} />
       
         <Link to='/altainsumos'>
-          <button className='btn-create'>+ Nuevo Insumo</button>
+          <button className='btn-create'>+ Nuevo insumo</button>
         </Link>
       </div>
       <TableContainer class="table-container-format" component={Paper}>

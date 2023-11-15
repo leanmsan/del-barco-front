@@ -69,17 +69,10 @@ export const TablaRecetas = () => {
       <>
         {showRecetasDetalle && (
           <>
-            <h2 style={{
-                            "margin-bottom": "0px", "padding": "5px",
-                            "color": "#7e530f ", "border": "none", "font-size": "24px", "font-weight": "bold"
-                        }}>Recetas Detalle
-            <button onClick={handleCloseRecetasDetalle}
-              style={{
-                "margin-left": "20px", "margin-top": "20px", "padding": "5px", "width": "fit-content",
-                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                "font-size": "16px", "font-weight": "bold"
-            }}>Cerrar Detalles
-            </button></h2>
+            <h2 className="subtitulo-tablas">Detalles de receta
+            <button className="button-cerrar-detalles" onClick={handleCloseRecetasDetalle}>
+                            Cerrar detalles
+                        </button></h2>
             <TableContainer component={Paper} class="table-container-format">
               <Table>
                 <TableHead>
@@ -116,7 +109,7 @@ export const TablaRecetas = () => {
         <h1 className="title">Recetas
         </h1>
         <Link to='/registrorecetas'>
-          <button className='btn-create-sin-searchbox'> + Nueva Recetas</button>
+          <button className='btn-create-sin-searchbox'>+ Nueva receta</button>
         </Link>
         {renderRecetas()}
         {selectedRecetas && (

@@ -529,20 +529,11 @@ export function EntradaForm() {
                     
                     <br />
                 </div>
-                <br />
-                <button
-                    className="button"
-                    type="button"
-                    onClick={agregarDetalle}
-                    style={{
-                        "padding": "5px", 
-                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                        "font-size": "16px", "font-weight": "bold", "width": "150px"
-                    }}
-                >
+                <button className="button-guardar" type="submit" onClick={agregarDetalle}>
                     Agregar insumo
                 </button>
-
+                
+                <h2 className="subtitulo-tablas">Lista de insumos</h2>
                 <TableContainer class="table-container-format" component={Paper}>
                     <Table>
                         <TableHead>
@@ -563,16 +554,8 @@ export function EntradaForm() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <button
-                    className="button"
-                    type="submit"
-                    style={{
-                        "padding": "5px", 
-                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                        "font-size": "16px", "font-weight": "bold", "width": "150px"
-                    }}
-                >
-                    Enviar
+                <button className="button-guardar" type="submit">
+                    Guardar
                 </button>
                 </Box>
 

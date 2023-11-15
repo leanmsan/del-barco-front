@@ -20,13 +20,9 @@ export const NotFound = () => {
       <img className="img-not-found" src={img_404} alt="Error 404" />
       <div className='txt-not-found'>
         <h1 className='title-not-found'>Error 404</h1>
+        <h2 className='subtitle-not-found'>Por aquí no hay cerveza</h2>
         <p className='p-not-found'>Lo sentimos, la página que estás buscando no existe.</p>
-        <button onClick={handleClick}
-              style={{
-                "width": "200px", "margin-top": "20px",
-                "color": "white", "background-color": "#7e530f", "border-radius": "4px", "border": "none",
-                "font-size": "16px", "font-weight": "bold"
-              }}>Volver a inicio
+        <button className='btn-volver' onClick={handleClick}>Volver a inicio
             </button>
       </div>
       

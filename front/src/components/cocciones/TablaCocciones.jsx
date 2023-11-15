@@ -47,7 +47,7 @@ export const TablaCocciones = () => {
                 value={busqueda} onChange={handleChange}
                 />
                 <Link to='/nuevacoccion'>
-                    <button className='btn-create'> + Nueva Coccion</button>
+                    <button className='btn-create'>+ Nueva cocción</button>
                 </Link>
             </div>
             <TableContainer component={Paper} class="table-container-format">
