@@ -533,7 +533,7 @@ export function EntradaForm() {
                     Agregar insumo
                 </button>
                 
-
+                <h2 className="subtitulo-tablas">Lista de insumos</h2>
                 <TableContainer class="table-container-format" component={Paper}>
                     <Table>
                         <TableHead>

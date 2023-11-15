@@ -408,7 +408,7 @@ export function RecetasForm() {
                 <button className="button-guardar" type="submit" onClick={handleAgregarDetalle}>
                     Agregar insumo
                 </button>
-                <h3>Detalles Agregados:</h3>
+                <h2 className="subtitulo-tablas">Lista de insumos</h2>
                 {listaDetalles.length >= 0 && (
                   <div>
                     

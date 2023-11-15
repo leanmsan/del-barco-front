@@ -361,7 +361,7 @@ export function SalidasForm() {
                 <button className="button-guardar" type="submit" onClick={agregarDetalle}>
                     Agregar insumo
                 </button>
-
+                <h2 className="subtitulo-tablas">Lista de insumos</h2>
                 {/* Tabla con los insumos en el detalle */}
                 <TableContainer class="table-container-format" component={Paper}>
                     <Table>
