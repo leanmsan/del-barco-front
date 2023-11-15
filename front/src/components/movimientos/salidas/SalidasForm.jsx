@@ -295,7 +295,7 @@ export function SalidasForm() {
                 autoComplete="off"
                 onSubmit={handleSubmit}
                 >
-                <h1 className="title">Nueva salida</h1>
+                <h1 className="title">Nuevo egreso</h1>
                 <div>
                 <TextField
                     required

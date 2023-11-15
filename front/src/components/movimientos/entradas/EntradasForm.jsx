@@ -5,7 +5,7 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"; 
 
 export function EntradaForm() {
     // entrada
@@ -173,86 +173,89 @@ export function EntradaForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+      
         try {
-            if (!proveedor_id || !fecha_entrada) {
-                setErrorProveedor(true);
-                setErrorFecha(true);
-                throw new RequiredFieldError("Este campo es obligatorio");
-            }
-
-            if (listaDetalle.length === 0) {
-                setErrorInsumoId(true);
-                setErrorCantidad(true);
-                setErrorPrecioUnitario(true);
-                console.log("Debes agregar al menos un detalle.");
-                throw new RequiredFieldError("Debes agregar al menos un detalle");
-            }
-
-            agregarDetalle();
-
-            const entrada = {
-                proveedor_id,
-                fecha_entrada,
-                monto_total,
-            };
-
-            const response = await fetch("http://127.0.0.1:8000/api/entradas/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(entrada),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setIdEntradaId(data.id);
-                setErrorProveedor(false);
-                setErrorFecha(false);
-                setProveedorId("");
-                setMontoTotal(0);
-                setListaDetalle([]);
-            } else {
-                console.log("Error al crear la entrada", response);
-                return;
-            }
-
-            const promises = listaDetalle.map((detalle) =>
-                fetch("http://127.0.0.1:8000/api/entrada_detalles/", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(detalle),
-                })
-            );
-
-            await Promise.all(promises);
-
-            Swal.fire({
-                title: 'Éxito',
-                text: 'La entrada se registró correctamente!',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-
-            console.log("Entrada y detalles creados exitosamente");
+          if (!proveedor_id || !fecha_entrada) {
+            setErrorProveedor(true);
+            setErrorFecha(true);
+            throw new RequiredFieldError("Este campo es obligatorio");
+          }
+      
+          if (listaDetalle.length === 0) {
+            setErrorInsumoId(true);
+            setErrorCantidad(true);
+            setErrorPrecioUnitario(true);
+            console.log("Debes agregar al menos un detalle.");
+            throw new RequiredFieldError("Debes agregar al menos un detalle");
+          }
+      
+          agregarDetalle();
+      
+          const entrada = {
+            proveedor_id,
+            fecha_entrada: fecha_entrada,
+            monto_total,
+          };
+      
+          const response = await fetch("http://127.0.0.1:8000/api/entradas/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(entrada),
+          });
+      
+          if (response.ok) {
+            const data = await response.json();
+            setIdEntradaId(data.id);
+            setErrorProveedor(false);
+            setErrorFecha(false);
+            setProveedorId("");
+            setMontoTotal(0);
+            setErrorInsumoId(false);
+            setErrorCantidad(false);
+            setErrorPrecioUnitario(false);
+            setListaDetalle([]);
+          } else {
+            console.log("Error al crear la entrada", response);
+            return;
+          }
+      
+          const promises = listaDetalle.map((detalle) =>
+            fetch("http://127.0.0.1:8000/api/entrada_detalles/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(detalle),
+            })
+          );
+      
+          await Promise.all(promises);
+      
+          Swal.fire({
+            title: 'Éxito',
+            text: 'La entrada se registró correctamente!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+      
+          console.log("Entrada y detalles creados exitosamente");
         } catch (error) {
-            if (error instanceof RequiredFieldError) {
-                console.log('Error de validación', error.message);
-            } else {
-                console.log("Error de red", error);
-            }
-
-            Swal.fire({
-                title: 'Error',
-                text: 'Hubo un problema al enviar el formulario',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
+          if (error instanceof RequiredFieldError) {
+            console.log('Error de validación', error.message);
+          } else {
+            console.log("Error de red", error);
+          }
+      
+          Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al enviar el formulario',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
         }
-    };
+      };      
 
     return (
         <div className="section-content-form">
@@ -420,7 +423,7 @@ export function EntradaForm() {
                 autoComplete="off"
                 onSubmit={handleSubmit}
                 >
-                <h1 className="title">Nueva entrada</h1>
+                <h1 className="title">Nuevo ingreso</h1>
                 <div>
                 <TextField
                     required
