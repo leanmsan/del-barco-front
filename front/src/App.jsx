@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Menu } from "./pages/Menu";
+import { LoginPage } from "./pages/LoginPage";
 import { Inicio } from "./components/Inicio";
 import ProveedoresPage from "./pages/ProveedoresPage";
 import {TablaInsumosPage} from './pages/TablaInsumosPage'
@@ -12,7 +13,6 @@ import { RegistroSalidaForm } from "./pages/RegistroSalidaForm";
 import { TablaRecetasPage } from "./pages/TablaRecetasPage";
 import { TablaCoccionesPage } from "./pages/TablaCoccionesPage";
 import { RegistroCoccionesPage } from "./pages/RegistroCoccionesForm";
-
 import { RegistroRecetasForm } from "./pages/RegistroRecetas";
 
 function App() {
@@ -21,7 +21,8 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path= '/' element={<Inicio/>}/>
+          <Route path= '/login' element={<LoginPage/>}/>
+          <Route path= '/' element={<Inicio/>} exact />
           {/* <Route path="/inicio" element={<Inicio/>}/> */}
           <Route path="/proveedores" element={<ProveedoresPage/>}/>
           <Route path= '/altaproveedores' element={<AltaProvPage/>}/>
