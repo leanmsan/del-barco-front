@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+  
+  .not-found {
+    margin: 5rem;
+    padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.img-not-found {
+  max-width: 100%;
+}
+
+.txt-not-found {
+  margin-left: 20px;
+}
+
+.title-not-found {
+  color: black;
+}

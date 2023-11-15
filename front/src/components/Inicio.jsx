@@ -20,7 +20,7 @@ export const Inicio = () => {
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 2000,
   };
 

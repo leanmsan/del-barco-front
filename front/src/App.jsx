@@ -15,6 +15,8 @@ import { RegistroCoccionesPage } from "./pages/RegistroCoccionesForm";
 
 import { RegistroRecetasForm } from "./pages/RegistroRecetas";
 
+import { NotFound } from "./components/NotFound";
+
 function App() {
 
   return (
@@ -35,6 +37,7 @@ function App() {
           <Route path= '/cocciones' element={<TablaCoccionesPage/>}/>
           <Route path= '/nuevacoccion' element={<RegistroCoccionesPage/>}/>
           <Route path= '/registrorecetas' element={<RegistroRecetasForm/>}/>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
