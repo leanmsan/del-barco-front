@@ -72,10 +72,7 @@ export const TablaEntradas = () => {
             <>
                 {showEntradaDetalle && (
                     <>
-                        <h2 style={{
-                            "margin-bottom": "0px", "padding": "5px",
-                            "color": "#7e530f ", "border": "none", "font-size": "24px", "font-weight": "bold"
-                        }}>Entradas Detalle
+                        <h2 className="subtitulo-tablas">Detalles de ingreso
                         
                         <button className="button-cerrar-detalles" onClick={handleCloseEntradaDetalle}>
                             Cerrar detalles

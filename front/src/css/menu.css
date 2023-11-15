@@ -433,6 +433,15 @@ nav.close ~ .top {
     margin-left: 20px;
 }
 
+.subtitulo-tablas {
+    margin-bottom: 0px;
+    padding: 5px;
+    color: #7e530f;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
   @keyframes fadeIn {
     0% {
       opacity: 0;

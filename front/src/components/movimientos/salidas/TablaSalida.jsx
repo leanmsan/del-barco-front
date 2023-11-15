@@ -70,10 +70,7 @@ export const TablaSalidasMovimientos = () => {
       <>
         {showSalidasDetalle && (
           <>
-            <h2 style={{
-              "margin-bottom": "0px", "padding": "5px",
-              "color": "#7e530f", "border": "none", "font-size": "24px", "font-weight": "bold"
-            }}>Salidas Detalle
+            <h2 className="subtitulo-tablas">Detalles de egresos
             <button className="button-cerrar-detalles" onClick={handleCloseSalidasDetalle}>
                             Cerrar detalles
                         </button></h2>
