@@ -44,7 +44,9 @@ export const TablaSalidasMovimientos = () => {
           </TableHead>
           <TableBody>
             {salidas.map((salida) => (
-              <TableRow key={salida.idsalida} onClick={() => handleSalidasClick(salida.idsalida)}>
+              <TableRow key={salida.idsalida} onClick={() => handleSalidasClick(salida.idsalida)}
+                  className={selectedSalidas === salida.idsalida ? 'selected-row' : ''}
+              >
                 <TableCell>{salida.idsalida}</TableCell>
                 <TableCell>{format(new Date(salida.fecha_salida), 'EEEE dd MMMM yyyy', { locale: esLocale })}</TableCell>
                 

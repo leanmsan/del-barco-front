@@ -47,7 +47,9 @@ export const TablaRecetas = () => {
           </TableHead>
           <TableBody>
             {recetas.map((receta) => (
-              <TableRow key={receta.nombre_receta} onClick={() => handleRecetasClick(receta.nombre_receta)}>
+              <TableRow key={receta.nombre_receta} onClick={() => handleRecetasClick(receta.nombre_receta)}
+              className={selectedRecetas === receta.nombre_receta ? 'selected-row' : ''}
+              >
                 <TableCell>{receta.nombre_receta}</TableCell>
                 <TableCell>{receta.tipo}</TableCell>
               </TableRow>
