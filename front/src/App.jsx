@@ -44,12 +44,12 @@ function App() {
 
   const handleAuthentication = (status) => {
     setAuthenticated(status);
-
+  
     // Actualizar el estado de autenticación en las cookies
     if (status) {
       cookieService.setToken("yourAccessTokenValue");
     } else {
-      cookieService.removeToken();
+      cookieService.deleteToken(); // Utiliza la función correcta para eliminar la cookie
     }
   };
 
@@ -62,18 +62,18 @@ function App() {
             element={<LoginPage handleAuthentication={handleAuthentication} />}
           />
           <Route path="/" element={<ProtectedRoute element={Inicio} />} />
-          <Route path="/proveedores" element={<ProtectedRoute element={<ProveedoresPage />} />} />
-          <Route path="/altaproveedores" element={<ProtectedRoute element={<AltaProvPage />} />} />
-          <Route path="/tablainsumos" element={<ProtectedRoute element={<TablaInsumosPage />} />} />
-          <Route path="/altainsumos" element={<ProtectedRoute element={<AltaInsumosPage />} />} />
-          <Route path="/entradas" element={<ProtectedRoute element={<TablaEntradasPage />} />} />
-          <Route path="/registroentradas" element={<ProtectedRoute element={<RegistroEntradaForm />} />} />
-          <Route path="/salidas" element={<ProtectedRoute element={<TablaSalida />} />} />
-          <Route path="/registrosalidas" element={<ProtectedRoute element={<RegistroSalidaForm />} />} />
-          <Route path="/recetas" element={<ProtectedRoute element={<TablaRecetasPage />} />} />
-          <Route path="/cocciones" element={<ProtectedRoute element={<TablaCoccionesPage />} />} />
-          <Route path="/nuevacoccion" element={<ProtectedRoute element={<RegistroCoccionesPage />} />} />
-          <Route path="/registrorecetas" element={<ProtectedRoute element={<RegistroRecetasForm />} />} />
+          <Route path="/proveedores" element={<ProtectedRoute element={ProveedoresPage} authenticated={authenticated} />} />
+          <Route path="/altaproveedores" element={<ProtectedRoute element={AltaProvPage} authenticated={authenticated} />} />
+          <Route path="/tablainsumos" element={<ProtectedRoute element={TablaInsumosPage} authenticated={authenticated} />} />
+          <Route path="/altainsumos" element={<ProtectedRoute element={AltaInsumosPage} authenticated={authenticated} />} />
+          <Route path="/entradas" element={<ProtectedRoute element={TablaEntradasPage} authenticated={authenticated} />} />
+          <Route path="/registroentradas" element={<ProtectedRoute element={RegistroEntradaForm} authenticated={authenticated} />} />
+          <Route path="/salidas" element={<ProtectedRoute element={TablaSalida} />} authenticated={authenticated} />
+          <Route path="/registrosalidas" element={<ProtectedRoute element={RegistroSalidaForm} authenticated={authenticated} />} />
+          <Route path="/recetas" element={<ProtectedRoute element={TablaRecetasPage} authenticated={authenticated} />} />
+          <Route path="/cocciones" element={<ProtectedRoute element={TablaCoccionesPage} authenticated={authenticated} />} />
+          <Route path="/nuevacoccion" element={<ProtectedRoute element={RegistroCoccionesPage} authenticated={authenticated} />} />
+          <Route path="/registrorecetas" element={<ProtectedRoute element={RegistroRecetasForm} authenticated={authenticated} />} />
         </Routes>
       </BrowserRouter>
     </div>

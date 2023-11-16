@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/img/logo1.png'
+import cookieService from "../services/cookieService";
 
 export function SideBar(selectedTab) {
   const navigate = useNavigate();
@@ -65,6 +66,18 @@ export function SideBar(selectedTab) {
     setRecetasOpen(false);
     setInsumosOpen(false)
   };
+
+  const Logout = (handleAuthentication) => {
+    function deleteTokenCookie() {
+      // Utiliza el mismo nombre de cookie que se establece en handleAuthentication
+      cookieService.removeToken();
+    }
+  
+    deleteTokenCookie();
+    handleAuthentication(false);
+    console.log('Redireccionando a /login')
+    navigate('/login');
+  }
 
   const handleLogoClick = () => {
     navigate("/");
@@ -275,14 +288,14 @@ export function SideBar(selectedTab) {
 
         </ul>
 
-        {/* <ul className="logout-mod">
+       <ul className="logout-mod">
           <li className="nav-link-item">
-            <Link onClick={handleLogout}>
+            <Link onClick={Logout}>
               <i className="fa-solid fa-right-from-bracket nav-link-icon"></i>
               <span className="link-name">Salir</span>
             </Link>
           </li>
-        </ul> */}
+        </ul> 
         </div>
         
       </div>
