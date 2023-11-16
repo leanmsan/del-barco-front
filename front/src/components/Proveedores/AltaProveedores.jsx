@@ -21,7 +21,7 @@ export function AltaProveedores() {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const navegate = useNavigate()
+  const navegate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +32,6 @@ export function AltaProveedores() {
       validarCampo(telefono, setTelefono, setErrorTelefono, 'telefono');
 
       if (errorNombre || errorMail || errorTelefono) {
-        // Mostrar un mensaje de error general indicando campos incorrectos
         throw new RequiredFieldError('Por favor, complete todos los campos correctamente.');
       }
 
@@ -43,7 +42,6 @@ export function AltaProveedores() {
       };
 
       if (nombre_proveedor.trim() === '' || mail.trim() === '' || telefono.trim() === '') {
-        // Mostrar un mensaje de error indicando que el formulario está vacío
         throw new RequiredFieldError('Por favor, complete todos los campos.');
       }
 
@@ -52,41 +50,37 @@ export function AltaProveedores() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(proveedor)
+        body: JSON.stringify(proveedor),
       });
 
       if (response.ok) {
         Swal.fire({
           title: 'Éxito',
-          text: 'La cocción se registró correctamente',
+          text: 'El proveedor se registró correctamente',
           icon: 'success',
-          confirmButtonText: 'OK'
+          confirmButtonText: 'OK',
         }).then(() => {
-          console.log('Antes de redireccionar a tabla insumos');
-          navegate('/proveedores')
-          console.log('Después de redireccionar a tabla insumos');
+          navegate('/proveedores');
         }).catch(error => {
           console.error('Error al redireccionar:', error);
         });
       } else {
-        console.log('Error al crear el proveedor');
+        throw new Error('Error al crear el proveedor');
       }
     } catch (error) {
       if (error instanceof RequiredFieldError) {
-        console.log('Faltan completar datos requeridos', error.message);
         Swal.fire({
           title: 'Error',
           text: error.message,
           icon: 'error',
-          confirmButtonText: 'OK'
+          confirmButtonText: 'OK',
         });
       } else {
-        console.log('Error de red', error);
         Swal.fire({
           title: 'Error',
-          text: 'Hubo un problema al enviar el formulario',
+          text: 'Hubo un problema al enviar el formulario, por favor verifique los campos',
           icon: 'error',
-          confirmButtonText: 'OK'
+          confirmButtonText: 'OK',
         });
       }
     }
@@ -96,7 +90,6 @@ export function AltaProveedores() {
     if (valor.trim() === '') {
       setError(true);
       setValor("");
-      // No lanzar excepción para campos vacíos
     } else if (regex && !regex.test(valor.trim())) {
       setError(true);
       setValor("");
@@ -184,8 +177,8 @@ export function AltaProveedores() {
           Guardar
         </button>
       </Box>
-      <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
-        <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+      <div style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+        <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{ color: "#ffffff" }} /></button>
       </div>
     </div>
   );

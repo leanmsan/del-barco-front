@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@mui/material';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,19 +15,18 @@ export const TablaProveedores = () => {
   const [busqueda, setBusqueda] = useState("");
 
   const handleChange = (event) => {
-    console.log(event.target.value);
     setBusqueda(event.target.value);
     filtrar(event.target.value);
-  }
+  };
 
   const filtrar = (terminoBusqueda) => {
     let resultadosBusqueda = tablaProveedores.filter((elemento) => {
       if (elemento.nombre_proveedor.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())) {
         return elemento;
       }
-    })
+    });
     setData(resultadosBusqueda);
-  }
+  };
 
   useEffect(() => {
     fetchData();
@@ -36,16 +35,22 @@ export const TablaProveedores = () => {
   const fetchData = async (searchTerm = '') => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/proveedores/?search=${searchTerm}`);
-      setData(response.data.proveedores);
-      setTablaProveedores(response.data.proveedores)
-      console.log(response.data.proveedores);
+
+      const sortedProveedores = response.data.proveedores.sort((a, b) => {
+        if (a.estado === 'A' && b.estado === 'I') return -1;
+        if (a.estado === 'I' && b.estado === 'A') return 1;
+        return 0;
+      });
+
+      setData(sortedProveedores);
+      setTablaProveedores(sortedProveedores);
+      console.log(sortedProveedores);
     } catch (error) {
       console.error('Error al obtener los datos:', error);
     }
   };
 
   const handleModificarProveedor = (index) => {
-    // Obtener los valores actuales de la fila en la tabla de proveedores
     const proveedorActual = tablaProveedores.find((proveedor) => proveedor.idproveedor === index);
 
     Swal.fire({
@@ -74,12 +79,11 @@ export const TablaProveedores = () => {
         const nuevoMail = form.elements['mail'].value;
         const nuevoContacto = form.elements['contacto'].value;
 
-        // Verificar que los campos no estén vacíos
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if(!emailRegex.test(nuevoMail)){
-          Swal.fire('Error', 'Por favor, introduce un correo electronico valido', 'error')
-          return
+        if (!emailRegex.test(nuevoMail)) {
+          Swal.fire('Error', 'Por favor, introduce un correo electronico valido', 'error');
+          return;
         }
 
         if (!nuevoNombre || !nuevoMail || !nuevoContacto) {
@@ -88,22 +92,20 @@ export const TablaProveedores = () => {
         }
 
         try {
-          // Realizar la solicitud PATCH a la API con los nuevos datos
           await axios.patch(`http://127.0.0.1:8000/api/proveedores/${idproveedor}/`, {
             nombre_proveedor: nuevoNombre,
             mail: nuevoMail,
             telefono: nuevoContacto,
           });
 
-          // Actualizar la fila en la tabla con los nuevos valores
           const nuevaTablaProveedores = tablaProveedores.map((proveedor) =>
             proveedor.idproveedor === index
               ? {
-                ...proveedor,
-                nombre_proveedor: nuevoNombre,
-                mail: nuevoMail,
-                telefono: nuevoContacto, // Ajusta este campo según la estructura real de tus datos
-              }
+                  ...proveedor,
+                  nombre_proveedor: nuevoNombre,
+                  mail: nuevoMail,
+                  telefono: nuevoContacto,
+                }
               : proveedor
           );
           setTablaProveedores(nuevaTablaProveedores);
@@ -121,28 +123,28 @@ export const TablaProveedores = () => {
     try {
       const result = await Swal.fire({
         title: `¿Estás seguro que quieres dar de baja a ${proveedor}?`,
-        text: "Esta acción no se puede revertir.",
-        icon: "warning",
+        text: 'Esta acción no se puede revertir.',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
         confirmButtonText: 'Sí, dar de baja',
         cancelButtonText: 'Cancelar',
       });
-  
+
       if (result.isConfirmed) {
         const response = await axios.patch(`http://127.0.0.1:8000/api/proveedores/${idproveedor}/`, {
           estado: 'I',
         });
-  
+
         fetchData();
-  
+
         Swal.fire({
           title: 'Dado de baja exitosamente!',
           text: 'El proveedor ha sido eliminado.',
           icon: 'success',
         });
-  
+
         console.log('Solicitud PATCH exitosa', response.data);
       } else if (result.isDenied) {
         Swal.fire('Cancelado!', '', 'info');
@@ -151,38 +153,41 @@ export const TablaProveedores = () => {
       console.error('Error al realizar la solicitud PATCH:', error.message);
       Swal.fire('Error al dar de baja', '', 'error');
     }
-  }; 
-  
+  };
+
   const driverAction = () => {
     const driverObj = driver({
       popoverClass: 'driverjs-theme',
       showProgress: true,
       steps: [
-        { element: '.section-content', popover: { title: 'Proveedores', description: 'Aquí podrás ver todos los proveedores cargados', side: "left", align: 'start' }},
-        { element: '.button-on-table-modificar', popover: { title: 'Modificar', description: 'Puedes cambiar algún dato del proveedor si crees necesario', side: "left", align: 'start' }},
-        { element: '.button-on-table-baja', popover: { title: 'Dar de baja', description: 'También puedes darlo de baja', side: "left", align: 'start' }},
-        { element: '.search-box', popover: { title: 'Buscar', description: 'Si no encuentras lo que buscas, puedes ingresar el nombre del proveedor para encontrarlo', side: "right", align: 'start' }},
-        { element: '.btn-create', popover: { title: 'Nuevo proveedor', description: 'También puedes ir a cargar un nuevo proveedor directamente!', side: "right", align: 'start' }},
-        { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+        { element: '.section-content', popover: { title: 'Proveedores', description: 'Aquí podrás ver todos los proveedores cargados', side: 'left', align: 'start' } },
+        { element: '.button-on-table-modificar', popover: { title: 'Modificar', description: 'Puedes cambiar algún dato del proveedor si crees necesario', side: 'left', align: 'start' } },
+        { element: '.button-on-table-baja', popover: { title: 'Dar de baja', description: 'También puedes darlo de baja', side: 'left', align: 'start' } },
+        { element: '.search-box', popover: { title: 'Buscar', description: 'Si no encuentras lo que buscas, puedes ingresar el nombre del proveedor para encontrarlo', side: 'right', align: 'start' } },
+        { element: '.btn-create', popover: { title: 'Nuevo proveedor', description: 'También puedes ir a cargar un nuevo proveedor directamente!', side: 'right', align: 'start' } },
+        { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } },
       ],
       nextBtnText: 'Próximo',
       prevBtnText: 'Anterior',
       doneBtnText: 'Finalizar',
       progressText: '{{current}} de {{total}}',
     });
-    driverObj.drive()
+    driverObj.drive();
   };
 
   return (
     <div className='section-content'>
       <h1 className="title">Proveedores</h1>
       <div className='search-box'>
-      <button className="btn-search">
-        <FontAwesomeIcon icon={faSearch} style={{ color: "#ffffff" }} />
-      </button>
+        <button className="btn-search">
+          <FontAwesomeIcon icon={faSearch} style={{ color: '#ffffff' }} />
+        </button>
         <input
-          className='input-search' type="text" placeholder="Buscar..."
-          value={busqueda} onChange={handleChange}
+          className='input-search'
+          type="text"
+          placeholder="Buscar..."
+          value={busqueda}
+          onChange={handleChange}
         />
         <Link to='/altaproveedores'>
           <button className='btn-create'>+ Nuevo proveedor</button>
@@ -190,13 +195,15 @@ export const TablaProveedores = () => {
       </div>
       <TableContainer class="table-container-format" component={Paper}>
         <Table>
-          <TableHead >
+          <TableHead>
             <TableRow>
               <TableCell class="cell-head-TableContainer">Nombre</TableCell>
               <TableCell class="cell-head-TableContainer">Mail</TableCell>
               <TableCell class="cell-head-TableContainer">Contacto</TableCell>
               <TableCell class="cell-head-TableContainer">Estado</TableCell>
-              <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">Acciones</TableCell>
+              <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">
+                Acciones
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -207,21 +214,33 @@ export const TablaProveedores = () => {
                 <TableCell>{row.telefono}</TableCell>
                 <TableCell>{row.estado}</TableCell>
                 <TableCell>
-                  <button type='button' class="button-on-table-modificar" onClick={() => handleModificarProveedor(row.idproveedor)}>
+                  <button
+                    type='button'
+                    className="button-on-table-modificar"
+                    onClick={() => handleModificarProveedor(row.idproveedor)}
+                  >
                     Modificar
                   </button>
                 </TableCell>
                 <TableCell>
-                  <button type='button' class="button-on-table-baja" onClick={() => handleEliminarProveedor(row.idproveedor, row.nombre_proveedor)}>Dar de Baja</button>
+                  <button
+                    type='button'
+                    className="button-on-table-baja"
+                    onClick={() => handleEliminarProveedor(row.idproveedor, row.nombre_proveedor)}
+                  >
+                    Dar de Baja
+                  </button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
-        <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+      <div style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+        <button onClick={driverAction}>
+          <FontAwesomeIcon icon={faQuestion} style={{ color: '#ffffff' }} />
+        </button>
       </div>
     </div>
   );
-}
+};
