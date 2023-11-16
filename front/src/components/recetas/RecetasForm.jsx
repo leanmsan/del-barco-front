@@ -128,6 +128,9 @@ export function RecetasForm() {
       setCantidad('');
       setTipoMedida('');
     } else {
+      setErrorCantidad(true);
+      setErrorInsumoId(true);
+      
       Swal.fire({
         icon: 'error',
         title: 'Campos incompletos',
