@@ -92,7 +92,7 @@ export const TablaRecetas = () => {
                 <input type="text" id="tipo_medida-${detalleId}" name="tipo_medida" value="${detallesActuales.tipo_medida}" required readOnly style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
                 <br />
                 <label htmlFor="cantidad_disponible-${detalleId}" style="display: block;">Cantidad:</label>
-                <input type="number" id="cantidad_disponible-${detalleId}" name="cantidad_disponible" value="${detallesActuales.cantidad_disponible}" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
+                <input type="number" id="cantidad_disponible-${detalleId}" name="cantidad_disponible" value="${detallesActuales.cantidad}" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
                 <br/>
               </form>`,
         showCancelButton: true,
