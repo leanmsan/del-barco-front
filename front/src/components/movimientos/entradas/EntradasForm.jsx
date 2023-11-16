@@ -291,7 +291,7 @@ export function EntradaForm() {
           progressText: '{{current}} de {{total}}',
         });
         driverObj.drive()
-      }
+      };
 
     return (
         <div className="section-content-form">

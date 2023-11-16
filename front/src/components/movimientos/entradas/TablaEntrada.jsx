@@ -131,7 +131,7 @@ export const TablaEntradas = () => {
           progressText: '{{current}} de {{total}}',
         });
         driverObj.drive()
-      }
+      };
 
     return (
         <div className="section-content">

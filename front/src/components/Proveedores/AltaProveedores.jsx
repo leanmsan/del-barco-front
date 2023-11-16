@@ -121,7 +121,7 @@ export function AltaProveedores() {
       progressText: '{{current}} de {{total}}',
     });
     driverObj.drive()
-  }
+  };
 
   return (
     <div className='section-content-form'>

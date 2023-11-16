@@ -167,7 +167,7 @@ export function AltaInsumos() {
       progressText: '{{current}} de {{total}}',
     });
     driverObj.drive()
-  }
+  };
 
   return (
 
