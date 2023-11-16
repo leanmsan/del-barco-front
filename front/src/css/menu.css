@@ -240,8 +240,11 @@ nav.close ~ .top {
 
 .selected-row {
     background-color: #d0d0d0;
-    font-weight: bold;
   }
+
+.selected-cell{
+    font-weight: bold;
+}
 
 .home .title, .home .subtitle {
     font-family: 'Poppins', sans-serif;
