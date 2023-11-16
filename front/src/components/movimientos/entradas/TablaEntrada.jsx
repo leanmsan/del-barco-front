@@ -45,11 +45,15 @@ export const TablaEntradas = () => {
                     </TableHead>
                     <TableBody>
                         {entradas.map((entrada) => (
-                            <TableRow key={entrada.identrada} onClick={() => handleEntradaClick(entrada.identrada)}>
-                                <TableCell>{entrada.identrada}</TableCell>
-                                <TableCell>{entrada.proveedor_id}</TableCell>
-                                <TableCell>{format(new Date(entrada.fecha_entrada), 'EEEE dd MMMM yyyy', { locale: esLocale })}</TableCell>
-                                <TableCell>{entrada.monto_total}</TableCell>
+                            <TableRow
+                                key={entrada.identrada}
+                                onClick={() => handleEntradaClick(entrada.identrada)}
+                                className={selectedEntrada === entrada.identrada ? 'selected-row' : ''}
+                            >
+                                <TableCell style={{ fontWeight: selectedEntrada === entrada.identrada ? 'bold' : 'normal' }}>{entrada.identrada}</TableCell>
+                                <TableCell style={{ fontWeight: selectedEntrada === entrada.identrada ? 'bold' : 'normal' }}>{entrada.proveedor_id}</TableCell>
+                                <TableCell style={{ fontWeight: selectedEntrada === entrada.identrada ? 'bold' : 'normal' }}>{format(new Date(entrada.fecha_entrada), 'EEEE dd MMMM yyyy', { locale: esLocale })}</TableCell>
+                                <TableCell style={{ fontWeight: selectedEntrada === entrada.identrada ? 'bold' : 'normal' }}>{entrada.monto_total}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

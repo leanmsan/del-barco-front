@@ -41,15 +41,18 @@ export const TablaRecetas = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell className="cell-head-TableContainer">Nombre</TableCell>
-              <TableCell className="cell-head-TableContainer">Tipo</TableCell>
+              <TableCell class="cell-head-TableContainer">Nombre</TableCell>
+              <TableCell class="cell-head-TableContainer">Tipo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {recetas.map((receta) => (
-              <TableRow key={receta.nombre_receta} onClick={() => handleRecetasClick(receta.nombre_receta)}>
-                <TableCell>{receta.nombre_receta}</TableCell>
-                <TableCell>{receta.tipo}</TableCell>
+              <TableRow key={receta.nombre_receta} onClick={() => handleRecetasClick(receta.nombre_receta)}
+              className={selectedRecetas === receta.nombre_receta ? 'selected-row' : ''}
+              >
+                <TableCell style={{ fontWeight: selectedRecetas === receta.nombre_receta ? 'bold' : 'normal' }}
+                  >{receta.nombre_receta}</TableCell>
+                <TableCell style={{ fontWeight: selectedRecetas === receta.nombre_receta ? 'bold' : 'normal' }}>{receta.tipo}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -144,10 +147,10 @@ export const TablaRecetas = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="cell-head-TableContainer">Insumo</TableCell>
-                    <TableCell className="cell-head-TableContainer">Cantidad</TableCell>
-                    <TableCell className="cell-head-TableContainer">Tipo Medida</TableCell>
-                    <TableCell colSpan={2} style={{ textAlign: 'center' }} className="cell-head-TableContainer">Acciones</TableCell>
+                    <TableCell class="cell-head-TableContainer">Insumo</TableCell>
+                    <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
+                    <TableCell class="cell-head-TableContainer">Tipo Medida</TableCell>
+                    <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">Acciones</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
