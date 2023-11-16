@@ -259,7 +259,13 @@ export function EntradaForm() {
             confirmButtonText: 'OK'
           });
         }
-      };      
+      };   
+      
+    const handleQuitarDetalle = (index) => {
+        const nuevasDetalles = [...listaDetalle];
+        nuevasDetalles.splice(index, 1);
+        setListaDetalle(nuevasDetalles);
+      };   
 
     return (
         <div className="section-content-form">
@@ -536,7 +542,7 @@ export function EntradaForm() {
                     
                     <br />
                 </div>
-                <button className="button-guardar" type="submit" onClick={agregarDetalle}>
+                <button className="button-guardar" type="button" onClick={agregarDetalle}>
                     Agregar insumo
                 </button>
                 
@@ -551,11 +557,16 @@ export function EntradaForm() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {listaDetalle.map((detalle) => (
+                            {listaDetalle.map((detalle, index) => (
                                 <TableRow key={detalle.identrada_id}>
                                     <TableCell>{detalle.insumo_id}</TableCell>
                                     <TableCell>{detalle.cantidad}</TableCell>
                                     <TableCell>{detalle.precio_unitario}</TableCell>
+                                    <TableCell>
+                          <button type='button' class="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
+                            Quitar
+                          </button></TableCell>
+
                                 </TableRow>
                             ))}
                         </TableBody>

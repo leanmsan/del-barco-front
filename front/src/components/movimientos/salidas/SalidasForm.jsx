@@ -142,6 +142,12 @@ export function SalidasForm() {
             }
         }
     };
+
+    const handleQuitarDetalle = (index) => {
+        const nuevasDetalles = [...listaDetalle];
+        nuevasDetalles.splice(index, 1);
+        setListaDetalle(nuevasDetalles);
+      };
     
     // handleSubmit
     const handleSubmit = async (e) => {
@@ -363,7 +369,7 @@ export function SalidasForm() {
                     
                     <br />
                 </div>
-                <button className="button-guardar" type="submit" onClick={agregarDetalle}>
+                <button className="button-guardar" type="button" onClick={agregarDetalle}>
                     Agregar insumo
                 </button>
                 <h2 className="subtitulo-tablas">Lista de insumos</h2>
@@ -377,10 +383,15 @@ export function SalidasForm() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {listaDetalle.map((detalle) => (
+                            {listaDetalle.map((detalle, index) => (
                                 <TableRow key={detalle.identrada_id}>
                                     <TableCell>{detalle.insumo_id}</TableCell>
                                     <TableCell>{detalle.cantidad}</TableCell>
+                                    <TableCell>
+                          <button type='button' class="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
+                            Quitar
+                          </button></TableCell>
+                                    
                                 </TableRow>
                             ))}
                         </TableBody>
