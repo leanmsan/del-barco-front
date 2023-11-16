@@ -7,6 +7,10 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2"; 
 import { useNavigate } from "react-router-dom";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export function EntradaForm() {
     // entrada
@@ -267,163 +271,30 @@ export function EntradaForm() {
         setListaDetalle(nuevasDetalles);
       };   
 
+      const driverAction = () => {
+        const driverObj = driver({
+          popoverClass: 'driverjs-theme',
+          showProgress: true,
+          steps: [
+            { element: '.section-content-form', popover: { title: 'Nuevo ingreso', description: 'Aquí podrás cargar los datos de los insumos que ingresan', side: "left", align: 'start' }},
+            { element: '.campos', popover: { title: 'Datos', description: 'En los campos vas cargando los datos de los insumos', side: "right", align: 'start' }},
+            { element: '.btn-agregar', popover: { title: 'Agregar insumo', description: 'Cuando tengas los datos cargados de un insumo, presiona aquí', side: "left", align: 'start' }},
+            { element: '.tabla-detalles', popover: { title: 'Lista de insumos', description: 'Aqui se verán los insumos que vas cargando', side: "right", align: 'start' }},
+            { element: '.monto-total', popover: { title: 'Monto total', description: 'Aquí se irá actualizando con el monto total de los ingresos. TIP: Recuerda tener los precios de insumos actualizados', side: "left", align: 'start' }},
+            { popover: { title: 'Quitar de la lista', description: 'Cuando cargues insumos te aparecerá el boton para quitarlo, en caso de que te hayas confundido' } },
+            { element: '.btn-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
+            { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+          ],
+          nextBtnText: 'Próximo',
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
+          progressText: '{{current}} de {{total}}',
+        });
+        driverObj.drive()
+      }
+
     return (
         <div className="section-content-form">
-            {/* <form
-                ref={entradaDetalleFormRef}
-                id="EntradaDetalle"
-                className="form"
-                onSubmit={handleSubmit}
-            >
-                <h1 className="title">Nueva entrada</h1>
-                <div className="input-control">
-                    <label>
-                        Proveedor
-                        <select
-                            value={proveedor_id}
-                            onChange={(e) => {
-                                setProveedorId(e.target.value);
-                                setErrorProveedor(false);
-                            }}
-                        >
-                            <option value="">Seleccione un proveedor</option>
-                            {proveedores.map((proveedor) => (
-                                <option
-                                    key={proveedor.idproveedor}
-                                    value={proveedor.nombre_proveedor}
-                                >
-                                    {proveedor.nombre_proveedor}
-                                </option>
-                            ))}
-                        </select>
-                        {errorProveedor && (
-                            <div className="error-message">Tienes que selecciona un proveedor</div>
-                        )}
-                    </label>
-                    <label>
-                        Fecha
-                        <input
-                            type="date"
-                            name="fecha"
-                            onChange={(e) => {
-                                setFechaEntrada(e.target.value);
-                                setErrorFecha(false);
-                            }}
-                        />
-                        {errorFecha && (
-                            <div className="error-message">Tienes que seleccionar una fecha</div>
-                        )}
-                    </label>
-                    <label>Monto Total</label>
-                    <p>{monto_total}</p>
-                </div>
-
-                <div className="input-control">
-                    <label name="insumo_id">Insumo
-                        <select
-                            value={insumo_id}
-                            onChange={(e) => {
-                                setInsumoId(e.target.value);
-                                setErrorInsumoId(false);
-                            }}
-                        >
-                            <option value="">Seleccione un insumo</option>
-                            {seleccionarInsumo.map((insumo) => (
-                                <option
-                                    key={insumo.insumo_id}
-                                    value={insumo.nombre_insumo}
-                                >
-                                    {insumo.nombre_insumo}
-                                </option>
-                            ))}
-                        </select>
-                        {errorInsumoId && (
-                            <div className="error-message">Tienes que seleccionar un insumo</div>
-                        )}
-                    </label>
-                    <label>Cantidad
-                        <input
-                            type="number"
-                            name="cantidad"
-                            onChange={(e) => {
-                                setCantidad(e.target.value);
-                                setErrorCantidad(false);
-                            }}
-                        />
-                        {errorCantidad && (
-                            <div className="error-message">Tienes que especificar la cantidad</div>
-                        )}
-                    </label>
-                    <label>Precio Unitario
-                        <input
-                            type="number"
-                            name="precio_unitario"
-                            onChange={(e) => {
-                                setPrecioUnitario(e.target.value);
-                                setErrorPrecioUnitario(false);
-                            }}
-                        />
-                        {errorPrecioUnitario && (
-                            <div className="error-message">Tienes que especificar el precio</div>
-                        )}
-                    </label>
-                </div>
-                <button
-                    className="button"
-                    type="button"
-                    onClick={agregarDetalle}
-                    style={{
-                        padding: "5px",
-                        color: "white",
-                        backgroundColor: "#7e530f",
-                        borderRadius: "4px",
-                        border: "none",
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                        width: "100%",
-                    }}
-                >
-                    Agregar insumo
-                </button>
-
-                <TableContainer style={{ margin: "10px 20px 0 0", padding: "5px 5px 5px 5px", }} component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Insumo</TableCell>
-                                <TableCell>Cantidad</TableCell>
-                                <TableCell>Precio Unitario</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {listaDetalle.map((detalle) => (
-                                <TableRow key={detalle.identrada_id}>
-                                    <TableCell>{detalle.insumo_id}</TableCell>
-                                    <TableCell>{detalle.cantidad}</TableCell>
-                                    <TableCell>{detalle.precio_unitario}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <button
-                    className="button"
-                    type="submit"
-                    style={{
-                        padding: "5px",
-                        color: "white",
-                        backgroundColor: "#7e530f",
-                        borderRadius: "4px",
-                        border: "none",
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                        width: "100%",
-                    }}
-                >
-                    Enviar
-                </button>
-            </form> */}
-
             <Box
                 component="form"
                 sx={{
@@ -434,7 +305,7 @@ export function EntradaForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nuevo ingreso</h1>
-                <div>
+                <div class="campos">
                 <TextField
                     required
                     id="outlined-select-currency"
@@ -538,16 +409,17 @@ export function EntradaForm() {
                         InputProps={{
                             readOnly: true,
                         }}
+                        class = "monto-total"
                     />
                     
                     <br />
                 </div>
-                <button className="button-guardar" type="button" onClick={agregarDetalle}>
+                <button className="button-guardar btn-agregar" type="button" onClick={agregarDetalle}>
                     Agregar insumo
                 </button>
                 
                 <h2 className="subtitulo-tablas">Lista de insumos</h2>
-                <TableContainer class="table-container-format" component={Paper}>
+                <TableContainer class="table-container-format tabla-detalles" component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -572,11 +444,13 @@ export function EntradaForm() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <button className="button-guardar" type="submit">
+                <button className="button-guardar btn-guardar" type="submit">
                     Guardar
                 </button>
                 </Box>
-
+                <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+                    <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+                </div>
         </div>
     );
 }
