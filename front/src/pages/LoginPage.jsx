@@ -1,9 +1,9 @@
-import { Login } from "../components/login/login";
+import { Login } from "../components/auth/login";
 
 export function LoginPage() {
     return (
-        <di>
+        <div>
             <Login/>
-        </di>
+        </div>
     )
 }
