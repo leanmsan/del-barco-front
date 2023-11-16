@@ -4,6 +4,10 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css'
 import { SideBar } from './SideBar';
 import '../css/inicio.css'
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 // importacion de imagenes para el slider
 import img1 from '../assets/img/img-1.png';
@@ -24,8 +28,25 @@ export const Inicio = () => {
     autoplaySpeed: 2000,
   };
 
+  const driverAction = () => {
+    const driverObj = driver({
+      showProgress: true,
+      steps: [
+        { element: '#section-content', popover: { title: 'Bienvenido!', description: 'Esta es la página principal', side: "left", align: 'start' }},
+        { element: '#side-bar', popover: { title: 'Navegación', description: 'Desde esta sección podrás navegar por la página', side: "right", align: 'start' }},
+        { element: 'html', popover: { title: 'Eso es todo por ahora', description: 'Esperemos que puedas realizar todas las operaciones que necesites', side: "top", align: 'start' } }
+      ],
+      nextBtnText: 'Próximo',
+      prevBtnText: 'Anterior',
+      doneBtnText: 'Finalizar',
+      progressText: '{{current}} de {{total}}',
+    });
+    driverObj.drive()
+  }
+
+
   return (
-    <div class="section-content">
+    <div class="section-content" id='section-content'>
       <SideBar />
       <div className="home">
         <div className='home-title'>
@@ -54,6 +75,9 @@ export const Inicio = () => {
             </div>
           </Slider>
         </div>
+          <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+            <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+          </div>
         </div>
       </div>
     </div>

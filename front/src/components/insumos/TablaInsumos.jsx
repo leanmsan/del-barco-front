@@ -52,7 +52,7 @@ export const TablaInsumos = () => {
               <input type="text" id="nombre_insumo" name="nombre_insumo" value="${insumoActual.nombre_insumo}" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
               <label htmlFor="cantidad_disponible" style="display: block;">Cantidad :</label>
-              <input type="text" id="cantidad_disponible" name="cantidad_disponible" value="${insumoActual.cantidad_disponible}" required  style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
+              <input type="number" id="cantidad_disponible" name="cantidad_disponible" value="${insumoActual.cantidad_disponible}" required  style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
               <label htmlFor="tipo_medida" style="display: block;">Tipo de medida:</label>
               <select id="tipo_medida" name="tipo_medida" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">

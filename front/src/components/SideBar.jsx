@@ -77,7 +77,7 @@ export function SideBar(selectedTab) {
          <img src={logo} alt="Logo Cervecería Del Barco" onClick={handleLogoClick}/>
         </div>
       
-      <div className="menu-items">
+      <div className="menu-items" id="side-bar">
         <div>
         <ul className="nav-links">
 
