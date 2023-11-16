@@ -3,6 +3,8 @@ import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper
 import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export const TablaProveedores = () => {
   const [proveedores, setData] = useState([]);
@@ -152,8 +154,9 @@ export const TablaProveedores = () => {
     <div className='section-content'>
       <h1 className="title">Proveedores</h1>
       <div className='search-box'>
-      
-        <button className="btn-search"><i className="fas fa-search"></i></button>
+      <button className="btn-search">
+        <FontAwesomeIcon icon={faSearch} style={{ color: "#ffffff" }} />
+      </button>
         <input
           className='input-search' type="text" placeholder="Buscar..."
           value={busqueda} onChange={handleChange}
