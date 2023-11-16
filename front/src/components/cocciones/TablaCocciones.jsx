@@ -56,7 +56,7 @@ export const TablaCocciones = () => {
                         <TableRow>
                             <TableCell class="cell-head-TableContainer">Receta</TableCell>
                             <TableCell class="cell-head-TableContainer">Fecha</TableCell>
-                            <TableCell class="cell-head-TableContainer">Volumen Producido</TableCell>
+                            <TableCell class="cell-head-TableContainer">Volumen producido en litros</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
