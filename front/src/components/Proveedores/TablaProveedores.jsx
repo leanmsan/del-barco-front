@@ -46,14 +46,15 @@ export const TablaProveedores = () => {
     Swal.fire({
       title: 'Modificar proveedor',
       html: `<form id="form-modificar">
-              <label for="nombre">Nuevo nombre:</label>
-              <input type="text" id="nombre" name="nombre" value="${proveedorActual.nombre_proveedor}" required>
+              <label htmlFor="nombre" style="display: block;">Nombre: </label>
+              <input type="text" id="nombre" name="nombre" value="${proveedorActual.nombre_proveedor}" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
-              <label for="mail">Nuevo Mail:</label>
-              <input type="text" id="mail" name="mail" value="${proveedorActual.mail}" required>
+              <label htmlFor="mail" style="display: block;">Email: </label>
+              <input type="text" id="mail" name="mail" value="${proveedorActual.mail}" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
-              <label for="contacto">Nuevo Contacto:</label>
-              <input type="text" id="contacto" name="contacto" value="${proveedorActual.telefono}" required>
+              <label htmlFor="contacto" style="display: block;">Contacto: </label>
+              <input type="text" id="contacto" name="contacto" value="${proveedorActual.telefono}" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
+            
             </form>`,
       showCancelButton: true,
       confirmButtonColor: '#1450C9',

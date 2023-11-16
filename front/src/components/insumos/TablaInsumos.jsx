@@ -10,6 +10,8 @@ export const TablaInsumos = () => {
   const [busqueda, setBusqueda] = useState('');
   const [proveedores, setProveedores] = useState([]);
 
+  const unidadesDeMedida = ["Kg", "g", "Mg", "L", "Ml", "Cc"];
+
   const handleChange = (event) => {
     setBusqueda(event.target.value);
     filtrar(event.target.value);
@@ -44,29 +46,35 @@ export const TablaInsumos = () => {
     Swal.fire({
       title: 'Modificar insumo',
       html: `<form id="form-modificar">
-              <label htmlFor="nombre_insumo">Nuevo nombre: </label>
-              <input type="text" id="nombre_insumo" name="nombre_insumo" value="${insumoActual.nombre_insumo}" required>
+              <label htmlFor="nombre_insumo" style="display: block;">Nombre: </label>
+              <input type="text" id="nombre_insumo" name="nombre_insumo" value="${insumoActual.nombre_insumo}" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
-              <label htmlFor="cantidad_disponible">Nueva cantidad :</label>
-              <input type="text" id="cantidad_disponible" name="cantidad_disponible" value="${insumoActual.cantidad_disponible}" required>
+              <label htmlFor="cantidad_disponible" style="display: block;">Cantidad :</label>
+              <input type="text" id="cantidad_disponible" name="cantidad_disponible" value="${insumoActual.cantidad_disponible}" required  style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
-              <label htmlFor="tipo_medida">Nueva Medida:</label>
-              <input type="text" id="tipo_medida" name="tipo_medida" value="${insumoActual.tipo_medida}" required>
+              <label htmlFor="tipo_medida" style="display: block;">Tipo de medida:</label>
+              <select id="tipo_medida" name="tipo_medida" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
+                ${unidadesDeMedida.map((unidadMedida) => `
+                  <option value="${unidadMedida}" ${insumoActual.tipo_medida === unidadMedida ? 'selected' : ''}>
+                    ${unidadMedida}
+                  </option>
+                `).join('')}
+              </select>
+              <label htmlFor="categoria" style="display: block;">Categoria:</label>
+              <input type="text" id="categoria" name="categoria" value="${insumoActual.categoria}" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
-              <label htmlFor="categoria">Nueva Categoria:</label>
-              <input type="text" id="categoria" name="categoria" value="${insumoActual.categoria}" required>
+              <label htmlFor="precio_unitario" style="display: block;">Precio unitario:</label>
+              <input type="number" id="precio_unitario" name="precio_unitario" value="${insumoActual.precio_unitario}" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
-              <label htmlFor="precio_unitario">Nuevo precio:</label>
-              <input type="number" id="precio_unitario" name="precio_unitario" value="${insumoActual.precio_unitario}" required>
-              <br/>
-              <label htmlFor="proveedor_id">Nuevo proveedor:</label>
-              <select id="proveedor_id" name="proveedor_id" value="${insumoActual.proveedor_id}" required>
+              <label htmlFor="proveedor_id" style="display: block;">Proveedor:</label>
+              <select id="proveedor_id" name="proveedor_id" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
                 ${proveedores.map((proveedor) => `
-                  <option key="${proveedor.nombre_proveedor}" value="${proveedor.nombre_proveedor}">
+                  <option value="${proveedor.nombre_proveedor}" ${insumoActual.proveedor_id === proveedor.nombre_proveedor ? 'selected' : ''}>
                     ${proveedor.nombre_proveedor}
                   </option>
                 `).join('')}
               </select>
+
             </form>`,
       showCancelButton: true,
       confirmButtonColor: '#1450C9',
