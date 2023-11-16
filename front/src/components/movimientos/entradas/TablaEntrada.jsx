@@ -4,6 +4,10 @@ import { format } from "date-fns";
 import esLocale from 'date-fns/locale/es';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import { Link } from 'react-router-dom'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export const TablaEntradas = () => {
     const [entradas, setEntradas] = useState([]);
@@ -33,7 +37,7 @@ export const TablaEntradas = () => {
         };
 
         return (
-            <TableContainer component={Paper} class="table-container-format">
+            <TableContainer component={Paper} class="table-container-format tabla-ingresos">
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -82,7 +86,7 @@ export const TablaEntradas = () => {
                             Cerrar detalles
                         </button>
                         </h2>
-                        <TableContainer component={Paper} class="table-container-format">
+                        <TableContainer component={Paper} class="table-container-format tabla-detalles">
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -110,6 +114,25 @@ export const TablaEntradas = () => {
         );
     };
 
+    const driverAction = () => {
+        const driverObj = driver({
+          popoverClass: 'driverjs-theme',
+          showProgress: true,
+          steps: [
+            { element: '.section-content', popover: { title: 'Ingresos', description: 'Aquí podrás ver los datos de los insumos que ingresaron', side: "left", align: 'start' }},
+            { element: '.tabla-ingresos', popover: { title: 'Lista de ingresos', description: 'Aquí podrás ver el listado de todos los ingresos', side: "right", align: 'start' }},
+            { element: '.tabla-ingresos', popover: { title: 'Seleccionar', description: 'Cuando hagas click sobre algún ingreso, podrás ver los detalles más abajo', side: "left", align: 'start' }},
+            { element: '.btn-create-sin-searchbox', popover: { title: 'Nuevo ingreso', description: 'También puedes ir a registrar un nuevo ingreso directamente!', side: "right", align: 'start' }},
+            { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+          ],
+          nextBtnText: 'Próximo',
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
+          progressText: '{{current}} de {{total}}',
+        });
+        driverObj.drive()
+      };
+
     return (
         <div className="section-content">
             <div>
@@ -124,6 +147,9 @@ export const TablaEntradas = () => {
                         {renderEntradasDetalle()}
                     </>
                 )}
+            </div>
+            <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+                <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
             </div>
         </div>
     );

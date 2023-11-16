@@ -30,6 +30,7 @@ export const Inicio = () => {
 
   const driverAction = () => {
     const driverObj = driver({
+      popoverClass: 'driverjs-theme',
       showProgress: true,
       steps: [
         { element: '#section-content', popover: { title: 'Bienvenido!', description: 'Esta es la página principal', side: "left", align: 'start' }},

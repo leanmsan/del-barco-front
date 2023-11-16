@@ -5,6 +5,9 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export const TablaProveedores = () => {
   const [proveedores, setData] = useState([]);
@@ -148,7 +151,27 @@ export const TablaProveedores = () => {
       console.error('Error al realizar la solicitud PATCH:', error.message);
       Swal.fire('Error al dar de baja', '', 'error');
     }
-  };  
+  }; 
+  
+  const driverAction = () => {
+    const driverObj = driver({
+      popoverClass: 'driverjs-theme',
+      showProgress: true,
+      steps: [
+        { element: '.section-content', popover: { title: 'Proveedores', description: 'Aquí podrás ver todos los proveedores cargados', side: "left", align: 'start' }},
+        { element: '.button-on-table-modificar', popover: { title: 'Modificar', description: 'Puedes cambiar algún dato del proveedor si crees necesario', side: "left", align: 'start' }},
+        { element: '.button-on-table-baja', popover: { title: 'Dar de baja', description: 'También puedes darlo de baja', side: "left", align: 'start' }},
+        { element: '.search-box', popover: { title: 'Buscar', description: 'Si no encuentras lo que buscas, puedes ingresar el nombre del proveedor para encontrarlo', side: "right", align: 'start' }},
+        { element: '.btn-create', popover: { title: 'Nuevo proveedor', description: 'También puedes ir a cargar un nuevo proveedor directamente!', side: "right", align: 'start' }},
+        { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+      ],
+      nextBtnText: 'Próximo',
+      prevBtnText: 'Anterior',
+      doneBtnText: 'Finalizar',
+      progressText: '{{current}} de {{total}}',
+    });
+    driverObj.drive()
+  };
 
   return (
     <div className='section-content'>
@@ -196,6 +219,9 @@ export const TablaProveedores = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+        <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+      </div>
     </div>
   );
 }

@@ -4,6 +4,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export const TablaCocciones = () => {
     const [cocciones, setCocciones] = useState([]);
@@ -37,7 +40,26 @@ export const TablaCocciones = () => {
         } catch (error) {
             console.log('Error al obtener los datos:', error);
         }
-    }
+    };
+
+    const driverAction = () => {
+        const driverObj = driver({
+          popoverClass: 'driverjs-theme',
+          showProgress: true,
+          steps: [
+            { element: '.section-content', popover: { title: 'Cocciones', description: 'Aquí podrás ver los datos de las cocciones', side: "left", align: 'start' }},
+            { element: '.tabla-cocciones', popover: { title: 'Lista de cocciones', description: 'Aquí podrás ver el listado de todos los ingresos', side: "right", align: 'start' }},
+            { element: '.search-box', popover: { title: 'Buscar', description: 'Si no encuentras lo que buscas, puedes ingresar el nombre de la receta para encontrarla', side: "right", align: 'start' }},
+            { element: '.btn-create', popover: { title: 'Nueva cocción', description: 'También puedes ir a registrar una nueva cocción directamente!', side: "right", align: 'start' }},
+            { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+          ],
+          nextBtnText: 'Próximo',
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
+          progressText: '{{current}} de {{total}}',
+        });
+        driverObj.drive()
+      };
 
     return (
         <div className="section-content">
@@ -54,7 +76,7 @@ export const TablaCocciones = () => {
                     <button className='btn-create'>+ Nueva cocción</button>
                 </Link>
             </div>
-            <TableContainer component={Paper} class="table-container-format">
+            <TableContainer component={Paper} class="table-container-format tabla-cocciones">
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -74,6 +96,9 @@ export const TablaCocciones = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+                    <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+                </div>
         </div>
     );
 };

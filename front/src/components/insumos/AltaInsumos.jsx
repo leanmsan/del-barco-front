@@ -5,6 +5,10 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2";
 import { useNavigate  } from 'react-router-dom';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export function AltaInsumos() {
   const [nombre_insumo, setNombre_insumo] = useState("");
@@ -148,6 +152,23 @@ export function AltaInsumos() {
     }
   };
 
+  const driverAction = () => {
+    const driverObj = driver({
+      popoverClass: 'driverjs-theme',
+      showProgress: true,
+      steps: [
+        { element: '.section-content-form', popover: { title: 'Nuevo insumo', description: 'Aquí podrás cargar los datos del insumo a registrar', side: "left", align: 'start' }},
+        { element: '.button-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
+        { popover: { title: 'Eso es todo!', description: 'Ya puedes realizar la carga.' } }
+      ],
+      nextBtnText: 'Próximo',
+      prevBtnText: 'Anterior',
+      doneBtnText: 'Finalizar',
+      progressText: '{{current}} de {{total}}',
+    });
+    driverObj.drive()
+  };
+
   return (
 
     <div className="section-content-form">         
@@ -266,6 +287,9 @@ export function AltaInsumos() {
           Guardar
         </button>
     </Box>
+          <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+            <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+          </div>
     </div>
   );
 }

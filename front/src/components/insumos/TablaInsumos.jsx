@@ -5,6 +5,9 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export const TablaInsumos = () => {
   const [insumos, setData] = useState([]);
@@ -136,6 +139,25 @@ export const TablaInsumos = () => {
     });
   };
 
+  const driverAction = () => {
+    const driverObj = driver({
+      popoverClass: 'driverjs-theme',
+      showProgress: true,
+      steps: [
+        { element: '.section-content', popover: { title: 'Insumos', description: 'Aquí podrás ver todos los insumos cargados', side: "left", align: 'start' }},
+        { element: '.button-on-table-modificar', popover: { title: 'Modificar', description: 'Puedes cambiar algún dato de insumo si crees necesario', side: "right", align: 'start' }},
+        { element: '.search-box', popover: { title: 'Buscar', description: 'Si no encuentras lo que buscas, puedes ingresar el nombre del insumo para encontrarlo', side: "right", align: 'start' }},
+        { element: '.btn-create', popover: { title: 'Nuevo insumo', description: 'También puedes ir a cargar un nuevo insumo directamente!', side: "right", align: 'start' }},
+        { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+      ],
+      nextBtnText: 'Próximo',
+      prevBtnText: 'Anterior',
+      doneBtnText: 'Finalizar',
+      progressText: '{{current}} de {{total}}',
+    });
+    driverObj.drive()
+  };
+
   return (
     <div className="section-content">
       <h1 className="title">Insumos</h1>
@@ -180,6 +202,9 @@ export const TablaInsumos = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+        <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+      </div>
     </div>
   );
 };
