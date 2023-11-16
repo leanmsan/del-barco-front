@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import "../../../css/form.css";
 import Swal from "sweetalert2";
 import RequiredFieldError from "../../../utils/errors";
+import { useNavigate } from "react-router-dom";
 
 // imports para la tabla con los insumos que componen el detalle
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
@@ -30,6 +31,8 @@ export function SalidasForm() {
 
     const [listaDetalle, setListaDetalle] = useState([]);
 
+    
+    const navegate = useNavigate()
     // listado de insumos
     useEffect(() => {
         const fetchInsumos = async () => {
@@ -194,7 +197,9 @@ export function SalidasForm() {
                 text: 'La salida se registró correctamente!',
                 icon: 'success',
                 confirmButtonText: 'OK'
-            });
+            }).then(() => {
+                navegate('/salidas')
+            })
 
             console.log('Entrada y detalles creados exitosamente');
         } catch (error) {

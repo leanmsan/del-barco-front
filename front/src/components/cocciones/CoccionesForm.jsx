@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export function CoccionesForm() {
     const [fecha_coccion, setFechaCoccion] = useState("");
@@ -17,6 +18,8 @@ export function CoccionesForm() {
 
     const [volumen_producido, setVolumenProducido] = useState("")
     const [errorVolumenProducido, setErrorVolumenProducido] = useState(false);
+    
+    const navegate = useNavigate()
 
     // listado de recetas
     useEffect(() => {
@@ -82,7 +85,9 @@ export function CoccionesForm() {
                     text: 'La cocción se registró correctamente!',
                     icon: 'success',
                     confirmButtonText: 'OK'
-                  });
+                  }).then(() => {
+                    navegate('/cocciones')
+                  })
             } else {
                 console.log("Error al enviar el formulario");
                 Swal.fire({
