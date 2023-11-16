@@ -6,6 +6,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Swal from 'sweetalert2';
 import '../../css/form.css';
 import { useNavigate } from "react-router-dom";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+
 export function RecetasForm() {
   const [nombreReceta, setNombreReceta] = useState('');
   const [errorNombreReceta, setErrorNombreReceta] = useState(false);
@@ -221,6 +226,27 @@ export function RecetasForm() {
     }
   };
 
+  const driverAction = () => {
+    const driverObj = driver({
+      popoverClass: 'driverjs-theme',
+      showProgress: true,
+      steps: [
+        { element: '.section-content-form', popover: { title: 'Nueva receta', description: 'Aquí podrás cargar los datos de una nueva receta', side: "left", align: 'start' }},
+        { element: '.campos', popover: { title: 'Datos', description: 'En los campos vas cargando los datos de la nueva receta y de los insumos', side: "right", align: 'start' }},
+        { element: '.btn-agregar', popover: { title: 'Agregar insumo', description: 'Cuando tengas los datos cargados de un insumo, presiona aquí', side: "left", align: 'start' }},
+        { element: '.tabla-detalles', popover: { title: 'Lista de insumos', description: 'Aqui se verán los insumos que vas cargando', side: "right", align: 'start' }},
+        { popover: { title: 'Quitar de la lista', description: 'Cuando cargues insumos te aparecerá el boton para quitarlo, en caso de que te hayas confundido' } },
+        { element: '.btn-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
+        { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+      ],
+      nextBtnText: 'Próximo',
+      prevBtnText: 'Anterior',
+      doneBtnText: 'Finalizar',
+      progressText: '{{current}} de {{total}}',
+    });
+    driverObj.drive()
+  };
+
   return (
     <div className='section-content-form'>
       <Box
@@ -233,7 +259,7 @@ export function RecetasForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nueva receta</h1>
-                <div>
+                <div class="campos">
                 <TextField
                   required
                   id="outlined-required"
@@ -317,14 +343,14 @@ export function RecetasForm() {
                     <br />
                 </div>
                 <br />
-                <button className="button-guardar" type="button" onClick={handleAgregarDetalle}>
+                <button className="button-guardar btn-agregar" type="button" onClick={handleAgregarDetalle}>
                     Agregar insumo
                 </button>
                 <h2 className="subtitulo-tablas">Lista de insumos</h2>
                 {listaDetalles.length >= 0 && (
                   <div>
                     
-                    <TableContainer class="table-container-format" component={Paper}>
+                    <TableContainer class="table-container-format tabla-detalles" component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -352,11 +378,13 @@ export function RecetasForm() {
                 </TableContainer> 
                 </div>
                 )}
-                <button className="button-guardar" type="submit">
+                <button className="button-guardar btn-guardar" type="submit">
                     Guardar
                 </button>
                 </Box>
-
+                <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+                    <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+                </div>
     </div>
   );
 }

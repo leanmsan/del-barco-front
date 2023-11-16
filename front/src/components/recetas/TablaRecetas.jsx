@@ -3,6 +3,10 @@ import axios from 'axios';
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export const TablaRecetas = () => {
   const [recetas, setRecetas] = useState([]);
@@ -37,7 +41,7 @@ export const TablaRecetas = () => {
     };
 
     return (
-      <TableContainer component={Paper} className="table-container-format">
+      <TableContainer component={Paper} className="table-container-format tabla-recetas">
         <Table>
           <TableHead>
             <TableRow>
@@ -160,7 +164,7 @@ export const TablaRecetas = () => {
                       <TableCell>{e.cantidad}</TableCell>
                       <TableCell>{e.tipo_medida}</TableCell>
                       <TableCell>
-                        <button type='button' className="button-on-table-modificar" onClick={() => handleModificarDetalles(e.idrecetadetalle)}>
+                        <button type='button' className="button-on-table-modificar btn-modif" onClick={() => handleModificarDetalles(e.idrecetadetalle)}>
                           Modificar Detalles
                         </button>
                       </TableCell>
@@ -173,6 +177,26 @@ export const TablaRecetas = () => {
         )}
       </>
     );
+  };
+
+  const driverAction = () => {
+    const driverObj = driver({
+      popoverClass: 'driverjs-theme',
+      showProgress: true,
+      steps: [
+        { element: '.section-content', popover: { title: 'Recetas', description: 'Aquí podrás ver las recetas y sus detalles', side: "left", align: 'start' }},
+        { element: '.tabla-recetas', popover: { title: 'Lista de egresos', description: 'Aquí podrás ver el listado de todas las recetas', side: "right", align: 'start' }},
+        { element: '.tabla-recetas', popover: { title: 'Seleccionar', description: 'Cuando hagas click sobre alguna receta, podrás ver los detalles más abajo', side: "left", align: 'start' }},
+        { element: '.btn-modif', popover: { title: 'Modificar', description: 'También vas a poder modificar las cantidades de los insumos si te confundiste' } },
+        { element: '.btn-create-sin-searchbox', popover: { title: 'Nueva receta', description: 'También puedes ir a registrar una nueva receta directamente!', side: "right", align: 'start' }},
+        { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+      ],
+      nextBtnText: 'Próximo',
+      prevBtnText: 'Anterior',
+      doneBtnText: 'Finalizar',
+      progressText: '{{current}} de {{total}}',
+    });
+    driverObj.drive()
   };
 
   return (
@@ -188,6 +212,9 @@ export const TablaRecetas = () => {
             {renderRecetasDetalle()}
           </>
         )}
+      </div>
+      <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+        <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
       </div>
     </div>
   );
