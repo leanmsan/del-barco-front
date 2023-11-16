@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from 'sweetalert2';
 import '../../css/form.css';
-
+import { useNavigate } from "react-router-dom";
 export function RecetasForm() {
   const [nombreReceta, setNombreReceta] = useState('');
   const [errorNombreReceta, setErrorNombreReceta] = useState(false);
@@ -29,6 +29,8 @@ export function RecetasForm() {
   const [errorListaInsumos, setErrorListaInsumos] = useState(false);
   
   const [editable, setEditable] = useState(true);
+
+  const navegate = useNavigate()
 
   useEffect(() => {
     fetchInsumos();
@@ -196,7 +198,9 @@ export function RecetasForm() {
           title: 'Receta creada con éxito',
           showConfirmButton: false,
           timer: 1500,
-        });
+        }).then(() => {
+          navegate('/recetas')
+        })
 
         // Limpiar formulario después del envío exitoso
         setNombreReceta('');

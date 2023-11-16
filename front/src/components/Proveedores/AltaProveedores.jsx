@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Swal from "sweetalert2";
 import RequiredFieldError from "../../utils/errors";
+import { useNavigate } from "react-router-dom";
 
 export function AltaProveedores() {
   const [nombre_proveedor, setNombre] = useState("");
@@ -15,6 +16,8 @@ export function AltaProveedores() {
   const [errorTelefono, setErrorTelefono] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const navegate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +57,12 @@ export function AltaProveedores() {
           text: 'La cocción se registró correctamente',
           icon: 'success',
           confirmButtonText: 'OK'
+        }).then(() => {
+          console.log('Antes de redireccionar a tabla insumos');
+          navegate('/proveedores')
+          console.log('Después de redireccionar a tabla insumos');
+        }).catch(error => {
+          console.error('Error al redireccionar:', error);
         });
       } else {
         console.log('Error al crear el proveedor');

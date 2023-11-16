@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2";
+import { useNavigate  } from 'react-router-dom';
 
 export function AltaInsumos() {
   const [nombre_insumo, setNombre_insumo] = useState("");
@@ -26,6 +27,8 @@ export function AltaInsumos() {
 
   const [proveedores, setProveedores] = useState([]);
   const [proveedorSeleccionado, setProveedorSeleccionado] = useState("");
+
+  const navegate = useNavigate ()
 
   const unidadesDeMedida = ["Kg", "g", "Mg", "L", "Ml", "Cc"];
 
@@ -116,7 +119,14 @@ export function AltaInsumos() {
           text: 'El insumo se registró correctamente!',
           icon: 'success',
           confirmButtonText: 'OK'
+        }).then(() => {
+          console.log('Antes de redireccionar a tabla insumos');
+          navegate('/tablainsumos')
+          console.log('Después de redireccionar a tabla insumos');
+        }).catch(error => {
+          console.error('Error al redireccionar:', error);
         });
+        
       } else {
         console.log("Error al enviar el formulario.");
         Swal.fire({

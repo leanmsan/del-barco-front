@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2"; 
+import { useNavigate } from "react-router-dom";
 
 export function EntradaForm() {
     // entrada
@@ -34,6 +35,8 @@ export function EntradaForm() {
     const [errorPrecioUnitario, setErrorPrecioUnitario] = useState(false);
 
     const [listaDetalle, setListaDetalle] = useState([]);
+
+    const navegate = useNavigate()
 
     useEffect(() => {
         const fetchProveedores = async () => {
@@ -213,7 +216,8 @@ export function EntradaForm() {
             setProveedorId("");
             setMontoTotal(0);
             setListaDetalle([]);
-          } else {
+          }
+          else {
             console.log("Error al crear la entrada", response);
             return;
           }
@@ -235,7 +239,10 @@ export function EntradaForm() {
             text: 'La entrada se registró correctamente!',
             icon: 'success',
             confirmButtonText: 'OK'
-          });
+          }).then(() => {
+            console.log('redireccion a la tabla entradas')
+            navegate('/entradas')
+          })
       
           console.log("Entrada y detalles creados exitosamente");
         } catch (error) {
