@@ -157,7 +157,7 @@ export function AltaInsumos() {
       popoverClass: 'driverjs-theme',
       showProgress: true,
       steps: [
-        { element: '#form-insumo', popover: { title: 'Nuevo insumo', description: 'Aquí podrás cargar los datos del insumo a registrar', side: "left", align: 'start' }},
+        { element: '.section-content-form', popover: { title: 'Nuevo insumo', description: 'Aquí podrás cargar los datos del insumo a registrar', side: "left", align: 'start' }},
         { element: '.button-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
         { popover: { title: 'Eso es todo!', description: 'Ya puedes realizar la carga.' } }
       ],
@@ -180,7 +180,6 @@ export function AltaInsumos() {
       noValidate
       autoComplete="off"
       onSubmit={handleSubmit}
-      id="form-insumo"
     >
       <h1 className="title">Nuevo insumo</h1>
       <div>

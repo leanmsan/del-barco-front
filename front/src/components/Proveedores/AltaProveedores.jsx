@@ -4,6 +4,10 @@ import TextField from '@mui/material/TextField';
 import Swal from "sweetalert2";
 import RequiredFieldError from "../../utils/errors";
 import { useNavigate } from "react-router-dom";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export function AltaProveedores() {
   const [nombre_proveedor, setNombre] = useState("");
@@ -102,6 +106,23 @@ export function AltaProveedores() {
     }
   };
 
+  const driverAction = () => {
+    const driverObj = driver({
+      popoverClass: 'driverjs-theme',
+      showProgress: true,
+      steps: [
+        { element: '.section-content-form', popover: { title: 'Nuevo proveedor', description: 'Aquí podrás cargar los datos del proveedor a registrar', side: "left", align: 'start' }},
+        { element: '.button-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
+        { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+      ],
+      nextBtnText: 'Próximo',
+      prevBtnText: 'Anterior',
+      doneBtnText: 'Finalizar',
+      progressText: '{{current}} de {{total}}',
+    });
+    driverObj.drive()
+  }
+
   return (
     <div className='section-content-form'>
       <Box
@@ -163,6 +184,9 @@ export function AltaProveedores() {
           Guardar
         </button>
       </Box>
+      <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
+            <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+          </div>
     </div>
   );
 }
