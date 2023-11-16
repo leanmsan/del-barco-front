@@ -409,7 +409,7 @@ export function RecetasForm() {
                     <br />
                 </div>
                 <br />
-                <button className="button-guardar" type="submit" onClick={handleAgregarDetalle}>
+                <button className="button-guardar" type="button" onClick={handleAgregarDetalle}>
                     Agregar insumo
                 </button>
                 <h2 className="subtitulo-tablas">Lista de insumos</h2>
@@ -432,10 +432,7 @@ export function RecetasForm() {
                                     <TableCell>{detalle.insumoId}</TableCell>
                                     <TableCell>{detalle.cantidad}</TableCell>
                                     <TableCell>{detalle.tipoMedida}</TableCell>
-                                    <TableCell><button type='button' class="button-on-table-modificar" onClick={() => handleQuitarDetalle(index)}>
-                            Modificar
-                          </button>
-                          </TableCell>
+                                    
                           <TableCell>
                           <button type='button' class="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
                             Quitar
