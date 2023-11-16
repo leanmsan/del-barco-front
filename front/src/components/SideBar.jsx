@@ -288,7 +288,10 @@ export function SideBar(selectedTab) {
       </div>
 
       <div className="info-the-five">
-        <p className="txt-the-five">Desarrollado por The Five</p>
+      <p className="txt-the-five" style={{ backgroundImage: 'linear-gradient(to right, blue, blue 20%, white 20%, white 30%, red 30%, red 70%, white 70%, white 80%, blue 80%, blue)', backgroundSize: '100% 8px', backgroundRepeat: 'no-repeat',
+    backgroundPositionY: 'bottom', }}>
+        Desarrollado por The Five
+      </p>
       </div>
     </nav>
   );
