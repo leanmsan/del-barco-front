@@ -33,8 +33,8 @@ export const Inicio = () => {
       popoverClass: 'driverjs-theme',
       showProgress: true,
       steps: [
-        { element: '#section-content', popover: { title: 'Bienvenido!', description: 'Esta es la página principal', side: "left", align: 'start' }},
-        { element: '#side-bar', popover: { title: 'Navegación', description: 'Desde esta sección podrás navegar por la página', side: "right", align: 'start' }},
+        { popover: { title: 'Bienvenido!', description: 'Esta es la página principal', side: "left", align: 'start' }},
+        { element: '#side-bar', popover: { title: 'Navegación', description: 'Desde esta sección podrás navegar por todas las funciones', side: "right", align: 'start' }},
         { element: 'html', popover: { title: 'Eso es todo por ahora', description: 'Esperemos que puedas realizar todas las operaciones que necesites', side: "top", align: 'start' } }
       ],
       nextBtnText: 'Próximo',
