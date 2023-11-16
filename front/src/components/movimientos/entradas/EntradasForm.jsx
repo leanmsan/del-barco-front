@@ -280,7 +280,7 @@ export function EntradaForm() {
             { element: '.campos', popover: { title: 'Datos', description: 'En los campos vas cargando los datos de los insumos', side: "right", align: 'start' }},
             { element: '.btn-agregar', popover: { title: 'Agregar insumo', description: 'Cuando tengas los datos cargados de un insumo, presiona aquí', side: "left", align: 'start' }},
             { element: '.tabla-detalles', popover: { title: 'Lista de insumos', description: 'Aqui se verán los insumos que vas cargando', side: "right", align: 'start' }},
-            { element: '.monto-total', popover: { title: 'Monto total', description: 'Aquí se irá actualizando con el monto total de los ingresos. TIP: Recuerda tener los precios de insumos actualizados', side: "left", align: 'start' }},
+            { element: '.monto', popover: { title: 'Monto total', description: 'Aquí se irá actualizando con el monto total de los ingresos. TIP: Recuerda tener los precios de insumos actualizados', side: "left", align: 'start' }},
             { popover: { title: 'Quitar de la lista', description: 'Cuando cargues insumos te aparecerá el boton para quitarlo, en caso de que te hayas confundido' } },
             { element: '.btn-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
             { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
@@ -401,7 +401,7 @@ export function EntradaForm() {
                     error={errorPrecioUnitario}
                     helperText={errorPrecioUnitario ? 'El precio unitario es requerido' : ''}
                     />
-
+                    <div class="monto">
                     <TextField
                         id="outlined-read-only-input"
                         label="Monto Total"
@@ -409,8 +409,8 @@ export function EntradaForm() {
                         InputProps={{
                             readOnly: true,
                         }}
-                        class = "monto-total"
-                    />
+                        
+                    /></div>
                     
                     <br />
                 </div>
