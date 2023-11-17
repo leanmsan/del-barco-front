@@ -80,11 +80,20 @@ export const TablaProveedores = () => {
         const nuevoContacto = form.elements['contacto'].value;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const telefonoRegex = /^\+54 9 [0-9]{4} [0-9]{2}-[0-9]{4}$/;
 
+        
         if (!emailRegex.test(nuevoMail)) {
           Swal.fire('Error', 'Por favor, introduce un correo electronico valido', 'error');
           return;
         }
+
+
+        if (!telefonoRegex.test(nuevoContacto)) {
+          Swal.fire('Error', 'Por favor, introduce un número de teléfono válido de Argentina', 'error');
+          return;
+        }
+
 
         if (!nuevoNombre || !nuevoMail || !nuevoContacto) {
           Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
@@ -153,6 +162,12 @@ export const TablaProveedores = () => {
       console.error('Error al realizar la solicitud PATCH:', error.message);
       Swal.fire('Error al dar de baja', '', 'error');
     }
+  };
+
+  const handleEnviarWhatsapp = (telefono) => {
+    const numeroTelefono = telefono.replace(/[^\d]/g, ''); // Elimina todo excepto los dígitos
+    const urlWhatsapp = `https://wa.me/${numeroTelefono}`;
+    window.open(urlWhatsapp, '_blank');
   };
 
   const driverAction = () => {
@@ -231,6 +246,15 @@ export const TablaProveedores = () => {
                     Dar de Baja
                   </button>
                 </TableCell>
+                <TableCell>
+            <button
+              type='button'
+              className="button-on-table-whatsapp"
+              onClick={() => handleEnviarWhatsapp(row.telefono)}
+            >
+              Enviar WhatsApp
+            </button>
+          </TableCell>
               </TableRow>
             ))}
           </TableBody>
