@@ -89,64 +89,86 @@ export function SalidasForm() {
         return !isNaN(value) && value > 0;
     };
 
-    const agregarDetalle = () => {
-        try {
-            if (!insumo_id || !cantidad) {
-                if (!insumo_id) {
-                    setErrorInsumoId(true);
-                }
-                if (!cantidad) {
-                    setErrorCantidad(true);
-                }
-
-                const cantidadNumero = parseFloat(cantidad);
-
-                if (!isPositiveNumber(cantidadNumero)) {
-                    setErrorCantidad(true);
-                    throw new RequiredFieldError('Cantidad debe ser un número positivo');
-                }
-
-                throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
-            } else {
-                const insumoExistente = listaDetalle.some(
-                    (detalle) => detalle.insumo_id === insumo_id
-                );
-
-                if (insumoExistente) {
-                    //console.log("El insumo ya está en la lista de detalles");
-                    throw new RequiredFieldError("El insumo ya está en la lista");
-                }
-
-                const nuevoDetalle = {
-                    idsalida_id: idsalida_id,
-                    insumo_id: insumo_id,
-                    cantidad: cantidad,
-                };
-
-                const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
-                var nuevoTotal = monto_total || 0;
-                nuevoTotal = nuevoTotal + subtotal;
-
-                setListaDetalle([...listaDetalle, nuevoDetalle]);
-                setMontoTotal(nuevoTotal);
-
-                setInsumoId("");
-                setCantidad("");
-
-                if (salidaDetalleFormRef.current) {
-                    salidaDetalleFormRef.current.reset();
-                    setErrorInsumoId(false);
-                    setErrorCantidad(false);
-                }
+    const validateSalidasFields = () => {
+        if (!insumo_id || !cantidad) {
+          if (!insumo_id) {
+            setErrorInsumoId(true);
+          }
+          if (!cantidad) {
+            setErrorCantidad(true);
+          }
+      
+          const cantidadNumero = parseFloat(cantidad);
+      
+          if (!isPositiveNumber(cantidadNumero)) {
+            if (!isPositiveNumber(cantidadNumero)) {
+              setErrorCantidad(true);
             }
-        } catch (error) {
-            if (error instanceof RequiredFieldError) {
-                console.log("Faltan completar datos requeridos", error.message);
-            } else {
-                console.log("Error de red", error);
-            }
+      
+            throw new RequiredFieldError('Cantidad deben ser números positivos');
+          }
+          throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
         }
-    };
+      
+        // Verificación adicional para asegurar que tanto cantidad como precio_unitario sean positivos
+        if (parseFloat(cantidad) <= 0) {
+          setErrorCantidad(true);
+          throw new RequiredFieldError('Cantidad deben ser números positivos');
+        }
+      };
+      
+
+      const agregarDetalle = () => {
+        try {
+          validateSalidasFields();
+    
+          const insumoExistente = listaDetalle.some(
+            (detalle) => detalle.insumo_id === insumo_id
+          );
+    
+          if (insumoExistente) {
+            Swal.fire({
+              title: 'Error',
+              text: 'El insumo ya está en la lista',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+            throw new RequiredFieldError("El insumo ya está en la lista");
+          }
+    
+          const nuevoDetalle = {
+            idsalida_id: idsalida_id,
+            insumo_id: insumo_id,
+            cantidad: cantidad,
+          };
+
+          
+        const subtotal = parseFloat(cantidad); 
+        const nuevoTotal = monto_total + subtotal;
+
+        setListaDetalle([...listaDetalle, nuevoDetalle]);
+        setMontoTotal(nuevoTotal);
+
+        setInsumoId("");
+        setCantidad("");
+    
+          setInsumoId("");
+          setCantidad("");
+    
+          if (salidaDetalleFormRef.current) {
+            salidaDetalleFormRef.current.reset();
+            setErrorInsumoId(false);
+            setErrorCantidad(false);
+          }
+        } catch (error) {
+          if (error instanceof RequiredFieldError) {
+            console.log("Faltan completar datos requeridos", error.message);
+          } else {
+            console.log("Error de red", error);
+          }
+        }
+      };
+
 
     const handleQuitarDetalle = (index) => {
         const nuevasDetalles = [...listaDetalle];
