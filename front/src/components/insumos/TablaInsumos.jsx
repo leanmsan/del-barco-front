@@ -102,6 +102,10 @@ export const TablaInsumos = () => {
           Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
           return;
         }
+        if (nuevaCantidad < 0 || nuevoPrecio < 0) {
+          Swal.fire('Error', 'La cantidad disponible y el precio unitario no pueden ser negativos', 'error');
+          return;
+        }
 
         try {
           await axios.patch(`http://127.0.0.1:8000/api/insumos/${idinsumo}/`, {
