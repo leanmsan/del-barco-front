@@ -8,6 +8,8 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import InputMask from "react-input-mask";
+
 
 export function AltaProveedores() {
   const [nombre_proveedor, setNombre] = useState("");
@@ -156,19 +158,26 @@ export function AltaProveedores() {
             helperText={errorMail ? 'El email es requerido' : ''}
           />
 
-          <TextField
-            required
-            id="outlined-number"
-            label="Número de contacto"
-            type="number"
+<InputMask
+            mask="+54 9 999 9999999"
+            maskChar=""
             value={telefono}
             onChange={(e) => {
               setTelefono(e.target.value);
               setErrorTelefono(false);
             }}
-            error={errorTelefono}
-            helperText={errorTelefono ? 'El contacto es requerido' : ''}
-          />
+          >
+            {() => (
+              <TextField
+                required
+                id="outlined-number"
+                label="Número de contacto"
+                type="tel"
+                error={errorTelefono}
+                helperText={errorTelefono ? "El contacto es requerido" : ""}
+              />
+            )}
+          </InputMask>
 
           <br />
         </div>
