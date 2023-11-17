@@ -17,6 +17,18 @@ export const TablaInsumos = () => {
 
   const unidadesDeMedida = ["Kg", "g", "Mg", "L", "Ml", "Cc"];
 
+  const descargarInforme = async () => {
+    const response = await fetch('http://127.0.0.1:8000/api/informe_insumos/');
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(new Blob([blob]));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'informe.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   const handleChange = (event) => {
     setBusqueda(event.target.value);
     filtrar(event.target.value);
@@ -175,6 +187,7 @@ export const TablaInsumos = () => {
           <button className='btn-create'>+ Nuevo insumo</button>
         </Link>
       </div>
+      <button onClick={descargarInforme}>Descargar Informe</button>
       <TableContainer class="table-container-format" component={Paper}>
 
       <Table>
