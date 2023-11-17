@@ -80,7 +80,7 @@ export const TablaProveedores = () => {
         const nuevoContacto = form.elements['contacto'].value;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const telefonoRegex = /^\+54 9 [0-9]{4} [0-9]{2}-[0-9]{4}$/;
+        const telefonoRegex = /^\+549[0-9]{10}$/;
 
         
         if (!emailRegex.test(nuevoMail)) {
@@ -216,7 +216,7 @@ export const TablaProveedores = () => {
               <TableCell class="cell-head-TableContainer">Mail</TableCell>
               <TableCell class="cell-head-TableContainer">Contacto</TableCell>
               <TableCell class="cell-head-TableContainer">Estado</TableCell>
-              <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">
+              <TableCell colSpan={3} style={{ textAlign: 'center' }} class="cell-head-TableContainer">
                 Acciones
               </TableCell>
             </TableRow>

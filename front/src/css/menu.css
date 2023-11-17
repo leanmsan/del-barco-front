@@ -263,7 +263,6 @@ nav.close ~ .top {
     width: 400px;
     margin-top: 1rem;
     margin-left: 0;
-    padding-bottom: 25px;
     font-size: 16px;
     border-radius: 10px;
 }
@@ -343,6 +342,19 @@ nav.close ~ .top {
     font-family: 'Poppins', sans-serif;
 }
 
+.btn-informe {
+    width: max-content;
+    padding: 10px 5px;
+    color: white;
+    background-color: #7e530f;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 1rem;
+}
+
 .scrollable-sidebar {
     height: 100%;
     overflow-y: auto;
@@ -412,6 +424,13 @@ nav.close ~ .top {
     border-radius: 20px;
     background-color: #FF3434;
     color: #fff;
+}
+
+.button-on-table-whatsapp {
+    font-weight: bold;
+    border-radius: 20px;
+    background-color: #34ff60;
+    color: #000000;
 }
 
 .button-guardar {

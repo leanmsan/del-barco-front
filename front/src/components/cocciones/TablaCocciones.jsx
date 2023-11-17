@@ -24,7 +24,7 @@ export const TablaCocciones = () => {
         const url = window.URL.createObjectURL(new Blob([blob]));
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'informe.pdf';
+        a.download = 'informe-cocciones.pdf';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -62,6 +62,7 @@ export const TablaCocciones = () => {
             { element: '.section-content', popover: { title: 'Cocciones', description: 'Aquí podrás ver los datos de las cocciones', side: "left", align: 'start' }},
             { element: '.tabla-cocciones', popover: { title: 'Lista de cocciones', description: 'Aquí podrás ver el listado de todos los ingresos', side: "right", align: 'start' }},
             { element: '.search-box', popover: { title: 'Buscar', description: 'Si no encuentras lo que buscas, puedes ingresar el nombre de la receta para encontrarla', side: "right", align: 'start' }},
+            { element: '.btn-informe', popover: { title: 'Informe', description: 'Haciendo click aquí podrás descargar un informe de las cocciones', side: "right", align: 'start' }},
             { element: '.btn-create', popover: { title: 'Nueva cocción', description: 'También puedes ir a registrar una nueva cocción directamente!', side: "right", align: 'start' }},
             { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
           ],
@@ -87,7 +88,7 @@ export const TablaCocciones = () => {
                 <Link to='/nuevacoccion'>
                     <button className='btn-create'>+ Nueva cocción</button>
                 </Link>
-                <button onClick={descargarInforme}>Descargar Informe</button>
+                <button onClick={descargarInforme} className='btn-informe'>Descargar Informe</button>
             </div>
             <TableContainer component={Paper} class="table-container-format tabla-cocciones">
                 <Table>
