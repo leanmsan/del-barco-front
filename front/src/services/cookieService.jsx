@@ -1,13 +1,13 @@
 import Cookies from 'js-cookie';
 
 const cookieService = {
-  getToken: () => Cookies.get('token'),
-  setToken: (token) => Cookies.set('token', token, { expires: 1 }),
-  removeToken: () => Cookies.remove('token'),
+  getToken: () => localStorage.getItem('token'),
+  setToken: (token) => localStorage.setItem('token', token),
+  removeToken: () => localStorage.removeItem('token'),
 
-  getRefreshToken: () => Cookies.get('refreshToken'),
-  setRefreshToken: (refreshToken) => Cookies.set('refreshToken', refreshToken, { expires: 7 }),
-  removeRefreshToken: () => Cookies.remove('refreshToken'),
+  getRefreshToken: () => localStorage.getItem('refreshToken'),
+  setRefreshToken: (refreshToken) => localStorage.setItem('refreshToken', refreshToken),
+  removeRefreshToken: () => localStorage.removeItem('refreshToken'),
 };
 
 export default cookieService;

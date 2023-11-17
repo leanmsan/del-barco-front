@@ -1,6 +1,15 @@
 /* eslint-disable react/prop-types */
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+//authentication components 
 import { LoginPage } from "./pages/LoginPage";
+import { PasswordResetRequestPage } from "./pages/PasswordResetRequestPage";
+import { ResetPasswordPage } from "./pages/ResetPasswordPage";
+import { VerifyEmailPage } from "./pages/VerifyEmailPage";
+import { SignupPage } from "./pages/SignupPage";
+
+// other imports 
 import { Inicio } from "./components/Inicio";
 import ProveedoresPage from "./pages/ProveedoresPage";
 import { TablaInsumosPage } from "./pages/TablaInsumosPage";
@@ -15,7 +24,8 @@ import { TablaCoccionesPage } from "./pages/TablaCoccionesPage";
 import { RegistroCoccionesPage } from "./pages/RegistroCoccionesForm";
 import { RegistroRecetasForm } from "./pages/RegistroRecetas";
 import cookieService from "./services/cookieService";
-import { useState, useEffect } from "react";
+import apiService from "./services/apiService";
+
 
 function ProtectedRoute({ element: Component, ...rest }) {
   const isAuthenticated = cookieService.getToken();
@@ -53,14 +63,32 @@ function App() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await apiService.logout();
+      cookieService.removeToken();
+      // Puedes añadir más líneas para eliminar otros tokens si es necesario
+      setAuthenticated(false);
+      Navigate('/login');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  };
+
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/login"
-            element={<LoginPage handleAuthentication={handleAuthentication} />}
-          />
+          {/* Authentication routes */}
+          <Route path="/login" element={<LoginPage handleAuthentication={handleAuthentication} />} />
+          <Route path="/forget-password" element={<PasswordResetRequestPage/>} />
+          <Route path='/password-reset-confirm/:uid/:token' element={<ResetPasswordPage/>}/>
+          <Route path='/otp/verify' element={<VerifyEmailPage/>}/>
+          <Route path='/signup' element={<SignupPage/>}/>
+          {/* <Route path="/logout" element={<LogoutPage onLogout={handleLogout} />} /> */}
+          
+
+          {/* Other routes */}
           <Route path="/" element={<ProtectedRoute element={Inicio} />} />
           <Route path="/proveedores" element={<ProtectedRoute element={ProveedoresPage} authenticated={authenticated} />} />
           <Route path="/altaproveedores" element={<ProtectedRoute element={AltaProvPage} authenticated={authenticated} />} />

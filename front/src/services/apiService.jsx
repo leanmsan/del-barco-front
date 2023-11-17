@@ -1,9 +1,8 @@
 import axios from 'axios';
 import cookieService from './cookieService';
-import { useNavigate } from 'react-router-dom';
 
 const apiService = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
+  baseURL: 'http://127.0.0.1:8000/api/',
 });
 
 const renewAccessToken = async () => {
@@ -18,6 +17,8 @@ const renewAccessToken = async () => {
     });
 
     const newAccessToken = response.data.access;
+
+    // Asegúrate de que el nuevo token se esté almacenando correctamente
     cookieService.setToken(newAccessToken);
 
     return newAccessToken;
@@ -27,31 +28,27 @@ const renewAccessToken = async () => {
   }
 };
 
-// Función para manejar errores de la renovación de token
-const handleTokenRenewError = (error, navigate) => {
-  console.error('Error en el interceptor de respuesta:', error);
-
-  // Redirige al usuario al inicio de sesión o maneja el error de renovación de token según tus necesidades
-  navigate('/login');
-};
-
 apiService.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalConfig = error.config;
 
-    // Si el error es debido a un token expirado y se intenta renovar el token
     if (error.response.status === 401 && !originalConfig._retry) {
       originalConfig._retry = true;
-
-      const navigate = useNavigate();
 
       try {
         const newAccessToken = await renewAccessToken();
         originalConfig.headers.Authorization = `Bearer ${newAccessToken}`;
         return apiService(originalConfig);
       } catch (renewError) {
-        handleTokenRenewError(renewError, navigate);
+        // Trata el error de renovación de token según tus necesidades
+        if (renewError.message === 'No se encontró el refresh token.') {
+          // Manejar el caso cuando no hay un refresh token
+        } else {
+          // Trata otros errores de renovación de token
+        }
+        console.error('Error al renovar el token:', renewError);
+        throw renewError;
       }
     }
 
@@ -59,4 +56,14 @@ apiService.interceptors.response.use(
   }
 );
 
+const logout = async () => {
+  try {
+    await apiService.post('logout/');  // Ajusta la ruta del endpoint de cierre de sesión
+    cookieService.removeToken();
+    // Puedes añadir más líneas para eliminar otros tokens si es necesario
+  } catch (error) {
+    console.error('Error al cerrar sesión:', error);
+    throw error;
+  }
+};
 export default apiService;
