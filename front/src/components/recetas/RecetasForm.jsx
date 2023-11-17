@@ -116,21 +116,32 @@ export function RecetasForm() {
 
   const handleAgregarDetalle = () => {
     if (insumoId && cantidad && tipoMedida) {
-      
-      const nuevoDetalle = {
-        insumoId: insumoId,
-        cantidad: cantidad,
-        tipoMedida: tipoMedida,
-      };
-
-      setListaDetalles([...listaDetalles, nuevoDetalle]);
-      setInsumoId('');
-      setCantidad('');
-      setTipoMedida('');
+      // Validar que la cantidad no esté vacía o sea cero
+      if (parseFloat(cantidad) > 0) {
+        const nuevoDetalle = {
+          insumoId: insumoId,
+          cantidad: cantidad,
+          tipoMedida: tipoMedida,
+        };
+  
+        setListaDetalles([...listaDetalles, nuevoDetalle]);
+        setInsumoId('');
+        setCantidad('');
+        setTipoMedida('');
+      } else {
+        setErrorCantidad(true);
+        setErrorInsumoId(true);
+  
+        Swal.fire({
+          icon: 'error',
+          title: 'Campos incompletos',
+          text: 'Todos los campos de detalle son obligatorios y la cantidad debe ser mayor que cero.',
+        });
+      }
     } else {
       setErrorCantidad(true);
       setErrorInsumoId(true);
-      
+  
       Swal.fire({
         icon: 'error',
         title: 'Campos incompletos',
