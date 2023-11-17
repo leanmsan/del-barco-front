@@ -159,7 +159,7 @@ export function AltaProveedores() {
           />
 
 <InputMask
-            mask="+54 9 999 9999999"
+            mask="+54 9 9999 99-9999"
             maskChar=""
             value={telefono}
             onChange={(e) => {
