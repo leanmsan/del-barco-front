@@ -79,9 +79,9 @@ export const TablaRecetas = () => {
       const detallesActuales = recetasDetalle.find(
         (detalle) => detalle.idrecetadetalle === detalleId
       );
-
+    
       const formId = `form-modificar-detalles-${detallesActuales.idrecetadetalle}`;
-
+    
       Swal.fire({
         title: 'Modificar detalles de receta',
         html: `<form id="${formId}">
@@ -106,19 +106,25 @@ export const TablaRecetas = () => {
           const nuevoInsumo = form.elements[`insumo_id-${detalleId}`].value;
           const nuevaCantidad = form.elements[`cantidad_disponible-${detalleId}`].value;
           const nuevoTipoMedida = form.elements[`tipo_medida-${detalleId}`].value;
-
+    
           if (!nuevoInsumo || !nuevaCantidad || !nuevoTipoMedida) {
             Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
             return;
           }
-
+    
+          // Validar que la cantidad no sea negativa
+          if (parseFloat(nuevaCantidad) < 0) {
+            Swal.fire('Error', 'La cantidad no puede ser negativa', 'error');
+            return;
+          }
+    
           try {
             await axios.patch(`http://127.0.0.1:8000/api/receta_detalles/${detallesActuales.idrecetadetalle}/`, {
               insumo_id: nuevoInsumo,
               cantidad: nuevaCantidad,
               tipo_medida: nuevoTipoMedida,
             });
-
+    
             const nuevosDetalles = recetasDetalle.map((detalle) =>
               detalle.idrecetadetalle === detallesActuales.idrecetadetalle
                 ? {
@@ -138,6 +144,7 @@ export const TablaRecetas = () => {
         }
       });
     };
+    
 
     return (
       <>
