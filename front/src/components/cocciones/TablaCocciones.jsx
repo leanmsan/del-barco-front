@@ -18,6 +18,18 @@ export const TablaCocciones = () => {
         filtrar(event.target.value);
     }
 
+    const descargarInforme = async () => {
+        const response = await fetch('http://127.0.0.1:8000/api/informe_cocciones/');
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'informe.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      };
+
     const filtrar = (terminoBusqueda) => {
         let resultadoBusqueda = tablaCocciones.filter((elemento) => {
             if(elemento.receta_id.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())) {
@@ -75,6 +87,7 @@ export const TablaCocciones = () => {
                 <Link to='/nuevacoccion'>
                     <button className='btn-create'>+ Nueva cocción</button>
                 </Link>
+                <button onClick={descargarInforme}>Descargar Informe</button>
             </div>
             <TableContainer component={Paper} class="table-container-format tabla-cocciones">
                 <Table>
