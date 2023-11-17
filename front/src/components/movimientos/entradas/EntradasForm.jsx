@@ -105,78 +105,93 @@ export function EntradaForm() {
     const isPositiveNumber = (value) => {
         return !isNaN(value) && value > 0;
     };
-
-    const agregarDetalle = () => {
-        try {
-            if (!insumo_id || !cantidad || !precio_unitario) {
-                if (!insumo_id) {
-                    setErrorInsumoId(true);
-                }
-                if (!cantidad) {
-                    setErrorCantidad(true);
-                }
-                if (!precio_unitario) {
-                    setErrorPrecioUnitario(true);
-                }
-
-                const cantidadNumero = parseFloat(cantidad);
-                const precioNumero = parseFloat(precio_unitario);
-
-                if (!isPositiveNumber(cantidadNumero) || !isPositiveNumber(precioNumero)) {
-                    if (!isPositiveNumber(cantidadNumero)) {
-                        setErrorCantidad(true)
-                    }
-                    if (!isPositiveNumber(precioNumero)) {
-                        setErrorPrecioUnitario(true);
-                    }
-
-                    throw new RequiredFieldError('Cantidad y precio unitario deben ser números positivos');
-                }
-
-                throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
-            } else { 
-                const insumoExistente = listaDetalle.some(
-                    (detalle) => detalle.insumo_id === insumo_id
-                );
-
-                if (insumoExistente) {
-                    //console.log("El insumo ya está en la lista de detalles");
-                    throw new RequiredFieldError("El insumo ya está en la lista");
-                }
-
-                const nuevoDetalle = {
-                    identrada_id: identrada_id,
-                    insumo_id: insumo_id,
-                    cantidad: cantidad,
-                    precio_unitario: precio_unitario,
-                };
-
-                const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
-                var nuevoTotal = monto_total || 0;
-                nuevoTotal = nuevoTotal + subtotal;
-
-                setListaDetalle([...listaDetalle, nuevoDetalle]);
-                setMontoTotal(nuevoTotal);
-
-                setInsumoId("");
-                setCantidad("");
-                setPrecioUnitario("");
-
-                if (entradaDetalleFormRef.current) {
-                    entradaDetalleFormRef.current.reset();
-                    setErrorInsumoId(false);
-                    setErrorCantidad(false);
-                    setErrorPrecioUnitario(false);
-                }
+    const validateDetalleFields = () => {
+        if (!insumo_id || !cantidad || !precio_unitario) {
+          if (!insumo_id) {
+            setErrorInsumoId(true);
+          }
+          if (!cantidad) {
+            setErrorCantidad(true);
+          }
+          if (!precio_unitario) {
+            setErrorPrecioUnitario(true);
+          }
+      
+          const cantidadNumero = parseFloat(cantidad);
+          const precioNumero = parseFloat(precio_unitario);
+      
+          if (!isPositiveNumber(cantidadNumero) || !isPositiveNumber(precioNumero)) {
+            if (!isPositiveNumber(cantidadNumero)) {
+              setErrorCantidad(true);
             }
-        } catch (error) {
-            if (error instanceof RequiredFieldError) {
-                console.log("Faltan completar datos requeridos", error.message);
-            } else {
-                console.log("Error de red", error);
+            if (!isPositiveNumber(precioNumero)) {
+              setErrorPrecioUnitario(true);
             }
+      
+            throw new RequiredFieldError('Cantidad y precio unitario deben ser números positivos');
+          }
+          throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
         }
-    };
+      
+        // Verificación adicional para asegurar que tanto cantidad como precio_unitario sean positivos
+        if (parseFloat(cantidad) <= 0 || parseFloat(precio_unitario) <= 0) {
+          setErrorCantidad(true);
+          setErrorPrecioUnitario(true);
+          throw new RequiredFieldError('Cantidad y precio unitario deben ser números positivos');
+        }
+      };
+      
+
+      const agregarDetalle = () => {
+        try {
+          validateDetalleFields();
+    
+          const insumoExistente = listaDetalle.some(
+            (detalle) => detalle.insumo_id === insumo_id
+          );
+    
+          if (insumoExistente) {
+            Swal.fire({
+              title: 'Error',
+              text: 'El insumo ya está en la lista',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+            throw new RequiredFieldError("El insumo ya está en la lista");
+          }
+    
+          const nuevoDetalle = {
+            identrada_id: identrada_id,
+            insumo_id: insumo_id,
+            cantidad: cantidad,
+            precio_unitario: precio_unitario,
+          };
+    
+          const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
+          var nuevoTotal = monto_total || 0;
+          nuevoTotal = nuevoTotal + subtotal;
+    
+          setListaDetalle([...listaDetalle, nuevoDetalle]);
+          setMontoTotal(nuevoTotal);
+    
+          setInsumoId("");
+          setCantidad("");
+          setPrecioUnitario("");
+    
+          if (entradaDetalleFormRef.current) {
+            entradaDetalleFormRef.current.reset();
+            setErrorInsumoId(false);
+            setErrorCantidad(false);
+            setErrorPrecioUnitario(false);
+          }
+        } catch (error) {
+          if (error instanceof RequiredFieldError) {
+            console.log("Faltan completar datos requeridos", error.message);
+          } else {
+            console.log("Error de red", error);
+          }
+        }
+      };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -265,11 +280,17 @@ export function EntradaForm() {
         }
       };   
       
-    const handleQuitarDetalle = (index) => {
+      const handleQuitarDetalle = (index) => {
+        const detalleToRemove = listaDetalle[index];
+        const subtotal = detalleToRemove.cantidad * detalleToRemove.precio_unitario;
+    
         const nuevasDetalles = [...listaDetalle];
         nuevasDetalles.splice(index, 1);
         setListaDetalle(nuevasDetalles);
-      };   
+    
+        const nuevoTotal = monto_total - subtotal;
+        setMontoTotal(nuevoTotal);
+    };
 
       const driverAction = () => {
         const driverObj = driver({
@@ -305,7 +326,7 @@ export function EntradaForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nuevo ingreso</h1>
-                <div class="campos">
+                <div className="campos">
                 <TextField
                     required
                     id="outlined-select-currency"
