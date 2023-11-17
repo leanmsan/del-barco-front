@@ -23,7 +23,7 @@ export const TablaInsumos = () => {
     const url = window.URL.createObjectURL(new Blob([blob]));
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'informe.pdf';
+    a.download = 'informe-insumos.pdf';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -163,6 +163,7 @@ export const TablaInsumos = () => {
         { element: '.section-content', popover: { title: 'Insumos', description: 'Aquí podrás ver todos los insumos cargados', side: "left", align: 'start' }},
         { element: '.button-on-table-modificar', popover: { title: 'Modificar', description: 'Puedes cambiar algún dato de insumo si crees necesario', side: "right", align: 'start' }},
         { element: '.search-box', popover: { title: 'Buscar', description: 'Si no encuentras lo que buscas, puedes ingresar el nombre del insumo para encontrarlo', side: "right", align: 'start' }},
+        { element: '.btn-informe', popover: { title: 'Informe', description: 'Haciendo click aquí podrás descargar un informe de las cocciones', side: "right", align: 'start' }},
         { element: '.btn-create', popover: { title: 'Nuevo insumo', description: 'También puedes ir a cargar un nuevo insumo directamente!', side: "right", align: 'start' }},
         { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
       ],
@@ -187,7 +188,7 @@ export const TablaInsumos = () => {
           <button className='btn-create'>+ Nuevo insumo</button>
         </Link>
       </div>
-      <button onClick={descargarInforme}>Descargar Informe</button>
+      <button onClick={descargarInforme} className='btn-informe'>Descargar Informe</button>
       <TableContainer class="table-container-format" component={Paper}>
 
       <Table>

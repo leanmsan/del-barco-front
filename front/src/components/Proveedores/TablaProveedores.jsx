@@ -80,7 +80,7 @@ export const TablaProveedores = () => {
         const nuevoContacto = form.elements['contacto'].value;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const telefonoRegex = /^\+54 9 [0-9]{4} [0-9]{2}-[0-9]{4}$/;
+        const telefonoRegex = /^\+549[0-9]{10}$/;
 
         
         if (!emailRegex.test(nuevoMail)) {
@@ -178,6 +178,7 @@ export const TablaProveedores = () => {
         { element: '.section-content', popover: { title: 'Proveedores', description: 'Aquí podrás ver todos los proveedores cargados', side: 'left', align: 'start' } },
         { element: '.button-on-table-modificar', popover: { title: 'Modificar', description: 'Puedes cambiar algún dato del proveedor si crees necesario', side: 'left', align: 'start' } },
         { element: '.button-on-table-baja', popover: { title: 'Dar de baja', description: 'También puedes darlo de baja', side: 'left', align: 'start' } },
+        { element: '.button-on-table-whatsapp', popover: { title: 'Enviar whatsapp', description: 'Aquí tienes un link directo para mandarle un whatsapp', side: 'left', align: 'start' } },
         { element: '.search-box', popover: { title: 'Buscar', description: 'Si no encuentras lo que buscas, puedes ingresar el nombre del proveedor para encontrarlo', side: 'right', align: 'start' } },
         { element: '.btn-create', popover: { title: 'Nuevo proveedor', description: 'También puedes ir a cargar un nuevo proveedor directamente!', side: 'right', align: 'start' } },
         { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } },
@@ -216,7 +217,7 @@ export const TablaProveedores = () => {
               <TableCell class="cell-head-TableContainer">Mail</TableCell>
               <TableCell class="cell-head-TableContainer">Contacto</TableCell>
               <TableCell class="cell-head-TableContainer">Estado</TableCell>
-              <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">
+              <TableCell colSpan={3} style={{ textAlign: 'center' }} class="cell-head-TableContainer">
                 Acciones
               </TableCell>
             </TableRow>

@@ -108,6 +108,19 @@ export function CoccionesForm() {
             } else {
                 console.log('Error en la solicitud POST', error);
             }
+            if (volumen_producido.trim() === "") {
+                setErrorVolumenProducido(true);
+                setVolumenProducido("");
+            } else {
+                setErrorVolumenProducido(false);
+            }
+            if (receta_id.trim() === "") {
+                setErrorRecetaId(true);
+                setRecetaId("");
+            } else {
+                setErrorRecetaId(false);
+            }
+
             Swal.fire({
                 title: 'Error',
                 text: 'Hubo un problema al enviar el formulario',
