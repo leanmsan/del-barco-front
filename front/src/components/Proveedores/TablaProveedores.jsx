@@ -262,7 +262,7 @@ export const TablaProveedores = () => {
         </Table>
       </TableContainer>
       <div style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
-        <button onClick={driverAction}>
+        <button onClick={driverAction} style={{color: "#000000", backgroundColor: "#000000"}}>
           <FontAwesomeIcon icon={faQuestion} style={{ color: '#ffffff' }} />
         </button>
       </div>
