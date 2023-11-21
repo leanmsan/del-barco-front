@@ -513,6 +513,18 @@ nav.close .info-the-five {
   font-weight: bold;
 }
 
+.btn-ayuda {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+}
+
+.button-ayuda {
+  color: #000;
+  background-color: #000;
+  padding: 0.5rem 0.8rem;
+}
 .driver-popover.driverjs-theme {
   font-family: "Poppins", sans-serif;
 }

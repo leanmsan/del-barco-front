@@ -36,7 +36,9 @@ export const Inicio = () => {
       steps: [
         { popover: { title: 'Bienvenido!', description: 'Esta es la página principal', side: "left", align: 'start' }},
         { element: '#side-bar', popover: { title: 'Navegación', description: 'Desde esta sección podrás navegar por todas las funciones', side: "right", align: 'start' }},
-        { element: 'html', popover: { title: 'Eso es todo por ahora', description: 'Esperemos que puedas realizar todas las operaciones que necesites', side: "top", align: 'start' } }
+        { element: '.sidebar-toggle', popover: { title: 'Mostrar navegación', description: 'Con este boton podrás mostrar o esconder la barra de navegación', side: "right", align: 'start' }},
+        { element: '.btn-ayuda', popover: { title: 'Ayuda', description: 'Haciendo click en este botón, se mostrará la ayuda en cada una de las páginas', side: "right", align: 'start' }},
+        { popover: { title: 'Eso es todo por ahora', description: 'Esperemos que puedas realizar todas las operaciones que necesites', side: "top", align: 'start' } }
       ],
       nextBtnText: 'Próximo',
       prevBtnText: 'Anterior',
@@ -77,8 +79,8 @@ export const Inicio = () => {
             </div>
           </Slider>
         </div>
-          <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
-            <button onClick={driverAction} style={{color: "#000000", backgroundColor: "#000000"}}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+          <div className='btn-ayuda'>
+            <button onClick={driverAction} className='button-ayuda'><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
           </div>
         </div>
       </div>
