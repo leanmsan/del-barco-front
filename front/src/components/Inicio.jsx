@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick';
 import 'slick-carousel/slick/slick.css';
@@ -19,7 +20,7 @@ import img6 from '../assets/img/img-6.png';
 
 export const Inicio = () => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 2,
@@ -35,7 +36,9 @@ export const Inicio = () => {
       steps: [
         { popover: { title: 'Bienvenido!', description: 'Esta es la página principal', side: "left", align: 'start' }},
         { element: '#side-bar', popover: { title: 'Navegación', description: 'Desde esta sección podrás navegar por todas las funciones', side: "right", align: 'start' }},
-        { element: 'html', popover: { title: 'Eso es todo por ahora', description: 'Esperemos que puedas realizar todas las operaciones que necesites', side: "top", align: 'start' } }
+        { element: '.sidebar-toggle', popover: { title: 'Mostrar navegación', description: 'Con este boton podrás mostrar o esconder la barra de navegación', side: "right", align: 'start' }},
+        { element: '.btn-ayuda', popover: { title: 'Ayuda', description: 'Haciendo click en este botón, se mostrará la ayuda en cada una de las páginas', side: "right", align: 'start' }},
+        { popover: { title: 'Eso es todo por ahora', description: 'Esperemos que puedas realizar todas las operaciones que necesites', side: "top", align: 'start' } }
       ],
       nextBtnText: 'Próximo',
       prevBtnText: 'Anterior',
@@ -47,11 +50,11 @@ export const Inicio = () => {
 
 
   return (
-    <div class="section-content" id='section-content'>
+    <div>
       <SideBar />
-      <div className="home">
+      <div className="section-content">
         <div className='home-title'>
-          <h1 className='title'>Sistema de Gestión de Producción</h1>
+          <h1 className='title inicio'>Sistema de Gestión de Producción</h1>
         </div>
         <div className='slider-container'>
         <div className="photo-slider">
@@ -76,8 +79,8 @@ export const Inicio = () => {
             </div>
           </Slider>
         </div>
-          <div  style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
-            <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+          <div className='btn-ayuda'>
+            <button onClick={driverAction} className='button-ayuda'><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
           </div>
         </div>
       </div>

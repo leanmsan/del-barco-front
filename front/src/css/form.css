@@ -1,107 +1,108 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 250px;
-    margin-top: 100px;
-    margin-bottom: 3%;
-    background-color: whitesmoke(210, 50, 50);
-    border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 250px;
+  margin-top: 100px;
+  margin-bottom: 3%;
+  background-color: whitesmoke(210, 50, 50);
+  border-radius: 4px;
 }
 
 .title {
-    text-align: left;
-    margin-top: 2rem;
-    margin-bottom: 1.2rem;
-    color: #000;
-    font-size: 28px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
+  text-align: left;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #000;
+  font-size: 28px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  width: 80%;
 }
 
 .button {
-    padding: 10px;
-    margin-top: 10px;
-    width: 100%;
-    color: white;
-    background-color: #7e530f ;
-    border-radius: 4px;
-    border: none;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    margin-bottom: 2rem;
+  padding: 10px;
+  margin-top: 10px;
+  width: 100%;
+  color: white;
+  background-color: #7e530f;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  margin-bottom: 2rem;
 }
 
-.button:hover{
-    color: #fff;
-    border: none;
-    background: #747474;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 1em;
-    border-radius: 5px;
-
+.button:hover {
+  color: #fff;
+  border: none;
+  background: #747474;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 5px;
 }
 
 .input-control {
-    display: contents;
-    flex-direction: column;
-    margin: .4rem;
+  display: contents;
+  flex-direction: column;
+  margin: 0.4rem;
 }
 
-.input-control input, select {
-    border: 2px solid #f0f0f0;
-    border-radius: 4px;
-    display: block;
-    font-size: .8rem;
-    padding: .3rem;
-    width: 100%;
-    height: 35px;
+.input-control input,
+select {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  display: block;
+  font-size: 0.8rem;
+  padding: 0.3rem;
+  width: 100%;
+  height: 35px;
 }
 
 .input-control label {
-    margin-bottom: .4rem;
-    color: #000;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
+  margin-bottom: 0.4rem;
+  color: #000;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
 }
 
-.input-control label button{
-    padding: 5px;
-    margin-top: 10px;
-    width: 100%;
-    color: white;
-    background-color: #7e530f;
-    border-radius: 4px;
-    border: none;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
+.input-control label button {
+  padding: 5px;
+  margin-top: 10px;
+  width: 100%;
+  color: white;
+  background-color: #7e530f;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
 }
 .input-control label button:hover {
-    color: #fff;
-    border: none;
-    background: #747474;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 1em;
-    border-radius: 5px;
+  color: #fff;
+  border: none;
+  background: #747474;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 5px;
 }
 
 .input-control input:focus {
-    outline: 0;
+  outline: 0;
 }
 
 .error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 15PX;
-  }
+  color: red;
+  font-size: 14px;
+  margin-top: 15px;
+}
 
 p {
-    color: #000;
+  color: #000;
 }

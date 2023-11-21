@@ -293,8 +293,8 @@ export function AltaInsumos() {
           Guardar
         </button>
       </Box>
-      <div style={{ position: 'absolute', top: 0, right: 0, margin: '1.5rem' }}>
-        <button onClick={driverAction}><FontAwesomeIcon icon={faQuestion} style={{ color: "#ffffff", }} /></button>
+      <div className='btn-ayuda'>
+        <button onClick={driverAction} className='button-ayuda'><FontAwesomeIcon icon={faQuestion} style={{ color: "#ffffff", }} /></button>
       </div>
     </div>
   );
