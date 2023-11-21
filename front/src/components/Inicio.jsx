@@ -48,9 +48,9 @@ export const Inicio = () => {
 
 
   return (
-    <div className="section-content" id='section-content'>
+    <div>
       <SideBar />
-      <div className="home">
+      <div className="section-content">
         <div className='home-title'>
           <h1 className='title'>Sistema de Gestión de Producción</h1>
         </div>

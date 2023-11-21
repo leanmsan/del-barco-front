@@ -13,7 +13,7 @@ export function SideBar(selectedTab) {
   const [proveedoresOpen, setProveedoresOpen] = useState(false);
   const [recetasOpen, setRecetasOpen] = useState(false);
   const [coccionesOpen, setCoccionesOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Agrega una función para manejar la alternancia del menú
   const handleToggleSidebar = () => {
@@ -310,7 +310,7 @@ export function SideBar(selectedTab) {
               "linear-gradient(to right, blue, blue 20%, white 20%, white 30%, red 30%, red 70%, white 70%, white 80%, blue 80%, blue)",
             backgroundSize: "100% 8px",
             backgroundRepeat: "no-repeat",
-            backgroundPositionY: "bottom",
+            backgroundPositionY: "top",
           }}
         >
           Desarrollado por The Five

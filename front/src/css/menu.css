@@ -27,6 +27,7 @@
 html, body {
   height: 100%;
   margin: 0;
+  display: flex;
 }
 
 body {
@@ -40,8 +41,6 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  max-height: 100%;
   width: 250px;
   background-color: var(--primary-color);
   border-right: 1px solid #f9c4405d;
@@ -49,6 +48,7 @@ nav {
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  z-index: 1000;
 }
 
 nav::-webkit-scrollbar {
@@ -193,7 +193,7 @@ nav.close .nav-link-item a .link-name {
 
 
 .info-the-five {
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -219,6 +219,15 @@ nav.close .info-the-five {
 
 .section-content {
   margin-left: 270px;
+  transition: var(--tran-05);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.scrollable-sidebar.close + .section-content,
+.section-content.mobile {
+  margin-left: 95px;
+  transition: var(--tran-05);
 }
 
 .section-content-form {
@@ -226,7 +235,26 @@ nav.close .info-the-five {
   width: 50%;
   max-width: 1000px;
   min-width: 250px;
+  transition: var(--tran-05);
+  flex: 1;
+  overflow-y: auto;
 }
+
+.scrollable-sidebar.close + .section-content-form,
+.section-content-form.mobile {
+  margin-left: 95px;
+  transition: var(--tran-05);
+}
+
+/* Agrega reglas específicas para pantallas más pequeñas */
+@media screen and (max-width: 767px) {
+  .section-content,
+  .section-content-form {
+    margin-left: 95px;
+    transition: var(--tran-05);
+  }
+}
+
 
 .table-container-format {
   margin: 10px 20px 10px 0;
@@ -363,15 +391,17 @@ nav.close .info-the-five {
 
 .scrollable-sidebar {
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   transition: var(--tran-05);
   overflow-x: hidden;
 }
 
 .scrollable-sidebar.close {
   transition: var(--tran-05);
+  overflow-y: hidden;
   overflow-x: hidden;
 }
+
 
 .scrollable-sidebar::-webkit-scrollbar {
   width: 7px;
