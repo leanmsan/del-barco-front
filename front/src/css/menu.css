@@ -24,6 +24,11 @@
   --tran-02: all 0.2 ease;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
   min-height: 100vh;
   background-color: var(--bg-color);
@@ -31,7 +36,7 @@ body {
 }
 
 nav {
-  padding: 1rem 0px 1rem 0px;
+  padding: 1rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -45,44 +50,70 @@ nav {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 nav::-webkit-scrollbar {
   width: 0;
 }
 
 nav.close {
-  width: 73px;
+  width: 75px;
+  transition: var(--tran-05);
 }
 
 nav .logo-image {
-  min-width: 155px;
-  height: 190.66px;
   transition: var(--tran-05);
-  margin-bottom: 1rem;
+  margin: 1rem 0rem 1rem 0rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav .sidebar-button {
+  display: flex;
+  justify-content: left;
+  transition: var(--tran-05);
+}
+
+nav.close .sidebar-button {
+  display: flex;
+  justify-content: left;
+  transition: var(--tran-05);
+}
+
+.sidebar-toggle {
+  display: flex;
+  justify-content: center;
+  width: 45px;
 }
 
 nav.close .logo-image {
-  height: 60.66px;
+  margin-top: 1rem;
   transition: var(--tran-05);
 }
 
 nav .logo-image img {
-  width: 140px;
-  margin-left: 3rem;
+  width: 110px;
   object-fit: cover;
   transition: var(--tran-05);
+  max-width: 100%; /* Ajusta el ancho máximo según tus necesidades */
+  height: auto;
 }
 
 nav.close .logo-image img {
-  width: 50px;
+  width: 42px;
   transition: var(--tran-05);
 }
 
 nav .menu-items {
-  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0px 15px 0px 0px;
+  transition: var(--tran-05);
+}
+
+nav.close .menu-items {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .menu-items .nav-link-item {
@@ -160,43 +191,17 @@ nav.close .nav-link-item a .link-name {
   color: var(--secondary-color);
 }
 
-.top {
-  position: relative;
-  left: 250px;
-  position: fixed;
-  left: 250px;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  width: calc(100% - 250px);
-  padding: 20px 25px;
-  background-color: var(--primary-color);
-  transition: var(--tran-05);
-}
-
-nav.close ~ .top {
-  left: 73px;
-  width: calc(100% - 73px);
-}
-
-nav.close ~ .top {
-  left: 73px;
-  width: calc(100% - 73px);
-}
-
-.top .sidebar-toggle {
-  display: flex;
-  align-items: center;
-  font-size: 26px;
-  color: var(--secondary-color);
-  cursor: pointer;
-  display: none;
-}
 
 .info-the-five {
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  width: 250px;
+  left: 0;
+  width: 100%;
+  transition: var(--tran-03);
+}
+nav.close .info-the-five {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .txt-the-five {
@@ -359,6 +364,13 @@ nav.close ~ .top {
 .scrollable-sidebar {
   height: 100%;
   overflow-y: auto;
+  transition: var(--tran-05);
+  overflow-x: hidden;
+}
+
+.scrollable-sidebar.close {
+  transition: var(--tran-05);
+  overflow-x: hidden;
 }
 
 .scrollable-sidebar::-webkit-scrollbar {

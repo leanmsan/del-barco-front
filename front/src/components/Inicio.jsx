@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick';
 import 'slick-carousel/slick/slick.css';
@@ -47,7 +48,7 @@ export const Inicio = () => {
 
 
   return (
-    <div class="section-content" id='section-content'>
+    <div className="section-content" id='section-content'>
       <SideBar />
       <div className="home">
         <div className='home-title'>
