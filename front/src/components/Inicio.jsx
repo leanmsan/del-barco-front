@@ -20,7 +20,7 @@ import img6 from '../assets/img/img-6.png';
 
 export const Inicio = () => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 2,
