@@ -54,7 +54,7 @@ export const Inicio = () => {
       <SideBar />
       <div className="section-content">
         <div className='home-title'>
-          <h1 className='title'>Sistema de Gestión de Producción</h1>
+          <h1 className='title inicio'>Sistema de Gestión de Producción</h1>
         </div>
         <div className='slider-container'>
         <div className="photo-slider">
