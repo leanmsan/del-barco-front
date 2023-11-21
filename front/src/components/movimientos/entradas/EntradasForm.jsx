@@ -422,16 +422,7 @@ export function EntradaForm() {
                     error={errorPrecioUnitario}
                     helperText={errorPrecioUnitario ? 'El precio unitario es requerido' : ''}
                     />
-                    <div class="monto">
-                    <TextField
-                        id="outlined-read-only-input"
-                        label="Monto Total"
-                        value={monto_total}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        
-                    /></div>
+                    
                     
                     <br />
                 </div>
@@ -465,6 +456,16 @@ export function EntradaForm() {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <div class="monto">
+                    <TextField
+                        id="outlined-read-only-input"
+                        label="Monto Total"
+                        value={monto_total}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        
+                    /></div>
                 <button className="button-guardar btn-guardar" type="submit">
                     Guardar
                 </button>

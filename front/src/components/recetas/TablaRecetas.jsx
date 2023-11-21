@@ -41,7 +41,7 @@ export const TablaRecetas = () => {
     };
 
     return (
-      <TableContainer component={Paper} className="table-container-format tabla-recetas">
+      <TableContainer className="table-container-format tabla-recetas" component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
