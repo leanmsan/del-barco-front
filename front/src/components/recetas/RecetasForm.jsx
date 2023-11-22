@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from 'sweetalert2';
-import '../../css/form.css';
 import { useNavigate } from "react-router-dom";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
@@ -273,7 +272,7 @@ export function RecetasForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nueva receta</h1>
-                <div class="campos">
+                <div className="campos">
                 <TextField
                   required
                   id="outlined-required"
@@ -371,7 +370,7 @@ export function RecetasForm() {
                                 <TableCell class="cell-head-TableContainer">Insumo</TableCell>
                                 <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
                                 <TableCell class="cell-head-TableContainer">Tipo Medida</TableCell>
-                                <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">Acciones</TableCell>
+                                <TableCell colSpan={2} style={{ textAlign: 'center' }} className="cell-head-TableContainer">Acciones</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -382,7 +381,7 @@ export function RecetasForm() {
                                     <TableCell>{detalle.tipoMedida}</TableCell>
                                     
                           <TableCell>
-                          <button type='button' class="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
+                          <button type='button' className="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
                             Quitar
                           </button></TableCell>
                                 </TableRow>

@@ -1,16 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+@import "./global.css";
 
 .not-found {
-  margin: 5rem;
-  padding: 2rem;
+  margin: 5%;
+  padding: 5%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Poppins', sans-serif;
+  flex-direction: column-reverse;
 }
 
-.img-not-found {
-  max-width: 100%;
+/* Estilos específicos para pantallas más grandes */
+@media screen and (min-width: 768px) {
+  .not-found {
+    flex-direction: row;
+  }
 }
 
 .txt-not-found {
@@ -18,21 +21,9 @@
 }
 
 .title-not-found {
-  color: black;
+  color: var(--secondary-color);
 }
 
 .subtitle-not-found {
-  color: #7e530f;
-}
-
-.btn-volver {
-  width: 200px;
-  margin-top: 20px;
-  color: white;
-  background-color: #7e530f;
-  border-radius: 4px;
-  border: none;
-  font-size: 16px;
-  font-weight: bold;
-
+  color: var(--subtitle1-color);
 }

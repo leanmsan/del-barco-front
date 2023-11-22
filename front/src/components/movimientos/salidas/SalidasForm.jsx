@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import "../../../css/form.css";
 import Swal from "sweetalert2";
 import RequiredFieldError from "../../../utils/errors";
 import { useNavigate } from "react-router-dom";
@@ -279,7 +278,7 @@ export function SalidasForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nuevo egreso</h1>
-                <div class="campos">
+                <div className="campos">
                 <TextField
                     required
                     id="outlined-required"
@@ -360,7 +359,7 @@ export function SalidasForm() {
                                     <TableCell>{detalle.insumo_id}</TableCell>
                                     <TableCell>{detalle.cantidad}</TableCell>
                                     <TableCell>
-                          <button type='button' class="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
+                          <button type='button' className="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
                             Quitar
                           </button></TableCell>
                                     

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "../../css/form.css";
 import RequiredFieldError from "../../utils/errors";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 import Box from '@mui/material/Box';
@@ -161,7 +160,7 @@ export function CoccionesForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nueva coccion</h1>
-                <div class="campos">
+                <div className="campos">
                 <TextField
                     required
                     id="outlined-required"
