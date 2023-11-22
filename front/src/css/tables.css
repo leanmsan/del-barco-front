@@ -1,0 +1,53 @@
+@import "./global.css";
+
+.table-container-format {
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.87);
+  -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  overflow-x: auto;
+  margin: 10px auto;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estilos específicos para pantallas pequeñas */
+@media screen and (max-width: 600px) {
+  .table-container-format {
+    margin: 5px;
+  }
+}
+
+.selected-row {
+  background-color: #d0d0d0;
+}
+
+.selected-cell {
+  font-weight: bold;
+}
+
+.cell-head-TableContainer {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: bold;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.01071em;
+  display: table-cell;
+  vertical-align: inherit;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  text-align: left;
+  padding: 16px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.subtitulo-tablas {
+  margin-bottom: 0px;
+  padding: 5px;
+  color: var(--subtitle1-color);
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+}

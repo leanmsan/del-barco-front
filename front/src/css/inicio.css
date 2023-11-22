@@ -1,17 +1,14 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: sans-serif;
-}
+@import "./global.css";
 
 .home-title {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.title {
-  font-size: 36px;
-  color: #fcb404;
+.title.inicio {
+  text-align: center;
+  width: 75%;
 }
 
 .slider-container {
@@ -23,7 +20,6 @@
 
 .photo-slider {
   width: 70%;
-
   margin: auto;
 }
 

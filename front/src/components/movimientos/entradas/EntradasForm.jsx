@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import "../../../css/form.css";
 import RequiredFieldError from "../../../utils/errors";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 import Box from '@mui/material/Box';
@@ -447,7 +446,7 @@ export function EntradaForm() {
                                     <TableCell>{detalle.cantidad}</TableCell>
                                     <TableCell>{detalle.precio_unitario}</TableCell>
                                     <TableCell>
-                          <button type='button' class="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
+                          <button type='button' className="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
                             Quitar
                           </button></TableCell>
 
@@ -456,7 +455,7 @@ export function EntradaForm() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <div class="monto">
+                <div className="monto">
                     <TextField
                         id="outlined-read-only-input"
                         label="Monto Total"

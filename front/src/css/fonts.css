@@ -1,0 +1,16 @@
+@import "./global.css";
+
+.home .title,
+.home .subtitle {
+  font-family: "Poppins", sans-serif;
+}
+
+.title {
+  color: var(--secondary-color);
+  text-align: left;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 28px;
+  font-weight: bold;
+  width: 80%;
+}

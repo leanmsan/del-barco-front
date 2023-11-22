@@ -236,7 +236,7 @@ export const TablaInsumos = () => {
           },
         },
         {
-          element: ".search-box",
+          element: ".input-search",
           popover: {
             title: "Buscar",
             description:
@@ -250,7 +250,7 @@ export const TablaInsumos = () => {
           popover: {
             title: "Informe",
             description:
-              "Haciendo click aquí podrás descargar un informe de las cocciones",
+              "Haciendo click aquí podrás descargar un informe de los insumos",
             side: "right",
             align: "start",
           },
@@ -338,7 +338,7 @@ export const TablaInsumos = () => {
                 <TableCell>
                   <button
                     type="button"
-                    class="button-on-table-modificar"
+                    className="button-on-table-modificar"
                     onClick={() => handleModificarInsumo(row.idinsumo)}
                   >
                     Modificar

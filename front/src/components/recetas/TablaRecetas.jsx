@@ -41,7 +41,7 @@ export const TablaRecetas = () => {
     };
 
     return (
-      <TableContainer className="table-container-format tabla-recetas" component={Paper}>
+      <TableContainer class="table-container-format tabla-recetas" component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
@@ -154,14 +154,14 @@ export const TablaRecetas = () => {
             <button className="button-cerrar-detalles" onClick={handleCloseRecetasDetalle}>
               Cerrar detalles
             </button></h2>
-            <TableContainer component={Paper} className="table-container-format">
+            <TableContainer component={Paper} class="table-container-format">
               <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell class="cell-head-TableContainer">Insumo</TableCell>
                     <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
                     <TableCell class="cell-head-TableContainer">Tipo Medida</TableCell>
-                    <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">Acciones</TableCell>
+                    <TableCell colSpan={2} style={{ textAlign: 'center' }} className="cell-head-TableContainer">Acciones</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

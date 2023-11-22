@@ -23,10 +23,24 @@ export const Inicio = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
+    slidesToShow: 2,
+    responsive: [
+      {
+        breakpoint: 2440,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   const driverAction = () => {
@@ -79,10 +93,10 @@ export const Inicio = () => {
             </div>
           </Slider>
         </div>
-          <div className='btn-ayuda'>
+        </div>
+        <div className='btn-ayuda'>
             <button onClick={driverAction} className='button-ayuda'><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
           </div>
-        </div>
       </div>
     </div>
   );
