@@ -8,16 +8,34 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faSort } from "@fortawesome/free-solid-svg-icons";
 
 export const TablaProveedores = () => {
   const [proveedores, setData] = useState([]);
   const [tablaProveedores, setTablaProveedores] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const [orden, setOrden] = useState({
+    campo: 'nombre_proveedor',
+    direccion: 'asc',
+  });
 
   const handleChange = (event) => {
     setBusqueda(event.target.value);
     filtrar(event.target.value);
   };
+
+  const handleOrdenar = (campo) => {
+    setOrden((estadoAnterior) => ({
+      campo,
+      direccion: estadoAnterior.campo === campo && estadoAnterior.direccion === 'asc' ? 'desc' : 'asc',
+    }));
+  };
+
+  // Función para ordenar los insumos según el estado actual
+  const proveedoresOrdenados = [...proveedores].sort((a, b) => {
+    const factorOrden = orden.direccion === 'asc' ? 1 : -1;
+    return a[orden.campo].localeCompare(b[orden.campo]) * factorOrden;
+  });
 
   const filtrar = (terminoBusqueda) => {
     let resultadosBusqueda = tablaProveedores.filter((elemento) => {
@@ -213,22 +231,22 @@ export const TablaProveedores = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell class="cell-head-TableContainer">Nombre</TableCell>
+              <TableCell class="cell-head-TableContainer clickeable" onClick={() => handleOrdenar('nombre_proveedor')}>Nombre <FontAwesomeIcon icon={faSort} style={{color: "#000000",}} /></TableCell>
               <TableCell class="cell-head-TableContainer">Mail</TableCell>
               <TableCell class="cell-head-TableContainer">Contacto</TableCell>
-              <TableCell class="cell-head-TableContainer">Estado</TableCell>
-              <TableCell colSpan={3} style={{ textAlign: 'center' }} className="cell-head-TableContainer">
+              <TableCell class="cell-head-TableContainer clickeable" onClick={() => handleOrdenar('estado')}>Estado <FontAwesomeIcon icon={faSort} style={{color: "#000000",}} /></TableCell>
+              <TableCell class="cell-head-TableContainer" colSpan={3} style={{ textAlign: 'center' }} >
                 Acciones
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {proveedores.map((row) => (
+            {proveedoresOrdenados.map((row) => (
               <TableRow key={row.idproveedor}>
                 <TableCell>{row.nombre_proveedor}</TableCell>
                 <TableCell>{row.mail}</TableCell>
                 <TableCell>{row.telefono}</TableCell>
-                <TableCell>{row.estado}</TableCell>
+                <TableCell>{row.estado === 'A' ? 'Activo' : 'Inactivo'}</TableCell>
                 <TableCell>
                   <button
                     type='button'
