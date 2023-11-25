@@ -13,11 +13,11 @@ import {
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import CustomTextField from '../CustomTextField'; // ajusta la ruta según sea necesario
 
 export const TablaInsumos = () => {
   const [insumos, setData] = useState([]);
@@ -25,8 +25,8 @@ export const TablaInsumos = () => {
   const [busqueda, setBusqueda] = useState("");
   const [proveedores, setProveedores] = useState([]);
   const [orden, setOrden] = useState({
-    campo: 'nombre_insumo',
-    direccion: 'asc',
+    campo: "nombre_insumo",
+    direccion: "asc",
   });
 
   const unidadesDeMedida = ["Kg", "g", "Mg", "L", "Ml", "Cc"];
@@ -46,13 +46,16 @@ export const TablaInsumos = () => {
   const handleOrdenar = (campo) => {
     setOrden((estadoAnterior) => ({
       campo,
-      direccion: estadoAnterior.campo === campo && estadoAnterior.direccion === 'asc' ? 'desc' : 'asc',
+      direccion:
+        estadoAnterior.campo === campo && estadoAnterior.direccion === "asc"
+          ? "desc"
+          : "asc",
     }));
   };
 
   // Función para ordenar los insumos según el estado actual
   const insumosOrdenados = [...insumos].sort((a, b) => {
-    const factorOrden = orden.direccion === 'asc' ? 1 : -1;
+    const factorOrden = orden.direccion === "asc" ? 1 : -1;
     return a[orden.campo].localeCompare(b[orden.campo]) * factorOrden;
   });
 
@@ -302,16 +305,8 @@ export const TablaInsumos = () => {
     <div className="section-content">
       <h1 className="title">Insumos</h1>
       <div className="search-box">
-        <button className="btn-search">
-          <FontAwesomeIcon icon={faSearch} style={{ color: "#ffffff" }} />
-        </button>
-        <input
-          className="input-search"
-          type="text"
-          placeholder="Buscar..."
-          value={busqueda}
-          onChange={handleChange}
-        />
+       
+        <CustomTextField value={busqueda} onChange={handleChange} />
 
         <Link to="/altainsumos">
           <button className="btn-create">+ Nuevo insumo</button>
@@ -325,8 +320,12 @@ export const TablaInsumos = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell class="cell-head-TableContainer clickeable" onClick={() => handleOrdenar('nombre_insumo')}>
-                Nombre insumo <FontAwesomeIcon icon={faSort} style={{color: "#000000",}} />
+              <TableCell
+                class="cell-head-TableContainer clickeable"
+                onClick={() => handleOrdenar("nombre_insumo")}
+              >
+                Nombre insumo{" "}
+                <FontAwesomeIcon icon={faSort} style={{ color: "#000000" }} />
               </TableCell>
               <TableCell class="cell-head-TableContainer">
                 Cantidad disponible
@@ -334,11 +333,23 @@ export const TablaInsumos = () => {
               <TableCell class="cell-head-TableContainer">
                 Tipo de medida
               </TableCell>
-              <TableCell class="cell-head-TableContainer clickeable" onClick={() => handleOrdenar('categoria')}>Categoria <FontAwesomeIcon icon={faSort} style={{color: "#000000",}} /></TableCell>
+              <TableCell
+                class="cell-head-TableContainer clickeable"
+                onClick={() => handleOrdenar("categoria")}
+              >
+                Categoria{" "}
+                <FontAwesomeIcon icon={faSort} style={{ color: "#000000" }} />
+              </TableCell>
               <TableCell class="cell-head-TableContainer">
                 Precio unitario
               </TableCell>
-              <TableCell class="cell-head-TableContainer clickeable" onClick={() => handleOrdenar('proveedor_id')}>Proveedor <FontAwesomeIcon icon={faSort} style={{color: "#000000",}} /></TableCell>
+              <TableCell
+                class="cell-head-TableContainer clickeable"
+                onClick={() => handleOrdenar("proveedor_id")}
+              >
+                Proveedor{" "}
+                <FontAwesomeIcon icon={faSort} style={{ color: "#000000" }} />
+              </TableCell>
               <TableCell class="cell-head-TableContainer">Acciones</TableCell>
             </TableRow>
           </TableHead>
