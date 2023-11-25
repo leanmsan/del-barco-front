@@ -17,12 +17,17 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { faSort } from "@fortawesome/free-solid-svg-icons";
 
 export const TablaInsumos = () => {
   const [insumos, setData] = useState([]);
   const [tablaInsumos, setTablaInsumos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [proveedores, setProveedores] = useState([]);
+  const [orden, setOrden] = useState({
+    campo: 'nombre_insumo',
+    direccion: 'asc',
+  });
 
   const unidadesDeMedida = ["Kg", "g", "Mg", "L", "Ml", "Cc"];
 
@@ -37,6 +42,19 @@ export const TablaInsumos = () => {
     a.click();
     document.body.removeChild(a);
   };
+
+  const handleOrdenar = (campo) => {
+    setOrden((estadoAnterior) => ({
+      campo,
+      direccion: estadoAnterior.campo === campo && estadoAnterior.direccion === 'asc' ? 'desc' : 'asc',
+    }));
+  };
+
+  // Función para ordenar los insumos según el estado actual
+  const insumosOrdenados = [...insumos].sort((a, b) => {
+    const factorOrden = orden.direccion === 'asc' ? 1 : -1;
+    return a[orden.campo].localeCompare(b[orden.campo]) * factorOrden;
+  });
 
   const handleChange = (event) => {
     setBusqueda(event.target.value);
@@ -86,10 +104,10 @@ export const TablaInsumos = () => {
                 insumoActual.nombre_insumo
               }" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
-              <label htmlFor="cantidad_disponible" style="display: block;">Cantidad :</label>
+              <label htmlFor="cantidad_disponible" style="display: block;">Cantidad: </label>
               <input type="number" id="cantidad_disponible" name="cantidad_disponible" value="${
                 insumoActual.cantidad_disponible
-              }" required  style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
+              }" readonly style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
               <br/>
               <label htmlFor="tipo_medida" style="display: block;">Tipo de medida:</label>
               <select id="tipo_medida" name="tipo_medida" required style="width: 100%; margin-bottom: 10px; height: 2.2rem; padding-left: 10px; background-color: white; color: black; border: 2px solid #444; border-radius: 10px;">
@@ -307,8 +325,8 @@ export const TablaInsumos = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell class="cell-head-TableContainer">
-                Nombre insumo
+              <TableCell class="cell-head-TableContainer clickeable" onClick={() => handleOrdenar('nombre_insumo')}>
+                Nombre insumo <FontAwesomeIcon icon={faSort} style={{color: "#000000",}} />
               </TableCell>
               <TableCell class="cell-head-TableContainer">
                 Cantidad disponible
@@ -316,16 +334,16 @@ export const TablaInsumos = () => {
               <TableCell class="cell-head-TableContainer">
                 Tipo de medida
               </TableCell>
-              <TableCell class="cell-head-TableContainer">Categoria</TableCell>
+              <TableCell class="cell-head-TableContainer clickeable" onClick={() => handleOrdenar('categoria')}>Categoria <FontAwesomeIcon icon={faSort} style={{color: "#000000",}} /></TableCell>
               <TableCell class="cell-head-TableContainer">
                 Precio unitario
               </TableCell>
-              <TableCell class="cell-head-TableContainer">Proveedor</TableCell>
+              <TableCell class="cell-head-TableContainer clickeable" onClick={() => handleOrdenar('proveedor_id')}>Proveedor <FontAwesomeIcon icon={faSort} style={{color: "#000000",}} /></TableCell>
               <TableCell class="cell-head-TableContainer">Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {insumos.map((row) => (
+            {insumosOrdenados.map((row) => (
               <TableRow key={row.idinsumo}>
                 <TableCell>{row.nombre_insumo}</TableCell>
                 <TableCell style={{ textTransform: "capitalize" }}>

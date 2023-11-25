@@ -83,6 +83,13 @@ button:focus-visible {
   color: #000000;
 }
 
+.button-on-table-alta {
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: #1450C9;
+  color: #ffffff;
+}
+
 .button-guardar {
   padding: 5px;
   color: white;
