@@ -16,7 +16,7 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
-import CustomTextField from '../CustomTextField';
+import CustomTextField from '../CustomSearchTextField';
 
 export const TablaCocciones = () => {
   const [cocciones, setCocciones] = useState([]);
@@ -130,7 +130,7 @@ export const TablaCocciones = () => {
           },
         },
         {
-          element: ".search-box",
+          element: ".input-search",
           popover: {
             title: "Buscar",
             description:
