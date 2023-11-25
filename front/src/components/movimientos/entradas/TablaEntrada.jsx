@@ -91,7 +91,7 @@ export const TablaEntradas = () => {
               <TableCell class="cell-head-TableContainer clickeable"
                 onClick={() => handleOrdenar("identrada")}
               >
-                ID Entrada{" "}
+                ID Ingreso{" "}
                 <FontAwesomeIcon icon={faSort} style={{ color: "#000000" }} />
               </TableCell>
               <TableCell
@@ -119,7 +119,7 @@ export const TablaEntradas = () => {
                 key={entrada.identrada}
                 onClick={() => handleEntradaClick(entrada.identrada)}
                 className={
-                  selectedEntrada === entrada.identrada ? "selected-row" : ""
+                    selectedEntrada === entrada.identrada ? "selected-row" : "clickeable"
                 }
               >
                 <TableCell
