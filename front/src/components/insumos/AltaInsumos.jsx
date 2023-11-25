@@ -31,7 +31,7 @@ export function AltaInsumos() {
   const [errorProveedor_id, setErrorProveedor_id] = useState(false);
 
   const [proveedores, setProveedores] = useState([]);
-  const [proveedorSeleccionado, setProveedorSeleccionado] = useState("");
+  //const [proveedorSeleccionado, setProveedorSeleccionado] = useState("");
 
   const navegate = useNavigate();
 

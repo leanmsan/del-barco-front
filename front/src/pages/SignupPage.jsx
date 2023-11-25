@@ -1,7 +1,11 @@
 import { Signup } from "../components/auth/Signup";
+import { SideBar } from "../components/SideBar";
 
 export function SignupPage() {
-    return(
-        <Signup/>
+    return (
+        <div>
+            <SideBar />
+            <Signup/>
+        </div>
     )
 }

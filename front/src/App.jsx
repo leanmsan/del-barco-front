@@ -24,7 +24,6 @@ import { TablaCoccionesPage } from "./pages/TablaCoccionesPage";
 import { RegistroCoccionesPage } from "./pages/RegistroCoccionesForm";
 import { RegistroRecetasForm } from "./pages/RegistroRecetas";
 import cookieService from "./services/cookieService";
-//import apiService from "./services/apiService";
 
 
 function ProtectedRoute({ element: Component, ...rest }) {
@@ -64,18 +63,6 @@ function App() {
       cookieService.deleteToken(); // Utiliza la función correcta para eliminar la cookie
     }
   };
-
-  // const handleLogout = async () => {
-  //   try {
-  //     await apiService.logout();
-  //     cookieService.removeToken();
-  //     // Puedes añadir más líneas para eliminar otros tokens si es necesario
-  //     setAuthenticated(false);
-  //     Navigate('/login');
-  //   } catch (error) {
-  //     console.error('Error al cerrar sesión:', error);
-  //   }
-  // };
 
   return (
     <div>

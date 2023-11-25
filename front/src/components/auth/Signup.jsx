@@ -1,92 +1,96 @@
 import { useState } from 'react'
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
+import RequiredFieldError from "../../utils/errors";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 export function Signup() {
-    const navigate=useNavigate()
-    const [formdata, setFormdata]=useState({
-        email:"",
-        first_name:"",
-        last_name:"",
-        password:"",
-        password2:""
-    })
-    const [error, setError]=useState('')
+  const[email, setEmail] = useState("");
+  const[emailError, setEmailError] = useState(false);
 
-    const handleOnchange = (e)=>{
-        setFormdata({...formdata, [e.target.name]:e.target.value})
-    }
+  
 
-    const {email, first_name, last_name, password, password2}=formdata
-   
-    const handleSubmit =async (e)=>{
-        e.preventDefault()
-       const response = await axios.post('http://localhost:8000/api/register/',formdata)
-       //console.log(response.data)
-       if (response.status === 201) {
-          navigate("/otp/verify")
-       }
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+
+
+      const response = await axios.post('http://127.0.0.1:8000/api/register/', formdata)
+      //console.log(response.data)
+      if (response.status === 201) {
+        navigate("/otp/verify")
+      }
+    } catch (error) {
+      console.log('Se produjo un error al registrar el usuario', error)
     }
-    
+  }
+
   return (
-    <div>
-        <div className='form-container'>
-            <div style={{width:"100%"}} className='wrapper'>
-            <h2>create account</h2>
-            <form action="" onSubmit={handleSubmit}>
-                <div className='form-group'>
-                 <label htmlFor="">Email Address:</label>
-                 <input type="text"
-                  className='email-form'  
-                  name="email" 
-                  value={email}  
-                  onChange={handleOnchange} />
-               </div>
-               <div className='form-group'>
-                 <label htmlFor="">First Name:</label>
-                 <input type="text"
-                  className='email-form'
-                  name="first_name" 
-                  value={first_name} 
-                  onChange={handleOnchange}/>
-               </div>
-               <div className='form-group'>
-                 <label htmlFor="">Last Name:</label>
-                 <input type="text" 
-                 className='email-form'  
-                 name="last_name" 
-                 value={last_name} 
-                 onChange={handleOnchange}/>
-               </div>
-               <div className='form-group'>
-                 <label htmlFor="">Password:</label>
-                 <input type="text" 
-                 className='email-form'  
-                 name="password" 
-                 value={password} 
-                 onChange={handleOnchange}/>
-               </div>
-               <div className='form-group'>
-                 <label htmlFor="">Confirm Password:</label>
-                 <input type="text" 
-                 className='p'  
-                 name="password2" 
-                 value={password2} 
-                 onChange={handleOnchange}/>
-               </div>
-               <input type="submit" value="Submit" className="submitButton" />
-
-                </form>
-                 <h3 className='text-option'>Or</h3>
-            <div className='githubContainer'>
-                <button>Sign up with Github</button>
-            </div>
-            <div className='googleContainer'>
-                <div id="signInDiv" className='gsignIn'></div>
-            </div>
-           </div>
+    <div className='section-content-form'>
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <h1 className="title">Registrar usuario</h1>
+        <div className="campos">
+          <TextField
+            required
+            id="outlined-required-email"
+            label="Correo"
+            type="email"
+            value={email}
+            name="email"
+            onChange={handleOnchange}
+          />
+          <TextField
+            required
+            id="outlined-required-first-name"
+            label="Nombre"
+            value={first_name}
+            name="first_name"
+            onChange={handleOnchange}
+          />
+          <TextField
+            required
+            id="outlined-required-last-name"
+            label="Apellido"
+            value={last_name}
+            name="last_name"
+            onChange={handleOnchange}
+          />
+          <TextField
+            required
+            id="outlined-required-password"
+            label="Contraseña"
+            type="password"
+            value={password}
+            name="password"
+            onChange={handleOnchange}
+          />
+          <TextField
+            required
+            id="outlined-required-password2"
+            label="Confirmar contraseña"
+            type="password"
+            value={password2}
+            name="password2"
+            onChange={handleOnchange}
+          />
         </div>
-
+        <br />
+        <button className="button-guardar btn-guardar" type="submit">
+          Registrar
+        </button>
+      </Box>
     </div>
   )
 }

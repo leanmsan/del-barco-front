@@ -1,5 +1,5 @@
 import { useState } from 'react'
-//import AxiosInstance from '../../utils/AxiosInstance'
+import { useNavigate } from 'react-router-dom';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 export function PasswordResetRequest() {
   const [email, setEmail] = useState("")
   const [emailError, setEmailError] = useState(false)
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,8 +21,11 @@ export function PasswordResetRequest() {
         if (res.status === 200) {
           Swal.fire({
             title: "Correo Enviado",
-            text: "Se ha enviado con éxito un correo electrónico con el enlace de recuperación",
-            icon: "success"
+            text: "Se ha enviado un correo electrónico con el enlace de recuperación",
+            icon: "success",
+            didClose: () => {
+              navigate('/login');
+            }
           });
           console.log(res.data);
         }
