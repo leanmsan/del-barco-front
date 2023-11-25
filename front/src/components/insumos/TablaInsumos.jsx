@@ -17,7 +17,7 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
-import CustomTextField from '../CustomTextField'; // ajusta la ruta según sea necesario
+import CustomTextField from '../CustomTextField';
 
 export const TablaInsumos = () => {
   const [insumos, setData] = useState([]);

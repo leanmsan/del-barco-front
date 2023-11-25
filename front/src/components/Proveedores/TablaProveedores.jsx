@@ -13,11 +13,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import CustomTextField from '../CustomTextField';
 
 export const TablaProveedores = () => {
   const [proveedores, setData] = useState([]);
@@ -289,7 +289,8 @@ export const TablaProveedores = () => {
           element: ".button-on-table-alta",
           popover: {
             title: "Dar de alta",
-            description: "Si tienes un proveedor dado de baja, puedes darlo de alta",
+            description:
+              "Si tienes un proveedor dado de baja, puedes darlo de alta",
             side: "left",
             align: "start",
           },
@@ -352,16 +353,7 @@ export const TablaProveedores = () => {
     <div className="section-content">
       <h1 className="title">Proveedores</h1>
       <div className="search-box">
-        <button className="btn-search">
-          <FontAwesomeIcon icon={faSearch} style={{ color: "#ffffff" }} />
-        </button>
-        <input
-          className="input-search"
-          type="text"
-          placeholder="Buscar..."
-          value={busqueda}
-          onChange={handleChange}
-        />
+        <CustomTextField value={busqueda} onChange={handleChange} />
         <Link to="/altaproveedores">
           <button className="btn-create">+ Nuevo proveedor</button>
         </Link>
