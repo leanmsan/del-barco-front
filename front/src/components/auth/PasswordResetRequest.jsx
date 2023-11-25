@@ -9,31 +9,36 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 export function PasswordResetRequest() {
-    const [email, setEmail]=useState("")
-    const [emailError, setEmailError] = useState(false)
+  const [email, setEmail] = useState("")
+  const [emailError, setEmailError] = useState(false)
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      if (email) {
-        try {
-          const res = await axios.post('http://127.0.0.1:8000/api/password-reset/', { 'email': email });
-          if (res.status === 200) {
-            Swal.fire({
-              title: "Correo Enviado",
-              text: "Se ha enviado con éxito un correo electrónico con el enlace de recuperación",
-              icon: "success"
-            });
-            console.log(res.data);
-          }
-        } catch (error) {
-          console.error('Error al solicitar restablecimiento de contraseña:', error);
-        } finally {
-          setEmail("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (email) {
+      try {
+        const res = await axios.post('http://127.0.0.1:8000/api/password-reset/', { 'email': email });
+        if (res.status === 200) {
+          Swal.fire({
+            title: "Correo Enviado",
+            text: "Se ha enviado con éxito un correo electrónico con el enlace de recuperación",
+            icon: "success"
+          });
+          console.log(res.data);
         }
-      } else {
-        setEmailError(true);
+      } catch (error) {
+        console.error('Error al solicitar restablecimiento de contraseña:', error);
+        Swal.fire({
+          title: "Correo no enviado",
+          text: "No se pudo enviar el correo electrónico ya que la dirección proporcionada no está registrada.",
+          icon: "error"
+        });
+      } finally {
+        setEmail("");
       }
-    };
+    } else {
+      setEmailError(true);
+    }
+  };
 
   return (
     <div>
@@ -54,7 +59,7 @@ export function PasswordResetRequest() {
           <Typography component="h2" variant="h6">
             Ingresa tu Email
           </Typography>
-          <br/>
+          <br />
           <Typography variant="body2" color="textSecondary" sx={{ marginBottom: 2 }}>
             Proporciona tu dirección de correo electrónico registrada para recuperar tu cuenta.
           </Typography>

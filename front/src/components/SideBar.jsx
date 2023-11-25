@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import logo from '../assets/img/logo1.png'
 import cookieService from "../services/cookieService";
+import logo from "../assets/img/Logo1.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export function SideBar(selectedTab) {
   const navigate = useNavigate();
@@ -12,6 +14,12 @@ export function SideBar(selectedTab) {
   const [proveedoresOpen, setProveedoresOpen] = useState(false);
   const [recetasOpen, setRecetasOpen] = useState(false);
   const [coccionesOpen, setCoccionesOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Agrega una función para manejar la alternancia del menú
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen((prevIsSidebarOpen) => !prevIsSidebarOpen);
+  };
 
   const toggleEntradas = () => {
     setEntradasOpen(!entradasOpen);
@@ -19,7 +27,7 @@ export function SideBar(selectedTab) {
     setRecetasOpen(false);
     setCoccionesOpen(false);
     setProveedoresOpen(false);
-    setInsumosOpen(false)
+    setInsumosOpen(false);
   };
 
   const toggleSalidas = () => {
@@ -28,7 +36,7 @@ export function SideBar(selectedTab) {
     setRecetasOpen(false);
     setCoccionesOpen(false);
     setProveedoresOpen(false);
-    setInsumosOpen(false)
+    setInsumosOpen(false);
   };
 
   const toogleRecetas = () => {
@@ -37,7 +45,7 @@ export function SideBar(selectedTab) {
     setSalidasOpen(false);
     setCoccionesOpen(false);
     setProveedoresOpen(false);
-    setInsumosOpen(false)
+    setInsumosOpen(false);
   };
 
   const toggleCocciones = () => {
@@ -46,7 +54,7 @@ export function SideBar(selectedTab) {
     setSalidasOpen(false);
     setRecetasOpen(false);
     setProveedoresOpen(false);
-    setInsumosOpen(false)
+    setInsumosOpen(false);
   };
 
   const toggleInsumos = () => {
@@ -55,7 +63,7 @@ export function SideBar(selectedTab) {
     setEntradasOpen(false);
     setSalidasOpen(false);
     setRecetasOpen(false);
-    setProveedoresOpen(false)
+    setProveedoresOpen(false);
   };
 
   const toggleProveedores = () => {
@@ -64,7 +72,7 @@ export function SideBar(selectedTab) {
     setEntradasOpen(false);
     setSalidasOpen(false);
     setRecetasOpen(false);
-    setInsumosOpen(false)
+    setInsumosOpen(false);
   };
 
   const Logout = (handleAuthentication) => {
@@ -72,7 +80,7 @@ export function SideBar(selectedTab) {
       // Utiliza el mismo nombre de cookie que se establece en handleAuthentication
       cookieService.removeToken();
     }
-  
+
     deleteTokenCookie();
     handleAuthentication(false);
     console.log('Redireccionando a /login')
@@ -81,35 +89,41 @@ export function SideBar(selectedTab) {
 
   const handleLogoClick = () => {
     navigate("/");
-  }
+  };
 
   return (
-    <nav  className="scrollable-sidebar">
-      
-        <div className="logo-image">
-         <img src={logo} alt="Logo Cervecería Del Barco" onClick={handleLogoClick}/>
-        </div>
-      
-      <div className="menu-items">
-        <div>
+    <nav className={`scrollable-sidebar ${isSidebarOpen ? "" : "close"}`}>
+      <div className="sidebar-button">
+        <button className="sidebar-toggle" onClick={handleToggleSidebar}>
+          <i className="fa-solid fa-bars">
+            <FontAwesomeIcon icon={faBars} style={{ color: "#ffffff" }} />
+          </i>
+        </button>
+      </div>
+      <div className="logo-image">
+        <img
+          src={logo}
+          alt="Logo Cervecería Del Barco"
+          onClick={handleLogoClick}
+        />
+      </div>
+  
+      <div className="menu-items" id="side-bar">
         <ul className="nav-links">
-
           {/* Insumos */}
           <li
             className={`nav-link-item ${selectedTab === "registroentradas" ? "active" : ""
-          } ${selectedTab === "entradas" ? "active" : ""
-          }`}
+              } ${selectedTab === "entradas" ? "active" : ""}`}
           >
             <Link onClick={toggleInsumos}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
               <span className="link-name">Insumos</span>
             </Link>
           </li>
-
+  
           <li
-            className={`nav-link-item ${
-              selectedTab === "insumos" ? "active" : ""
-            } ${insumosOpen ? "active fade-in" : "fade-out"}`}
+            className={`nav-link-item ${selectedTab === "insumos" ? "active" : ""
+              } ${insumosOpen ? "active fade-in" : "fade-out"}`}
           >
             {insumosOpen && (
               <ul className="sub-menu">
@@ -126,23 +140,21 @@ export function SideBar(selectedTab) {
               </ul>
             )}
           </li>
-          
+  
           {/* Proveedores */}
           <li
             className={`nav-link-item ${selectedTab === "registroentradas" ? "active" : ""
-          } ${selectedTab === "entradas" ? "active" : ""
-          }`}
+              } ${selectedTab === "entradas" ? "active" : ""}`}
           >
             <Link onClick={toggleProveedores}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
               <span className="link-name">Proveedores</span>
             </Link>
           </li>
-
+  
           <li
-            className={`nav-link-item ${
-              selectedTab === "proveedores" ? "active" : ""
-            } ${proveedoresOpen ? "active fade-in" : "fade-out"}`}
+            className={`nav-link-item ${selectedTab === "proveedores" ? "active" : ""
+              } ${proveedoresOpen ? "active fade-in" : "fade-out"}`}
           >
             {proveedoresOpen && (
               <ul className="sub-menu">
@@ -159,85 +171,80 @@ export function SideBar(selectedTab) {
               </ul>
             )}
           </li>
-
+  
           <li
             className={`nav-link-item ${selectedTab === "registroentradas" ? "active" : ""
-          } ${selectedTab === "entradas" ? "active" : ""
-          }`}
+              } ${selectedTab === "entradas" ? "active" : ""}`}
           >
             <Link onClick={toggleEntradas}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
-              <span className="link-name">Entradas</span>
+              <span className="link-name">Ingresos</span>
             </Link>
           </li>
-
+  
           <li
-            className={`nav-link-item ${
-              selectedTab === "movimientos" ? "active" : ""
-            } ${entradasOpen ? "active fade-in" : "fade-out"}`}
+            className={`nav-link-item ${selectedTab === "movimientos" ? "active" : ""
+              } ${entradasOpen ? "active fade-in" : "fade-out"}`}
           >
             {entradasOpen && (
               <ul className="sub-menu">
                 <li>
                   <Link to="/registroentradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Nueva entrada</span>
+                    <span className="link-name">Nuevo ingreso</span>
                   </Link>
                   <Link to="/entradas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Lista de entradas</span>
+                    <span className="link-name">Lista de ingresos</span>
                   </Link>
                 </li>
               </ul>
             )}
           </li>
-
+  
           <li
-            className={`nav-link-item ${
-              selectedTab === "movimientos" ? "active" : ""
-            }`}
+            className={`nav-link-item ${selectedTab === "movimientos" ? "active" : ""
+              }`}
           >
             <Link onClick={toggleSalidas}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
-              <span className="link-name">Salidas</span>
+              <span className="link-name">Egresos</span>
             </Link>
           </li>
-
+  
           <li
-            className={`nav-link-item ${
-              selectedTab === "movimientos" ? "active" : ""
-            } ${salidasOpen ? "active fade-in" : "fade-out"}`}
+            className={`nav-link-item ${selectedTab === "movimientos" ? "active" : ""
+              } ${salidasOpen ? "active fade-in" : "fade-out"}`}
           >
             {salidasOpen && (
               <ul className="sub-menu">
                 <li>
                   <Link to="/registrosalidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Nueva salida</span>
+                    <span className="link-name">Nuevo egreso</span>
                   </Link>
                   <Link to="/salidas">
                     <i className="fa-solid fa-cash-register nav-link-icon"></i>
-                    <span className="link-name">Lista de salidas</span>
+                    <span className="link-name">Lista de egresos</span>
                   </Link>
                 </li>
               </ul>
             )}
           </li>
-          
+  
           <li
-            className={`nav-link-item ${
-              selectedTab === "recetas" ? "active" : ""
-            }`}
+            className={`nav-link-item ${selectedTab === "recetas" ? "active" : ""
+              }`}
           >
             <Link onClick={toogleRecetas}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
               <span className="link-name">Recetas</span>
             </Link>
           </li>
+  
           <li
-            className={`nav-link-item ${
-              selectedTab === "recetas" ? "active" : ""
-            } ${recetasOpen ? "active fade-in" : "fade-out"}`}
+            className={`nav-link-item ${selectedTab === "recetas" ? "active" : ""
+              } ${recetasOpen ? "active fade-in" : "fade-out"}`}
           >
             {recetasOpen && (
               <ul className="sub-menu">
@@ -254,11 +261,12 @@ export function SideBar(selectedTab) {
               </ul>
             )}
           </li>
-          
+        </ul>
+  
+        <ul className="logout-mod">
           <li
-            className={`nav-link-item ${
-              selectedTab === "cocciones" ? "active" : ""
-            }`}
+            className={`nav-link-item ${selectedTab === "cocciones" ? "active" : ""
+              }`}
           >
             <Link onClick={toggleCocciones}>
               <i className="fa-solid fa-person-circle-plus nav-link-icon"></i>
@@ -266,9 +274,8 @@ export function SideBar(selectedTab) {
             </Link>
           </li>
           <li
-            className={`nav-link-item ${
-              selectedTab === "cocciones" ? "active" : ""
-            } ${coccionesOpen ? "active fade-in" : "fade-out"}`}
+            className={`nav-link-item ${selectedTab === "cocciones" ? "active" : ""
+              } ${coccionesOpen ? "active fade-in" : "fade-out"}`}
           >
             {coccionesOpen && (
               <ul className="sub-menu">
@@ -285,20 +292,32 @@ export function SideBar(selectedTab) {
               </ul>
             )}
           </li>
-
         </ul>
-
-       <ul className="logout-mod">
+  
+        <ul className="logout-mod">
           <li className="nav-link-item">
             <Link onClick={Logout}>
               <i className="fa-solid fa-right-from-bracket nav-link-icon"></i>
               <span className="link-name">Salir</span>
             </Link>
           </li>
-        </ul> 
-        </div>
-        
+        </ul>
+      </div>
+  
+      <div className="info-the-five">
+        <p
+          className="txt-the-five"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, blue, blue 20%, white 20%, white 30%, red 30%, red 70%, white 70%, white 80%, blue 80%, blue)",
+            backgroundSize: "100% 8px",
+            backgroundRepeat: "no-repeat",
+            backgroundPositionY: "top",
+          }}
+        >
+          Desarrollado por The Five
+        </p>
       </div>
     </nav>
-  );
+  )
 }

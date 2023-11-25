@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import "../../../css/form.css";
 import RequiredFieldError from "../../../utils/errors";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2"; 
+import { useNavigate } from "react-router-dom";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export function EntradaForm() {
     // entrada
@@ -34,6 +38,8 @@ export function EntradaForm() {
     const [errorPrecioUnitario, setErrorPrecioUnitario] = useState(false);
 
     const [listaDetalle, setListaDetalle] = useState([]);
+
+    const navegate = useNavigate()
 
     useEffect(() => {
         const fetchProveedores = async () => {
@@ -98,78 +104,93 @@ export function EntradaForm() {
     const isPositiveNumber = (value) => {
         return !isNaN(value) && value > 0;
     };
-
-    const agregarDetalle = () => {
-        try {
-            if (!insumo_id || !cantidad || !precio_unitario) {
-                if (!insumo_id) {
-                    setErrorInsumoId(true);
-                }
-                if (!cantidad) {
-                    setErrorCantidad(true);
-                }
-                if (!precio_unitario) {
-                    setErrorPrecioUnitario(true);
-                }
-
-                const cantidadNumero = parseFloat(cantidad);
-                const precioNumero = parseFloat(precio_unitario);
-
-                if (!isPositiveNumber(cantidadNumero) || !isPositiveNumber(precioNumero)) {
-                    if (!isPositiveNumber(cantidadNumero)) {
-                        setErrorCantidad(true)
-                    }
-                    if (!isPositiveNumber(precioNumero)) {
-                        setErrorPrecioUnitario(true);
-                    }
-
-                    throw new RequiredFieldError('Cantidad y precio unitario deben ser números positivos');
-                }
-
-                throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
-            } else { 
-                const insumoExistente = listaDetalle.some(
-                    (detalle) => detalle.insumo_id === insumo_id
-                );
-
-                if (insumoExistente) {
-                    //console.log("El insumo ya está en la lista de detalles");
-                    throw new RequiredFieldError("El insumo ya está en la lista");
-                }
-
-                const nuevoDetalle = {
-                    identrada_id: identrada_id,
-                    insumo_id: insumo_id,
-                    cantidad: cantidad,
-                    precio_unitario: precio_unitario,
-                };
-
-                const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
-                var nuevoTotal = monto_total || 0;
-                nuevoTotal = nuevoTotal + subtotal;
-
-                setListaDetalle([...listaDetalle, nuevoDetalle]);
-                setMontoTotal(nuevoTotal);
-
-                setInsumoId("");
-                setCantidad("");
-                setPrecioUnitario("");
-
-                if (entradaDetalleFormRef.current) {
-                    entradaDetalleFormRef.current.reset();
-                    setErrorInsumoId(false);
-                    setErrorCantidad(false);
-                    setErrorPrecioUnitario(false);
-                }
+    const validateDetalleFields = () => {
+        if (!insumo_id || !cantidad || !precio_unitario) {
+          if (!insumo_id) {
+            setErrorInsumoId(true);
+          }
+          if (!cantidad) {
+            setErrorCantidad(true);
+          }
+          if (!precio_unitario) {
+            setErrorPrecioUnitario(true);
+          }
+      
+          const cantidadNumero = parseFloat(cantidad);
+          const precioNumero = parseFloat(precio_unitario);
+      
+          if (!isPositiveNumber(cantidadNumero) || !isPositiveNumber(precioNumero)) {
+            if (!isPositiveNumber(cantidadNumero)) {
+              setErrorCantidad(true);
             }
-        } catch (error) {
-            if (error instanceof RequiredFieldError) {
-                console.log("Faltan completar datos requeridos", error.message);
-            } else {
-                console.log("Error de red", error);
+            if (!isPositiveNumber(precioNumero)) {
+              setErrorPrecioUnitario(true);
             }
+      
+            throw new RequiredFieldError('Cantidad y precio unitario deben ser números positivos');
+          }
+          throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
         }
-    };
+      
+        // Verificación adicional para asegurar que tanto cantidad como precio_unitario sean positivos
+        if (parseFloat(cantidad) <= 0 || parseFloat(precio_unitario) <= 0) {
+          setErrorCantidad(true);
+          setErrorPrecioUnitario(true);
+          throw new RequiredFieldError('Cantidad y precio unitario deben ser números positivos');
+        }
+      };
+      
+
+      const agregarDetalle = () => {
+        try {
+          validateDetalleFields();
+    
+          const insumoExistente = listaDetalle.some(
+            (detalle) => detalle.insumo_id === insumo_id
+          );
+    
+          if (insumoExistente) {
+            Swal.fire({
+              title: 'Error',
+              text: 'El insumo ya está en la lista',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+            throw new RequiredFieldError("El insumo ya está en la lista");
+          }
+    
+          const nuevoDetalle = {
+            identrada_id: identrada_id,
+            insumo_id: insumo_id,
+            cantidad: cantidad,
+            precio_unitario: precio_unitario,
+          };
+    
+          const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
+          var nuevoTotal = monto_total || 0;
+          nuevoTotal = nuevoTotal + subtotal;
+    
+          setListaDetalle([...listaDetalle, nuevoDetalle]);
+          setMontoTotal(nuevoTotal);
+    
+          setInsumoId("");
+          setCantidad("");
+          setPrecioUnitario("");
+    
+          if (entradaDetalleFormRef.current) {
+            entradaDetalleFormRef.current.reset();
+            setErrorInsumoId(false);
+            setErrorCantidad(false);
+            setErrorPrecioUnitario(false);
+          }
+        } catch (error) {
+          if (error instanceof RequiredFieldError) {
+            console.log("Faltan completar datos requeridos", error.message);
+          } else {
+            console.log("Error de red", error);
+          }
+        }
+      };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -212,11 +233,9 @@ export function EntradaForm() {
             setErrorFecha(false);
             setProveedorId("");
             setMontoTotal(0);
-            setErrorInsumoId(false);
-            setErrorCantidad(false);
-            setErrorPrecioUnitario(false);
             setListaDetalle([]);
-          } else {
+          }
+          else {
             console.log("Error al crear la entrada", response);
             return;
           }
@@ -238,7 +257,10 @@ export function EntradaForm() {
             text: 'La entrada se registró correctamente!',
             icon: 'success',
             confirmButtonText: 'OK'
-          });
+          }).then(() => {
+            console.log('redireccion a la tabla entradas')
+            navegate('/entradas')
+          })
       
           console.log("Entrada y detalles creados exitosamente");
         } catch (error) {
@@ -255,165 +277,44 @@ export function EntradaForm() {
             confirmButtonText: 'OK'
           });
         }
-      };      
+      };   
+      
+      const handleQuitarDetalle = (index) => {
+        const detalleToRemove = listaDetalle[index];
+        const subtotal = detalleToRemove.cantidad * detalleToRemove.precio_unitario;
+    
+        const nuevasDetalles = [...listaDetalle];
+        nuevasDetalles.splice(index, 1);
+        setListaDetalle(nuevasDetalles);
+    
+        const nuevoTotal = monto_total - subtotal;
+        setMontoTotal(nuevoTotal);
+    };
+
+      const driverAction = () => {
+        const driverObj = driver({
+          popoverClass: 'driverjs-theme',
+          showProgress: true,
+          steps: [
+            { element: '.section-content-form', popover: { title: 'Nuevo ingreso', description: 'Aquí podrás cargar los datos de los insumos que ingresan', side: "left", align: 'start' }},
+            { element: '.campos', popover: { title: 'Datos', description: 'En los campos vas cargando los datos de los insumos', side: "right", align: 'start' }},
+            { element: '.btn-agregar', popover: { title: 'Agregar insumo', description: 'Cuando tengas los datos cargados de un insumo, presiona aquí', side: "left", align: 'start' }},
+            { element: '.tabla-detalles', popover: { title: 'Lista de insumos', description: 'Aqui se verán los insumos que vas cargando', side: "right", align: 'start' }},
+            { element: '.monto', popover: { title: 'Monto total', description: 'Aquí se irá actualizando con el monto total de los ingresos. TIP: Recuerda tener los precios de insumos actualizados', side: "left", align: 'start' }},
+            { popover: { title: 'Quitar de la lista', description: 'Cuando cargues insumos te aparecerá el boton para quitarlo, en caso de que te hayas confundido' } },
+            { element: '.btn-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
+            { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+          ],
+          nextBtnText: 'Próximo',
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
+          progressText: '{{current}} de {{total}}',
+        });
+        driverObj.drive()
+      };
 
     return (
         <div className="section-content-form">
-            {/* <form
-                ref={entradaDetalleFormRef}
-                id="EntradaDetalle"
-                className="form"
-                onSubmit={handleSubmit}
-            >
-                <h1 className="title">Nueva entrada</h1>
-                <div className="input-control">
-                    <label>
-                        Proveedor
-                        <select
-                            value={proveedor_id}
-                            onChange={(e) => {
-                                setProveedorId(e.target.value);
-                                setErrorProveedor(false);
-                            }}
-                        >
-                            <option value="">Seleccione un proveedor</option>
-                            {proveedores.map((proveedor) => (
-                                <option
-                                    key={proveedor.idproveedor}
-                                    value={proveedor.nombre_proveedor}
-                                >
-                                    {proveedor.nombre_proveedor}
-                                </option>
-                            ))}
-                        </select>
-                        {errorProveedor && (
-                            <div className="error-message">Tienes que selecciona un proveedor</div>
-                        )}
-                    </label>
-                    <label>
-                        Fecha
-                        <input
-                            type="date"
-                            name="fecha"
-                            onChange={(e) => {
-                                setFechaEntrada(e.target.value);
-                                setErrorFecha(false);
-                            }}
-                        />
-                        {errorFecha && (
-                            <div className="error-message">Tienes que seleccionar una fecha</div>
-                        )}
-                    </label>
-                    <label>Monto Total</label>
-                    <p>{monto_total}</p>
-                </div>
-
-                <div className="input-control">
-                    <label name="insumo_id">Insumo
-                        <select
-                            value={insumo_id}
-                            onChange={(e) => {
-                                setInsumoId(e.target.value);
-                                setErrorInsumoId(false);
-                            }}
-                        >
-                            <option value="">Seleccione un insumo</option>
-                            {seleccionarInsumo.map((insumo) => (
-                                <option
-                                    key={insumo.insumo_id}
-                                    value={insumo.nombre_insumo}
-                                >
-                                    {insumo.nombre_insumo}
-                                </option>
-                            ))}
-                        </select>
-                        {errorInsumoId && (
-                            <div className="error-message">Tienes que seleccionar un insumo</div>
-                        )}
-                    </label>
-                    <label>Cantidad
-                        <input
-                            type="number"
-                            name="cantidad"
-                            onChange={(e) => {
-                                setCantidad(e.target.value);
-                                setErrorCantidad(false);
-                            }}
-                        />
-                        {errorCantidad && (
-                            <div className="error-message">Tienes que especificar la cantidad</div>
-                        )}
-                    </label>
-                    <label>Precio Unitario
-                        <input
-                            type="number"
-                            name="precio_unitario"
-                            onChange={(e) => {
-                                setPrecioUnitario(e.target.value);
-                                setErrorPrecioUnitario(false);
-                            }}
-                        />
-                        {errorPrecioUnitario && (
-                            <div className="error-message">Tienes que especificar el precio</div>
-                        )}
-                    </label>
-                </div>
-                <button
-                    className="button"
-                    type="button"
-                    onClick={agregarDetalle}
-                    style={{
-                        padding: "5px",
-                        color: "white",
-                        backgroundColor: "#7e530f",
-                        borderRadius: "4px",
-                        border: "none",
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                        width: "100%",
-                    }}
-                >
-                    Agregar insumo
-                </button>
-
-                <TableContainer style={{ margin: "10px 20px 0 0", padding: "5px 5px 5px 5px", }} component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Insumo</TableCell>
-                                <TableCell>Cantidad</TableCell>
-                                <TableCell>Precio Unitario</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {listaDetalle.map((detalle) => (
-                                <TableRow key={detalle.identrada_id}>
-                                    <TableCell>{detalle.insumo_id}</TableCell>
-                                    <TableCell>{detalle.cantidad}</TableCell>
-                                    <TableCell>{detalle.precio_unitario}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <button
-                    className="button"
-                    type="submit"
-                    style={{
-                        padding: "5px",
-                        color: "white",
-                        backgroundColor: "#7e530f",
-                        borderRadius: "4px",
-                        border: "none",
-                        fontSize: "16px",
-                        fontWeight: "bold",
-                        width: "100%",
-                    }}
-                >
-                    Enviar
-                </button>
-            </form> */}
-
             <Box
                 component="form"
                 sx={{
@@ -424,7 +325,7 @@ export function EntradaForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nuevo ingreso</h1>
-                <div>
+                <div className="campos">
                 <TextField
                     required
                     id="outlined-select-currency"
@@ -520,33 +421,16 @@ export function EntradaForm() {
                     error={errorPrecioUnitario}
                     helperText={errorPrecioUnitario ? 'El precio unitario es requerido' : ''}
                     />
-
-                    <TextField
-                        id="outlined-read-only-input"
-                        label="Monto Total"
-                        value={monto_total}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                    />
+                    
                     
                     <br />
                 </div>
-                <br />
-                <button
-                    className="button"
-                    type="button"
-                    onClick={agregarDetalle}
-                    style={{
-                        "padding": "5px", 
-                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                        "font-size": "16px", "font-weight": "bold", "width": "150px"
-                    }}
-                >
+                <button className="button-guardar btn-agregar" type="button" onClick={agregarDetalle}>
                     Agregar insumo
                 </button>
-
-                <TableContainer class="table-container-format" component={Paper}>
+                
+                <h2 className="subtitulo-tablas">Lista de insumos</h2>
+                <TableContainer class="table-container-format tabla-detalles" component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -556,29 +440,38 @@ export function EntradaForm() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {listaDetalle.map((detalle) => (
+                            {listaDetalle.map((detalle, index) => (
                                 <TableRow key={detalle.identrada_id}>
                                     <TableCell>{detalle.insumo_id}</TableCell>
                                     <TableCell>{detalle.cantidad}</TableCell>
                                     <TableCell>{detalle.precio_unitario}</TableCell>
+                                    <TableCell>
+                          <button type='button' className="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
+                            Quitar
+                          </button></TableCell>
+
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <button
-                    className="button"
-                    type="submit"
-                    style={{
-                        "padding": "5px", 
-                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                        "font-size": "16px", "font-weight": "bold", "width": "150px"
-                    }}
-                >
-                    Enviar
+                <div className="monto">
+                    <TextField
+                        id="outlined-read-only-input"
+                        label="Monto Total"
+                        value={monto_total}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        
+                    /></div>
+                <button className="button-guardar btn-guardar" type="submit">
+                    Guardar
                 </button>
                 </Box>
-
+                <div className='btn-ayuda'>
+                    <button onClick={driverAction} className='button-ayuda'><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+                </div>
         </div>
     );
 }

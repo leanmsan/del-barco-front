@@ -2,12 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import "../../../css/form.css";
 import Swal from "sweetalert2";
 import RequiredFieldError from "../../../utils/errors";
+import { useNavigate } from "react-router-dom";
 
 // imports para la tabla con los insumos que componen el detalle
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
+
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export function SalidasForm() {
 
@@ -30,6 +35,8 @@ export function SalidasForm() {
 
     const [listaDetalle, setListaDetalle] = useState([]);
 
+    
+    const navegate = useNavigate()
     // listado de insumos
     useEffect(() => {
         const fetchInsumos = async () => {
@@ -81,64 +88,92 @@ export function SalidasForm() {
         return !isNaN(value) && value > 0;
     };
 
-    const agregarDetalle = () => {
-        try {
-            if (!insumo_id || !cantidad) {
-                if (!insumo_id) {
-                    setErrorInsumoId(true);
-                }
-                if (!cantidad) {
-                    setErrorCantidad(true);
-                }
-
-                const cantidadNumero = parseFloat(cantidad);
-
-                if (!isPositiveNumber(cantidadNumero)) {
-                    setErrorCantidad(true);
-                    throw new RequiredFieldError('Cantidad debe ser un número positivo');
-                }
-
-                throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
-            } else {
-                const insumoExistente = listaDetalle.some(
-                    (detalle) => detalle.insumo_id === insumo_id
-                );
-
-                if (insumoExistente) {
-                    //console.log("El insumo ya está en la lista de detalles");
-                    throw new RequiredFieldError("El insumo ya está en la lista");
-                }
-
-                const nuevoDetalle = {
-                    idsalida_id: idsalida_id,
-                    insumo_id: insumo_id,
-                    cantidad: cantidad,
-                };
-
-                const subtotal = nuevoDetalle.cantidad * nuevoDetalle.precio_unitario;
-                var nuevoTotal = monto_total || 0;
-                nuevoTotal = nuevoTotal + subtotal;
-
-                setListaDetalle([...listaDetalle, nuevoDetalle]);
-                setMontoTotal(nuevoTotal);
-
-                setInsumoId("");
-                setCantidad("");
-
-                if (salidaDetalleFormRef.current) {
-                    salidaDetalleFormRef.current.reset();
-                    setErrorInsumoId(false);
-                    setErrorCantidad(false);
-                }
+    const validateSalidasFields = () => {
+        if (!insumo_id || !cantidad) {
+          if (!insumo_id) {
+            setErrorInsumoId(true);
+          }
+          if (!cantidad) {
+            setErrorCantidad(true);
+          }
+      
+          const cantidadNumero = parseFloat(cantidad);
+      
+          if (!isPositiveNumber(cantidadNumero)) {
+            if (!isPositiveNumber(cantidadNumero)) {
+              setErrorCantidad(true);
             }
-        } catch (error) {
-            if (error instanceof RequiredFieldError) {
-                console.log("Faltan completar datos requeridos", error.message);
-            } else {
-                console.log("Error de red", error);
-            }
+      
+            throw new RequiredFieldError('Cantidad deben ser números positivos');
+          }
+          throw new RequiredFieldError('Todos los campos del detalle son obligatorios');
         }
-    };
+      
+        // Verificación adicional para asegurar que tanto cantidad como precio_unitario sean positivos
+        if (parseFloat(cantidad) <= 0) {
+          setErrorCantidad(true);
+          throw new RequiredFieldError('Cantidad deben ser números positivos');
+        }
+      };
+      
+
+      const agregarDetalle = () => {
+        try {
+          validateSalidasFields();
+    
+          const insumoExistente = listaDetalle.some(
+            (detalle) => detalle.insumo_id === insumo_id
+          );
+    
+          if (insumoExistente) {
+            Swal.fire({
+              title: 'Error',
+              text: 'El insumo ya está en la lista',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+            throw new RequiredFieldError("El insumo ya está en la lista");
+          }
+    
+          const nuevoDetalle = {
+            idsalida_id: idsalida_id,
+            insumo_id: insumo_id,
+            cantidad: cantidad,
+          };
+
+          
+        const subtotal = parseFloat(cantidad); 
+        const nuevoTotal = monto_total + subtotal;
+
+        setListaDetalle([...listaDetalle, nuevoDetalle]);
+        setMontoTotal(nuevoTotal);
+
+        setInsumoId("");
+        setCantidad("");
+    
+          setInsumoId("");
+          setCantidad("");
+    
+          if (salidaDetalleFormRef.current) {
+            salidaDetalleFormRef.current.reset();
+            setErrorInsumoId(false);
+            setErrorCantidad(false);
+          }
+        } catch (error) {
+          if (error instanceof RequiredFieldError) {
+            console.log("Faltan completar datos requeridos", error.message);
+          } else {
+            console.log("Error de red", error);
+          }
+        }
+      };
+
+
+    const handleQuitarDetalle = (index) => {
+        const nuevasDetalles = [...listaDetalle];
+        nuevasDetalles.splice(index, 1);
+        setListaDetalle(nuevasDetalles);
+      };
     
     // handleSubmit
     const handleSubmit = async (e) => {
@@ -194,7 +229,9 @@ export function SalidasForm() {
                 text: 'La salida se registró correctamente!',
                 icon: 'success',
                 confirmButtonText: 'OK'
-            });
+            }).then(() => {
+                navegate('/salidas')
+            })
 
             console.log('Entrada y detalles creados exitosamente');
         } catch (error) {
@@ -208,85 +245,30 @@ export function SalidasForm() {
         }
     };
 
+    const driverAction = () => {
+        const driverObj = driver({
+          popoverClass: 'driverjs-theme',
+          showProgress: true,
+          steps: [
+            { element: '.section-content-form', popover: { title: 'Nuevo egreso', description: 'Aquí podrás cargar los datos de los insumos que salieron', side: "left", align: 'start' }},
+            { element: '.campos', popover: { title: 'Datos', description: 'En los campos vas cargando los datos de los insumos', side: "right", align: 'start' }},
+            { element: '.btn-agregar', popover: { title: 'Agregar insumo', description: 'Cuando tengas los datos cargados de un insumo, presiona aquí', side: "left", align: 'start' }},
+            { element: '.tabla-detalles', popover: { title: 'Lista de insumos', description: 'Aqui se verán los insumos que vas cargando', side: "right", align: 'start' }},
+            { popover: { title: 'Quitar de la lista', description: 'Cuando cargues insumos te aparecerá el boton para quitarlo, en caso de que te hayas confundido' } },
+            { element: '.btn-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
+            { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+          ],
+          nextBtnText: 'Próximo',
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
+          progressText: '{{current}} de {{total}}',
+        });
+        driverObj.drive()
+      };
+
     return (
         <div className="section-content-form">
-            {/* <form  ref={salidaDetalleFormRef} id="SalidaDetalle" className="form" onSubmit={handleSubmit}>
-                <h1 className="title">Nueva salida</h1>
-                <div className="input-control">
-                    */} {/* salida */}
-                    {/* <label>Fecha
-                        <input type="date" name="fecha" onChange={(e) => {
-                            setFechaSalida(e.target.value);
-                            setErrorFecha(false)
-                        }} />
-                        {errorFecha && (
-                            <div className="error-message">Tienes que seleccionar una fecha</div>
-                        )}
-                    </label>
-                </div> */}
-
-                {/* salida detalle*/}
-               {/*  <div className="input-control">
-                    <label name="insumo_id">Insumo
-                        <select value={insumo_id} onChange={(e) => {
-                            setInsumoId(e.target.value);
-                            setErrorInsumoId(false);
-                        }}>
-                            <option value="">Seleccione un insumo</option>
-                            {seleccionarInsumo.map((insumo) => (
-                                <option key={insumo.insumo_id} value={insumo.nombre_insumo}>
-                                    {insumo.nombre_insumo}
-                                </option>
-                            ))}
-                        </select>
-                        {errorInsumoId && (
-                            <div className="error-message">Tienes que seleccionar un insumo</div>
-                        )}
-                    </label>
-                    <label>Cantidad
-                        <input type="number" name="cantidad" onChange={(e) => {
-                            setCantidad(e.target.value);
-                            setErrorCantidad(false);
-
-                        }} />
-                        {errorCantidad && (
-                            <div className="error-message">Tienes que especificar la cantidad</div>
-                        )}
-                    </label>
-                </div>
-                <button className="button" type="button" onClick={agregarDetalle}  style={{
-                                "padding": "5px",
-                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                                "font-size": "16px", "font-weight": "bold", "width": "100%"
-                            }}>Agregar insumo</button> */}
-
-                {/* Tabla con los insumos en el detalle */}
-               {/*  <TableContainer style={{"margin": "10px 20px 0 0", "padding": "5px 5px 5px 5px"}} component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Insumo</TableCell>
-                                <TableCell>Cantidad</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {listaDetalle.map((detalle) => (
-                                <TableRow key={detalle.identrada_id}>
-                                    <TableCell>{detalle.insumo_id}</TableCell>
-                                    <TableCell>{detalle.cantidad}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <button className="button" type="submit"  style={{
-                                "padding": "5px",
-                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                                "font-size": "16px", "font-weight": "bold", "width": "100%"
-                            }}>Enviar</button>
-            </form> */}
-
-            <Box
+           <Box
                 component="form"
                 sx={{
                     '& .MuiTextField-root': { m: 1, width: '25ch' },
@@ -296,7 +278,7 @@ export function SalidasForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nuevo egreso</h1>
-                <div>
+                <div className="campos">
                 <TextField
                     required
                     id="outlined-required"
@@ -358,14 +340,12 @@ export function SalidasForm() {
                     
                     <br />
                 </div>
-                <button className="button" type="button" onClick={agregarDetalle}  style={{
-                        "padding": "5px", 
-                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                        "font-size": "16px", "font-weight": "bold", "width": "150px"
-                    }}>Agregar insumo</button>
-
+                <button className="button-guardar btn-agregar" type="button" onClick={agregarDetalle}>
+                    Agregar insumo
+                </button>
+                <h2 className="subtitulo-tablas">Lista de insumos</h2>
                 {/* Tabla con los insumos en el detalle */}
-                <TableContainer class="table-container-format" component={Paper}>
+                <TableContainer class="table-container-format tabla-detalles" component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -374,23 +354,28 @@ export function SalidasForm() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {listaDetalle.map((detalle) => (
+                            {listaDetalle.map((detalle, index) => (
                                 <TableRow key={detalle.identrada_id}>
                                     <TableCell>{detalle.insumo_id}</TableCell>
                                     <TableCell>{detalle.cantidad}</TableCell>
+                                    <TableCell>
+                          <button type='button' className="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
+                            Quitar
+                          </button></TableCell>
+                                    
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <button className="button" type="submit"  style={{
-                        "padding": "5px", 
-                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                        "font-size": "16px", "font-weight": "bold", "width": "150px"
-                    }}>Enviar</button>
+                <button className="button-guardar btn-guardar" type="submit">
+                    Guardar
+                </button>
 
                 </Box>
-
+                <div className='btn-ayuda'>
+                    <button onClick={driverAction} className='button-ayuda'><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+                </div>
         </div>
     )
 }

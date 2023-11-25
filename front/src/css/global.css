@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
+@import "./fonts.css";
+@import "./section-content.css";
+@import "./inicio.css";
+@import "./not-found.css";
+@import "./buttons.css";
+@import "./search-box.css";
+@import "./driverjs.css";
+@import "./sidebar.css";
+@import "./tables.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --primary-color: #d1a602;
+  --secondary-color: #000;
+  --bg-color: #e6e5e5;
+  --text-color: #747474;
+  --black-light-color: #707070;
+  --border-color: #e6e5e5;
+  --togle-color: #747474 A;
+  --box1-color: #4da3ff;
+  --box2-color: #ffe6ac;
+  --box3-color: #e7d1fc;
+  --title-icon-color: #fff;
+  --title-btn-color: #fff;
+  --subtitle1-color: #7e530f;
+
+  --tran-05: all 0.5s ease;
+  --tran-03: all 0.3s ease;
+  --tran-02: all 0.2 ease;
+}
+
+html, body {
+  /* height: 100%; */
+  margin: 0;
+  /* display: flex; */
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+}
+
+.clickeable {
+  cursor: pointer;
+}
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

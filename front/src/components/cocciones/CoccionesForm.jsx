@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import "../../css/form.css";
 import RequiredFieldError from "../../utils/errors";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export function CoccionesForm() {
     const [fecha_coccion, setFechaCoccion] = useState("");
@@ -17,6 +21,8 @@ export function CoccionesForm() {
 
     const [volumen_producido, setVolumenProducido] = useState("")
     const [errorVolumenProducido, setErrorVolumenProducido] = useState(false);
+    
+    const navegate = useNavigate()
 
     // listado de recetas
     useEffect(() => {
@@ -82,7 +88,9 @@ export function CoccionesForm() {
                     text: 'La cocción se registró correctamente!',
                     icon: 'success',
                     confirmButtonText: 'OK'
-                  });
+                  }).then(() => {
+                    navegate('/cocciones')
+                  })
             } else {
                 console.log("Error al enviar el formulario");
                 Swal.fire({
@@ -99,6 +107,19 @@ export function CoccionesForm() {
             } else {
                 console.log('Error en la solicitud POST', error);
             }
+            if (volumen_producido.trim() === "") {
+                setErrorVolumenProducido(true);
+                setVolumenProducido("");
+            } else {
+                setErrorVolumenProducido(false);
+            }
+            if (receta_id.trim() === "") {
+                setErrorRecetaId(true);
+                setRecetaId("");
+            } else {
+                setErrorRecetaId(false);
+            }
+
             Swal.fire({
                 title: 'Error',
                 text: 'Hubo un problema al enviar el formulario',
@@ -108,53 +129,27 @@ export function CoccionesForm() {
         }
     };
 
+    const driverAction = () => {
+        const driverObj = driver({
+          popoverClass: 'driverjs-theme',
+          showProgress: true,
+          steps: [
+            { element: '.section-content-form', popover: { title: 'Nueva cocción', description: 'Aquí podrás registrar una nueva cocción', side: "left", align: 'start' }},
+            { element: '.campos', popover: { title: 'Datos', description: 'En los campos vas cargando los datos de la cocción', side: "right", align: 'start' }},
+            { element: '.btn-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
+            { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+          ],
+          nextBtnText: 'Próximo',
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
+          progressText: '{{current}} de {{total}}',
+        });
+        driverObj.drive()
+      };
+
     return (
         <div className="section-content-form">
-            {/* <form className="form" onSubmit={handleSubmit}>
-                <h1>Nueva Cocción</h1>
-                <div className="input-control">
-                    <label>Fecha
-                        <input type="date" name="fecha" onChange={(e) => {
-                            setFechaCoccion(e.target.value);
-                            setErrorFechaCoccion(false);
-                        }}/>
-                        {errorFechaCoccion && (
-                            <div className="error-message">Tienes que seleccionar una fecha</div>
-                        )}
-                    </label>
-                    <label>Receta
-                        <select value={receta_id} onChange={(e) => {
-                            setRecetaId(e.target.value);
-                            setErrorRecetaId(false);
-                        }}>
-                            <option value="">Seleccione una receta</option>
-                            {seleccionarReceta.map((receta) => (
-                                <option key={receta.idreceta} value={receta.nombre_receta}>
-                                    {receta.nombre_receta}
-                                </option>
-                            ))}
-                        </select>
-                        {errorRecetaId && (
-                            <div className="error-message">Tienes que seleccionar una receta</div>
-                        )}
-                    </label>
-                    <label>Volumen Producido
-                        <input type="number" name="volumen-producido" onChange={(e) => {
-                            setVolumenProducido(e.target.value);
-                            setErrorVolumenProducido(false);
-                        }}/>
-                        {errorVolumenProducido && (
-                            <div className="error-message">Tienes que especificar el volumen producido</div>
-                        )}
-                    </label>
-                </div>
-                <button className="button" type="submit"  style={{
-                                "padding": "5px",
-                                "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                                "font-size": "16px", "font-weight": "bold", "width": "100%"
-                            }}>Enviar</button>
-            </form> */}
-
+            
             <Box
                 component="form"
                 sx={{
@@ -165,7 +160,7 @@ export function CoccionesForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nueva coccion</h1>
-                <div>
+                <div className="campos">
                 <TextField
                     required
                     id="outlined-required"
@@ -223,20 +218,13 @@ export function CoccionesForm() {
                     <br />
                 </div>
                 <br />
-                
-                <button
-                    className="button"
-                    type="submit"
-                    style={{
-                        "padding": "5px", 
-                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                        "font-size": "16px", "font-weight": "bold", "width": "150px"
-                    }}
-                >
-                    Enviar
+                <button className="button-guardar btn-guardar" type="submit">
+                    Guardar
                 </button>
                 </Box>
-
+                <div className='btn-ayuda'>
+                    <button onClick={driverAction} className='button-ayuda'><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+                </div>
         </div>
     );
 }

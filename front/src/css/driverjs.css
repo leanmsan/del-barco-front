@@ -1,0 +1,38 @@
+@import "./global.css";
+
+.driver-popover.driverjs-theme {
+  font-family: "Poppins", sans-serif;
+}
+
+.driver-popover.driverjs-theme .driver-popover-title {
+  font-family: "Poppins", sans-serif;
+}
+
+.driver-popover.driverjs-theme .driver-popover-title,
+.driver-popover.driverjs-theme .driver-popover-description,
+.driver-popover.driverjs-theme .driver-popover-progress-text {
+  font-family: "Poppins", sans-serif;
+}
+
+.driver-popover.driverjs-theme button {
+  text-align: center;
+  border: 2px solid #000;
+  text-shadow: none;
+  font-size: 14px;
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+}
+
+.driver-popover.driverjs-theme button:hover {
+  background-color: #000;
+  color: #ffffff;
+}
+
+.driver-popover.driverjs-theme .driver-popover-navigation-btns {
+  justify-content: center;
+  gap: 3px;
+}
+
+.driver-popover.driverjs-theme .driver-popover-close-btn {
+  color: #9b9b9b;
+}

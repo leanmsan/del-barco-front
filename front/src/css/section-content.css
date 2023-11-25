@@ -1,0 +1,36 @@
+@import "./global.css";
+
+.section-content {
+  margin-left: 270px;
+  transition: var(--tran-05);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.scrollable-sidebar.close + .section-content,
+.section-content.mobile {
+  margin-left: 80px;
+  transition: var(--tran-05);
+}
+
+.section-content-form {
+  margin-left: 270px;
+  transition: var(--tran-05);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.scrollable-sidebar.close + .section-content-form,
+.section-content-form.mobile {
+  margin-left: 80px;
+  transition: var(--tran-05);
+}
+
+/* Agrega reglas específicas para pantallas más pequeñas */
+@media screen and (max-width: 767px) {
+  .section-content,
+  .section-content-form {
+    margin-left: 80px;
+    transition: var(--tran-05);
+  }
+}

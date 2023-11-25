@@ -1,0 +1,29 @@
+@import "./global.css";
+
+.not-found {
+  margin: 5%;
+  padding: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column-reverse;
+}
+
+/* Estilos específicos para pantallas más grandes */
+@media screen and (min-width: 768px) {
+  .not-found {
+    flex-direction: row;
+  }
+}
+
+.txt-not-found {
+  margin-left: 20px;
+}
+
+.title-not-found {
+  color: var(--secondary-color);
+}
+
+.subtitle-not-found {
+  color: var(--subtitle1-color);
+}

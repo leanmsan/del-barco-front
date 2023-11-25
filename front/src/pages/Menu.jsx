@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { SideBar } from "../components/SideBar";
 import { TablaInsumos } from "../components/insumos/TablaInsumos";
 import ProveedoresPage from "./ProveedoresPage";
-import "../css/menu.css";
 
 export function Menu() {
   const [selectedTab, setSelectedTab] = useState("productos");

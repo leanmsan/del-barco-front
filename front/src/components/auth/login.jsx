@@ -10,7 +10,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import "../../css/login.css"
-import { set } from 'date-fns';
 
 export function Login() {
   const navigate = useNavigate()
@@ -87,7 +86,6 @@ export function Login() {
                 id="email"
                 label="Correo Electrónico"
                 name="email"
-                autoComplete="email"
                 autoFocus
                 value={logindata.email}
                 onChange={handleOnchange}
@@ -100,7 +98,6 @@ export function Login() {
                 label="Contraseña"
                 type="password"
                 id="password"
-                autoComplete="current-password"
                 value={logindata.password}
                 onChange={handleOnchange}
                 error={error}

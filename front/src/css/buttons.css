@@ -1,0 +1,168 @@
+@import "./global.css";
+
+.button {
+  padding: 10px;
+  margin-top: 10px;
+  width: 100%;
+  color: white;
+  background-color: var(--subtitle1-color);
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+.button:hover {
+  color: #fff;
+  border: none;
+  background: #747474;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1em;
+  border-radius: 5px;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.btn-volver {
+  width: fit-content;
+  margin: 20px 0px;
+  color: var(--title-btn-color);
+  background-color: var(--subtitle1-color);
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.button-on-table-modificar {
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: #fcc840;
+  color: #000;
+}
+
+.button-on-table-modificar:focus,
+.button-on-table-modificar:active,
+.button-on-table-modificar::after,
+.button-on-table-modificar:focus-visible {
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: #fcc840;
+  color: #000;
+}
+
+.button-on-table-baja {
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: #ff3434;
+  color: #fff;
+}
+
+.button-on-table-whatsapp {
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: #34ff60;
+  color: #000000;
+}
+
+.button-on-table-alta {
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: #1450C9;
+  color: #ffffff;
+}
+
+.button-guardar {
+  padding: 5px;
+  color: white;
+  background-color: var(--subtitle1-color);
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  width: 150px;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 1rem;
+}
+
+.button-cerrar-detalles {
+  padding: 5px;
+  color: white;
+  background-color: var(--subtitle1-color);
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  width: 150px;
+  font-family: "Poppins", sans-serif;
+  margin-left: 20px;
+}
+
+.button-ayuda {
+  color: #000;
+  background-color: #000;
+  padding: 0.5rem 0.8rem;
+}
+
+.btn-ayuda {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 10px;
+}
+
+.btn-create {
+  width: max-content;
+  padding: 10px 5px;
+  color: white;
+  background-color: var(--subtitle1-color);
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  margin: 0.5rem;
+}
+
+.btn-create-sin-searchbox {
+  width: max-content;
+  padding: 10px 5px;
+  color: white;
+  background-color: var(--subtitle1-color);
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+}
+
+.btn-informe {
+  width: max-content;
+  padding: 10px 5px;
+  color: white;
+  background-color: #0f617e;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  margin: 0.5rem;
+}

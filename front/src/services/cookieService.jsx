@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie';
-
 const cookieService = {
   getToken: () => localStorage.getItem('token'),
   setToken: (token) => localStorage.setItem('token', token),

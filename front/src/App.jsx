@@ -24,7 +24,7 @@ import { TablaCoccionesPage } from "./pages/TablaCoccionesPage";
 import { RegistroCoccionesPage } from "./pages/RegistroCoccionesForm";
 import { RegistroRecetasForm } from "./pages/RegistroRecetas";
 import cookieService from "./services/cookieService";
-import apiService from "./services/apiService";
+//import apiService from "./services/apiService";
 
 
 function ProtectedRoute({ element: Component, ...rest }) {
@@ -36,6 +36,8 @@ function ProtectedRoute({ element: Component, ...rest }) {
     <Navigate to="/login" replace={true} />
   );
 }
+
+import { NotFound } from "./components/NotFound";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(
@@ -63,17 +65,17 @@ function App() {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await apiService.logout();
-      cookieService.removeToken();
-      // Puedes añadir más líneas para eliminar otros tokens si es necesario
-      setAuthenticated(false);
-      Navigate('/login');
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     await apiService.logout();
+  //     cookieService.removeToken();
+  //     // Puedes añadir más líneas para eliminar otros tokens si es necesario
+  //     setAuthenticated(false);
+  //     Navigate('/login');
+  //   } catch (error) {
+  //     console.error('Error al cerrar sesión:', error);
+  //   }
+  // };
 
   return (
     <div>
@@ -102,6 +104,7 @@ function App() {
           <Route path="/cocciones" element={<ProtectedRoute element={TablaCoccionesPage} authenticated={authenticated} />} />
           <Route path="/nuevacoccion" element={<ProtectedRoute element={RegistroCoccionesPage} authenticated={authenticated} />} />
           <Route path="/registrorecetas" element={<ProtectedRoute element={RegistroRecetasForm} authenticated={authenticated} />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

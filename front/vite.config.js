@@ -10,5 +10,5 @@ export default defineConfig({
       // Añadir esta opción
       keepNames: true,
     },
-  },
-})
+  }, // <-- Aquí se agregó el paréntesis de cierre correctamente
+});

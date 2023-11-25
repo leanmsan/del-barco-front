@@ -4,7 +4,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Swal from 'sweetalert2';
-import '../../css/form.css';
+import { useNavigate } from "react-router-dom";
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 export function RecetasForm() {
   const [nombreReceta, setNombreReceta] = useState('');
@@ -29,6 +33,8 @@ export function RecetasForm() {
   const [errorListaInsumos, setErrorListaInsumos] = useState(false);
   
   const [editable, setEditable] = useState(true);
+
+  const navegate = useNavigate()
 
   useEffect(() => {
     fetchInsumos();
@@ -109,18 +115,32 @@ export function RecetasForm() {
 
   const handleAgregarDetalle = () => {
     if (insumoId && cantidad && tipoMedida) {
-      
-      const nuevoDetalle = {
-        insumoId: insumoId,
-        cantidad: cantidad,
-        tipoMedida: tipoMedida,
-      };
-
-      setListaDetalles([...listaDetalles, nuevoDetalle]);
-      setInsumoId('');
-      setCantidad('');
-      setTipoMedida('');
+      // Validar que la cantidad no esté vacía o sea cero
+      if (parseFloat(cantidad) > 0) {
+        const nuevoDetalle = {
+          insumoId: insumoId,
+          cantidad: cantidad,
+          tipoMedida: tipoMedida,
+        };
+  
+        setListaDetalles([...listaDetalles, nuevoDetalle]);
+        setInsumoId('');
+        setCantidad('');
+        setTipoMedida('');
+      } else {
+        setErrorCantidad(true);
+        setErrorInsumoId(true);
+  
+        Swal.fire({
+          icon: 'error',
+          title: 'Campos incompletos',
+          text: 'Todos los campos de detalle son obligatorios y la cantidad debe ser mayor que cero.',
+        });
+      }
     } else {
+      setErrorCantidad(true);
+      setErrorInsumoId(true);
+  
       Swal.fire({
         icon: 'error',
         title: 'Campos incompletos',
@@ -196,7 +216,9 @@ export function RecetasForm() {
           title: 'Receta creada con éxito',
           showConfirmButton: false,
           timer: 1500,
-        });
+        }).then(() => {
+          navegate('/recetas')
+        })
 
         // Limpiar formulario después del envío exitoso
         setNombreReceta('');
@@ -217,100 +239,29 @@ export function RecetasForm() {
     }
   };
 
+  const driverAction = () => {
+    const driverObj = driver({
+      popoverClass: 'driverjs-theme',
+      showProgress: true,
+      steps: [
+        { element: '.section-content-form', popover: { title: 'Nueva receta', description: 'Aquí podrás cargar los datos de una nueva receta', side: "left", align: 'start' }},
+        { element: '.campos', popover: { title: 'Datos', description: 'En los campos vas cargando los datos de la nueva receta y de los insumos', side: "right", align: 'start' }},
+        { element: '.btn-agregar', popover: { title: 'Agregar insumo', description: 'Cuando tengas los datos cargados de un insumo, presiona aquí', side: "left", align: 'start' }},
+        { element: '.tabla-detalles', popover: { title: 'Lista de insumos', description: 'Aqui se verán los insumos que vas cargando', side: "right", align: 'start' }},
+        { popover: { title: 'Quitar de la lista', description: 'Cuando cargues insumos te aparecerá el boton para quitarlo, en caso de que te hayas confundido' } },
+        { element: '.btn-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
+        { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+      ],
+      nextBtnText: 'Próximo',
+      prevBtnText: 'Anterior',
+      doneBtnText: 'Finalizar',
+      progressText: '{{current}} de {{total}}',
+    });
+    driverObj.drive()
+  };
+
   return (
     <div className='section-content-form'>
-      {/* <form className='form' onSubmit={handleSubmit}>
-        <h1 className='title'>Nueva Receta</h1>
-        <div className='input-control'>
-          <label className='form-label'>Nombre de la Receta:
-          <input type='text' value={nombreReceta} onChange={handleNombreRecetaChange} />
-          {errorNombreReceta && (
-              <div className="error-message">El nombre es requerido</div>
-            )}
-            </label>
-          <label>Tipo de Receta: 
-          
-          <input type='text' className='form-input' value={tipoReceta} onChange={handleTipoRecetaChange} />
-          {errorTipoReceta && (
-              <div className="error-message">El tipo de receta es requerido</div>
-            )}
-          </label>
-          <label className='form-label'>Insumo ID:
-          <select className='form-input' value={insumoId} onChange={handleInsumoIdChange}>
-            <option value=''>Seleccionar Insumo</option>
-            {listaInsumos.map((insumo) => (
-              <option key={insumo.insumo_id} value={insumo.insumo_id}>
-                {insumo.nombre_insumo}
-              </option>
-            ))}
-          </select>
-            {errorInsumoId && (
-              <div className="error-message">El insumo es requerido</div>
-            )}
-          </label>
-          <label className='form-label'>Cantidad:
-          <input type='number' className='form-input' value={cantidad} onChange={handleCantidadChange} />
-          {errorCantidad && (
-              <div className="error-message">La cantidad es requerida</div>
-            )}
-          </label>
-          <label className='form-label'>Tipo de Medida:
-          <input type='text' className='form-input' value={tipoMedida} onChange={handleTipoMedidaChange} />
-          {errorTipoMedida && (
-              <div className="error-message">El tipo de medida es requerido</div>
-            )}
-          </label>
-          <button
-            type='button'
-            onClick={handleAgregarDetalle}
-            className='form-button'
-            style={{
-              padding: '5px',
-              color: 'white',
-              backgroundColor: '#7e530f ',
-              borderRadius: '4px',
-              border: 'none',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              width: '100%',
-            }}
-          >
-            Agregar Detalle
-          </button>
-          {listaDetalles.length > 0 && (
-            <div>
-              <h3>Detalles Agregados:</h3>
-              <ul>
-                {listaDetalles.map((detalle, index) => (
-                  <li key={index}>
-                    {detalle.insumoId} - {detalle.cantidad} - {detalle.tipoMedida}{' '}
-                    <button type='button' onClick={() => handleQuitarDetalle(index)}>
-                      Quitar
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <button
-            type='submit'
-            className='form-button'
-            style={{
-              padding: '5px',
-              color: 'white',
-              backgroundColor: '#7e530f ',
-              borderRadius: '4px',
-              border: 'none',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              width: '100%',
-            }}
-          >
-            Enviar
-          </button>
-        </div>
-      </form> */}
-
       <Box
                 component="form"
                 sx={{
@@ -321,7 +272,7 @@ export function RecetasForm() {
                 onSubmit={handleSubmit}
                 >
                 <h1 className="title">Nueva receta</h1>
-                <div>
+                <div className="campos">
                 <TextField
                   required
                   id="outlined-required"
@@ -405,30 +356,21 @@ export function RecetasForm() {
                     <br />
                 </div>
                 <br />
-                <button
-                    className="button"
-                    type="button"
-                    onClick={handleAgregarDetalle}
-                    style={{
-                        "padding": "5px", 
-                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                        "font-size": "16px", "font-weight": "bold", "width": "150px"
-                    }}
-                >
+                <button className="button-guardar btn-agregar" type="button" onClick={handleAgregarDetalle}>
                     Agregar insumo
                 </button>
-                <h3>Detalles Agregados:</h3>
+                <h2 className="subtitulo-tablas">Lista de insumos</h2>
                 {listaDetalles.length >= 0 && (
                   <div>
                     
-                    <TableContainer class="table-container-format" component={Paper}>
+                    <TableContainer class="table-container-format tabla-detalles" component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell class="cell-head-TableContainer">Insumo</TableCell>
                                 <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
                                 <TableCell class="cell-head-TableContainer">Tipo Medida</TableCell>
-                                <TableCell colSpan={2} style={{ textAlign: 'center' }} class="cell-head-TableContainer">Acciones</TableCell>
+                                <TableCell colSpan={2} style={{ textAlign: 'center' }} className="cell-head-TableContainer">Acciones</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -437,12 +379,9 @@ export function RecetasForm() {
                                     <TableCell>{detalle.insumoId}</TableCell>
                                     <TableCell>{detalle.cantidad}</TableCell>
                                     <TableCell>{detalle.tipoMedida}</TableCell>
-                                    <TableCell><button type='button' class="button-on-table-modificar" onClick={() => handleQuitarDetalle(index)}>
-                            Modificar
-                          </button>
-                          </TableCell>
+                                    
                           <TableCell>
-                          <button type='button' class="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
+                          <button type='button' className="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
                             Quitar
                           </button></TableCell>
                                 </TableRow>
@@ -452,19 +391,13 @@ export function RecetasForm() {
                 </TableContainer> 
                 </div>
                 )}
-                <button
-                    className="button"
-                    type="submit"
-                    style={{
-                        "padding": "5px", 
-                        "color": "white", "background-color": "#7e530f ", "border-radius": "4px", "border": "none",
-                        "font-size": "16px", "font-weight": "bold", "width": "150px"
-                    }}
-                >
-                    Enviar
+                <button className="button-guardar btn-guardar" type="submit">
+                    Guardar
                 </button>
                 </Box>
-
+                <div className='btn-ayuda'>
+                    <button onClick={driverAction} className='button-ayuda'><FontAwesomeIcon icon={faQuestion} style={{color: "#ffffff",}} /></button>
+                </div>
     </div>
   );
 }
