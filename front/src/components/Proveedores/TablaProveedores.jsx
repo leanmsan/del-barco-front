@@ -286,6 +286,15 @@ export const TablaProveedores = () => {
           },
         },
         {
+          element: ".button-on-table-alta",
+          popover: {
+            title: "Dar de alta",
+            description: "Si tienes un proveedor dado de baja, puedes darlo de alta",
+            side: "left",
+            align: "start",
+          },
+        },
+        {
           element: ".button-on-table-baja",
           popover: {
             title: "Dar de baja",
