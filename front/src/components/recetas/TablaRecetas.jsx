@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faSort } from "@fortawesome/free-solid-svg-icons";
 
 export const TablaRecetas = () => {
   const [recetas, setRecetas] = useState([]);
@@ -15,6 +16,10 @@ export const TablaRecetas = () => {
   const [showRecetasDetalle, setShowRecetasDetalle] = useState(false);
   const [listaInsumos, setListaInsumos] = useState([]);
   const unidadesDeMedidas = ["Kg","g", "Mg", "L", "Ml", "Cc"];
+  const [orden, setOrden] = useState({
+    campo: "nombre_receta",
+    direccion: "asc",
+  });
 
   useEffect(() => {
     fetchData();
@@ -34,6 +39,22 @@ export const TablaRecetas = () => {
     }
   };
 
+  const handleOrdenar = (campo) => {
+    setOrden((estadoAnterior) => ({
+      campo,
+      direccion:
+        estadoAnterior.campo === campo && estadoAnterior.direccion === "asc"
+          ? "desc"
+          : "asc",
+    }));
+  };
+
+  // Función para ordenar los insumos según el estado actual
+  const recetasOrdenadas = [...recetas].sort((a, b) => {
+    const factorOrden = orden.direccion === "asc" ? 1 : -1;
+    return a[orden.campo].localeCompare(b[orden.campo]) * factorOrden;
+  });
+
   const renderRecetas = () => {
     const handleRecetasClick = (nombre_receta) => {
       setSelectedRecetas(nombre_receta);
@@ -45,14 +66,24 @@ export const TablaRecetas = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell class="cell-head-TableContainer">Nombre</TableCell>
-              <TableCell class="cell-head-TableContainer">Tipo</TableCell>
+              <TableCell class="cell-head-TableContainer clickeable"
+                onClick={() => handleOrdenar("nombre_receta")}
+              >
+                Nombre{" "}
+                <FontAwesomeIcon icon={faSort} style={{ color: "#000000" }} />
+              </TableCell>
+              <TableCell class="cell-head-TableContainer clickeable"
+                onClick={() => handleOrdenar("tipo")}
+              >
+                Tipo{" "}
+                <FontAwesomeIcon icon={faSort} style={{ color: "#000000" }} />
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {recetas.map((receta) => (
+            {recetasOrdenadas.map((receta) => (
               <TableRow key={receta.nombre_receta} onClick={() => handleRecetasClick(receta.nombre_receta)}
-              className={selectedRecetas === receta.nombre_receta ? 'selected-row' : ''}
+              className={selectedRecetas === receta.nombre_receta ? 'selected-row' : 'clickeable'}
               >
                 <TableCell style={{ fontWeight: selectedRecetas === receta.nombre_receta ? 'bold' : 'normal' }}
                   >{receta.nombre_receta}</TableCell>
