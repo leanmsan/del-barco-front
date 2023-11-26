@@ -364,7 +364,15 @@ export function RecetasForm() {
                   <div>
                     
                     <TableContainer class="table-container-format tabla-detalles" component={Paper}>
-                    <Table>
+                    <Table
+                    sx={{
+                      "& .MuiTableCell-root": {
+                        fontFamily: "Poppins, sans-serif",
+                      },
+                      "& .MuiTableRow-root": {
+                        fontFamily: "Poppins, sans-serif",
+                      },
+                    }}>
                         <TableHead>
                             <TableRow>
                                 <TableCell class="cell-head-TableContainer">Insumo</TableCell>

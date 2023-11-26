@@ -78,9 +78,17 @@ export const TablaRecetas = () => {
     return (
       <TableContainer
         class="table-container-format tabla-recetas"
-        component={Paper}
+        component={Paper} 
       >
-        <Table>
+        <Table
+        sx={{
+          "& .MuiTableCell-root": {
+            fontFamily: "Poppins, sans-serif",
+          },
+          "& .MuiTableRow-root": {
+            fontFamily: "Poppins, sans-serif",
+          },
+        }}>
           <TableHead>
             <TableRow>
               <TableCell
@@ -252,8 +260,16 @@ export const TablaRecetas = () => {
                 Cerrar detalles
               </button>
             </h2>
-            <TableContainer component={Paper} class="table-container-format">
-              <Table>
+            <TableContainer class="table-container-format" component={Paper}>
+              <Table
+              sx={{
+                "& .MuiTableCell-root": {
+                  fontFamily: "Poppins, sans-serif",
+                },
+                "& .MuiTableRow-root": {
+                  fontFamily: "Poppins, sans-serif",
+                },
+              }}>
                 <TableHead>
                   <TableRow>
                     <TableCell class="cell-head-TableContainer">
@@ -266,9 +282,9 @@ export const TablaRecetas = () => {
                       Tipo Medida
                     </TableCell>
                     <TableCell
+                      className="cell-head-TableContainer"
                       colSpan={2}
                       style={{ textAlign: "center" }}
-                      className="cell-head-TableContainer"
                     >
                       Acciones
                     </TableCell>
