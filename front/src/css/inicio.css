@@ -16,11 +16,13 @@
   width: 100%;
   margin-bottom: 10px;
   max-width: 1000px;
+  display:flex;
+  justify-content: center;
+  transition: all 0.5s ease;
 }
 
 .photo-slider {
   width: 70%;
-  margin: auto;
 }
 
 .photo-slider img {

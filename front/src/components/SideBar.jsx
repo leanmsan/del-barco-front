@@ -82,9 +82,7 @@ export function SideBar(selectedTab) {
     <nav className={`scrollable-sidebar ${isSidebarOpen ? "" : "close"}`}>
       <div className="sidebar-button">
         <button className="sidebar-toggle" onClick={handleToggleSidebar}>
-          <i className="fa-solid fa-bars">
-            <FontAwesomeIcon icon={faBars} style={{ color: "#ffffff" }} />
-          </i>
+          <FontAwesomeIcon icon={faBars} style={{ color: "#ffffff" }} />
         </button>
       </div>
       <div className="logo-image">
