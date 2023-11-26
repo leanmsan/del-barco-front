@@ -72,11 +72,9 @@ function App() {
           <Route path="/login" element={<LoginPage handleAuthentication={handleAuthentication} />} />
           <Route path="/forget-password" element={<PasswordResetRequestPage/>} />
           <Route path='/password-reset-confirm/:uid/:token' element={<ResetPasswordPage/>}/>
-          <Route path='/otp/verify' element={<VerifyEmailPage/>}/>
-          <Route path='/signup' element={<SignupPage/>}/>
-          {/* <Route path="/logout" element={<LogoutPage onLogout={handleLogout} />} /> */}
+          <Route path="/otp/verify" element={<ProtectedRoute element={VerifyEmailPage} authenticated={authenticated} />} />
+          <Route path="/signup" element={<ProtectedRoute element={SignupPage} authenticated={authenticated} />} />
           
-
           {/* Other routes */}
           <Route path="/" element={<ProtectedRoute element={Inicio} />} />
           <Route path="/proveedores" element={<ProtectedRoute element={ProveedoresPage} authenticated={authenticated} />} />

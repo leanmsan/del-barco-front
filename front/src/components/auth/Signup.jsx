@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import axios from "axios"
 import { useNavigate } from "react-router-dom";
-//import RequiredFieldError from "../../utils/errors";
+import RequiredFieldError from "../../utils/errors";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Swal from 'sweetalert2';
 
 export function Signup() {
   const[email, setEmail] = useState("");
+  const[emailErrorMessage, setEmailErrorMessage] = useState("");
   const[emailError, setEmailError] = useState(false);
 
   const[first_name, setFirstName] = useState("");
@@ -28,36 +28,75 @@ export function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (
-      email.trim() === "" ||
-      first_name.trim() === "" ||
-      last_name.trim() === "" ||
-      password.trim() === "" ||
-      password2.trim() === "" ||
-      emailError ||
-      errorFirstName ||
-      errorLastName ||
-      errorPassword ||
-      errorPassword2
-    ) {
-      // Mostrar alerta de error
-      Swal.fire({
-        title: 'Error',
-        text: 'Por favor, complete todos los campos.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-      // No enviar el formulario si hay errores
-      return;
+    const registro = {
+      email,
+      first_name,
+      last_name,
+      password,
+      password2,
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/register/')
+      if (!email || !first_name || !last_name || !password || !password2) {
+        if (email.trim()=== "") {
+          setEmailError(true);
+          setEmailErrorMessage('El email es requerido');
+          setEmail("");
+        }
+  
+        if (first_name.trim() === "") {
+          setFirstNameError(true),
+          setFirstName("");
+        }
+  
+        if (last_name.trim() === "") {
+          setLastNameError(true);
+          setLastName("");
+        }
+  
+        if (password.trim() === "") {
+          setPasswordError(true);
+          setPassword("");
+        }
+  
+        if (password2.trim() === "") {
+          setPassword2Error(true);
+          setPassword2ErrorMessage('La confirmación de la contraseña es requerida')
+          setPassword2("");
+        }
+        throw RequiredFieldError('Todos los campos son obligatorio')
+      }
+
+      const response = await fetch('http://127.0.0.1:8000/api/register/', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registro),
+      })
       //console.log(response.data)
       if (response.status === 201) {
         navigate("/otp/verify")
+      } else if (response.email && response.email[0] === "user with this Email Address already exists.") {
+        setEmailErrorMessage('El usuario con este correo electrónico ya existe.');
+      } else if (response.non_field_errors && response.non_field_errors[0] === "Las contraseñas no coiciden") {
+        setPassword2ErrorMessage('Las contraseñas no coinciden.');
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Se produjo un error. Por favor, vuelva a intentar.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
+
     } catch (error) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Se produjo un error. Por favor, vuelva a intentar.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
       console.log('Se produjo un error al registrar el usuario', error)
     }
   }
@@ -87,7 +126,7 @@ export function Signup() {
               setEmailError(false);
             }}
             error={emailError}
-            helperText={emailError && 'El email es requerido'}
+            helperText={emailError && emailErrorMessage}
           />
           <TextField
             required
@@ -140,6 +179,8 @@ export function Signup() {
               setPassword2(e.target.value);
               setPassword2Error(false);
             }}
+            error={errorPassword2}
+            helperText={errorPassword2 && password2ErrorMessage}
           />
         </div>
         <br />

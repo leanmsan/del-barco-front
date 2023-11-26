@@ -55,10 +55,16 @@ export function CoccionesForm() {
         }
 
         try {
+            if (fecha_coccion.trim() === "") {
+                setErrorFechaCoccion(true);
+                setFechaCoccion("");
+                throw RequiredFieldError('Este campo es obligatorio');
+            }
+
             if (receta_id.trim() === "") {
                 setErrorRecetaId(true);
                 setRecetaId("");
-                throw new RequiredFieldError('Este campo es obligatorio');
+                throw RequiredFieldError('Este campo es obligatorio');
             } else {
                 setErrorRecetaId(false);
             }
@@ -66,7 +72,7 @@ export function CoccionesForm() {
             if (volumen_producido.trim() === "") {
                 setErrorVolumenProducido(true);
                 setVolumenProducido("");
-                throw new RequiredFieldError('Este campo es obligatorio');
+                throw RequiredFieldError('Este campo es obligatorio');
             } else {
                 setErrorVolumenProducido(false);
             }
