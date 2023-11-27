@@ -234,6 +234,7 @@ export function AltaInsumos() {
       showProgress: true,
       steps: [
         { element: '.section-content-form', popover: { title: 'Nuevo insumo', description: 'Aquí podrás cargar los datos del insumo a registrar', side: "left", align: 'start' }},
+        { element: '.form-tipo-medida', popover: { title: 'Tipo de medida', description: 'TIP: aquí debes seleccionar el tipo de medida de acuerdo al que usas en las recetas.', side: "left", align: 'start' }},
         { element: '.button-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' }},
         { popover: { title: 'Eso es todo!', description: 'Ya puedes realizar la carga.' } }
       ],
@@ -273,6 +274,29 @@ export function AltaInsumos() {
           />
           <TextField
             required
+            id="outlined-select-currency"
+            className="form-tipo-medida"
+            select
+            label="Tipo de medida"
+            value={tipo_medida}
+            onChange={(e) => {
+              setTipo_medida(e.target.value);
+              setErrorTipo_medida(false);
+            }}
+            error={errorTipo_medida}
+            helperText={errorTipo_medida ? 'La unidad de medida es requerida. Selecciona el tipo de medida que utilizas para las recetas' : 'Selecciona el tipo de medida que utilizas para las recetas'}
+          >
+            <MenuItem value="" disabled>
+              Selecciona la unidad de medida
+            </MenuItem>
+            {unidadesDeMedida.map((unidad, index) => (
+              <MenuItem key={index} value={unidad}>
+                {unidad}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            required
             id="outlined-number"
             label="Cantidad disponible"
             type="number"
@@ -284,30 +308,8 @@ export function AltaInsumos() {
               setErrorCantidadNegativa(value < 0);
             }}
             error={errorCantidad_disponible || errorCantidadNegativa}
-            helperText={errorCantidad_disponible ? 'La cantidad disponible es requerida' : (errorCantidadNegativa ? 'La cantidad no puede ser negativa' : '')}
+            helperText={errorCantidad_disponible ? 'La cantidad disponible es requerida' : (errorCantidadNegativa ? 'La cantidad no puede ser negativa' : 'Recuerda cargar la cantidad de acuerdo al tipo de medida')}
           />
-          <TextField
-            required
-            id="outlined-select-currency"
-            select
-            label="Tipo de medida"
-            value={tipo_medida}
-            onChange={(e) => {
-              setTipo_medida(e.target.value);
-              setErrorTipo_medida(false);
-            }}
-            error={errorTipo_medida}
-            helperText={errorTipo_medida && 'La unidad de medida es requerida'}
-          >
-            <MenuItem value="" disabled>
-              Selecciona la unidad de medida
-            </MenuItem>
-            {unidadesDeMedida.map((unidad, index) => (
-              <MenuItem key={index} value={unidad}>
-                {unidad}
-              </MenuItem>
-            ))}
-          </TextField>
 
           <TextField
             required
