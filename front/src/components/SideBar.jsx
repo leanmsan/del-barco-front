@@ -85,7 +85,7 @@ export function SideBar(selectedTab) {
           <FontAwesomeIcon icon={faBars} style={{ color: "#ffffff" }} />
         </button>
       </div>
-      <div className="logo-image">
+      <div className="logo-image clickeable">
         <img
           src={logo}
           alt="Logo Cervecería Del Barco"
