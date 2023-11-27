@@ -16,6 +16,7 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export const TablaRecetas = () => {
   const [recetas, setRecetas] = useState([]);
@@ -28,6 +29,12 @@ export const TablaRecetas = () => {
     campo: "nombre_receta",
     direccion: "asc",
   });
+
+  const navigate = useNavigate();
+
+  const navegarANuevaReceta = () => {
+    navigate("/registrorecetas");
+  };
 
   useEffect(() => {
     fetchData();
@@ -78,9 +85,17 @@ export const TablaRecetas = () => {
     return (
       <TableContainer
         class="table-container-format tabla-recetas"
-        component={Paper}
+        component={Paper} 
       >
-        <Table>
+        <Table
+        sx={{
+          "& .MuiTableCell-root": {
+            fontFamily: "Poppins, sans-serif",
+          },
+          "& .MuiTableRow-root": {
+            fontFamily: "Poppins, sans-serif",
+          },
+        }}>
           <TableHead>
             <TableRow>
               <TableCell
@@ -252,8 +267,16 @@ export const TablaRecetas = () => {
                 Cerrar detalles
               </button>
             </h2>
-            <TableContainer component={Paper} class="table-container-format">
-              <Table>
+            <TableContainer class="table-container-format" component={Paper}>
+              <Table
+              sx={{
+                "& .MuiTableCell-root": {
+                  fontFamily: "Poppins, sans-serif",
+                },
+                "& .MuiTableRow-root": {
+                  fontFamily: "Poppins, sans-serif",
+                },
+              }}>
                 <TableHead>
                   <TableRow>
                     <TableCell class="cell-head-TableContainer">
@@ -266,9 +289,9 @@ export const TablaRecetas = () => {
                       Tipo Medida
                     </TableCell>
                     <TableCell
+                      className="cell-head-TableContainer"
                       colSpan={2}
                       style={{ textAlign: "center" }}
-                      className="cell-head-TableContainer"
                     >
                       Acciones
                     </TableCell>
@@ -372,9 +395,10 @@ export const TablaRecetas = () => {
     <div className="section-content">
       <div>
         <h1 className="title">Recetas</h1>
-        <Link to="/registrorecetas">
+        <button className="btn-create-sin-searchbox" onClick={navegarANuevaReceta}>+ Nueva receta</button>
+        {/* <Link to="/registrorecetas">
           <button className="btn-create-sin-searchbox">+ Nueva receta</button>
-        </Link>
+        </Link> */}
         {renderRecetas()}
         {selectedRecetas && <>{renderRecetasDetalle()}</>}
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   TableContainer,
   Table,
@@ -30,6 +30,12 @@ export const TablaInsumos = () => {
   });
 
   const unidadesDeMedida = ["Kg", "g", "Mg", "L", "Ml", "Cc"];
+
+  const navigate = useNavigate();
+
+  const navegarANuevoInsumo = () => {
+    navigate("/altainsumos");
+  };
 
   const descargarInforme = async () => {
     const response = await fetch("http://127.0.0.1:8000/api/informe_insumos/");
@@ -184,10 +190,10 @@ export const TablaInsumos = () => {
           Swal.fire("Error", "Todos los campos son obligatorios", "error");
           return;
         }
-        if (nuevaCantidad < 0 || nuevoPrecio < 0) {
+        if (nuevoPrecio < 0) {
           Swal.fire(
             "Error",
-            "La cantidad disponible y el precio unitario no pueden ser negativos",
+            "El precio unitario no puede ser negativo",
             "error"
           );
           return;
@@ -308,9 +314,10 @@ export const TablaInsumos = () => {
        
         <CustomTextField value={busqueda} onChange={handleChange} />
 
-        <Link to="/altainsumos">
+        <button className="btn-create" onClick={navegarANuevoInsumo}>+ Nuevo insumo</button>
+        {/* <Link to="/altainsumos">
           <button className="btn-create">+ Nuevo insumo</button>
-        </Link>
+        </Link> */}
         <button onClick={descargarInforme} className="btn-informe">
           Descargar Informe
         </button>
