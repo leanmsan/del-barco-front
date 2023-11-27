@@ -307,10 +307,10 @@ export function EntradaForm() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Insumo</TableCell>
-                <TableCell>Cantidad</TableCell>
-                <TableCell>Precio Unitario</TableCell>
-                <TableCell>Acciones</TableCell>
+                <TableCell class="cell-head-TableContainer">Insumo</TableCell>
+                <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
+                <TableCell class="cell-head-TableContainer">Precio Unitario</TableCell>
+                <TableCell class="cell-head-TableContainer">Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -365,10 +365,19 @@ export function EntradaForm() {
           },
         },
         {
-          element: ".campos",
+          element: ".proveedor-fecha",
           popover: {
-            title: "Datos",
-            description: "En los campos vas cargando los datos de los insumos",
+            title: "Datos de proveedor y fecha",
+            description: "Aqui seleccionas el proveedor al que le compraste y la fecha de ingreso. TIP: recuerda tener cargado el proveedor antes de crear un ingreso",
+            side: "right",
+            align: "start",
+          },
+        },
+        {
+          element: ".insumos-cantidad-precio",
+          popover: {
+            title: "Datos de insumos",
+            description: "Aquí debes seleccionar el insumo, la cantidad y el precio unitario. TIP: recuerda tener cargado el insumo antes de crear un ingreso",
             side: "right",
             align: "start",
           },
@@ -378,7 +387,7 @@ export function EntradaForm() {
           popover: {
             title: "Agregar insumo",
             description:
-              "Cuando tengas los datos cargados de un insumo, presiona aquí",
+              "Cuando tengas los datos cargados de un insumo, presiona aquí para añadirlo a la lista",
             side: "left",
             align: "start",
           },
@@ -397,17 +406,20 @@ export function EntradaForm() {
           popover: {
             title: "Monto total",
             description:
-              "Aquí se irá actualizando con el monto total de los ingresos. TIP: Recuerda tener los precios de insumos actualizados",
+              "Aquí se irá actualizando con el monto total de los ingresos.",
             side: "left",
             align: "start",
           },
         },
         {
+          element: ".button-on-table-baja",
           popover: {
             title: "Quitar de la lista",
             description:
               "Cuando cargues insumos te aparecerá el boton para quitarlo, en caso de que te hayas confundido",
-          },
+              side: "left",
+              align: "start",
+            },
         },
         {
           element: ".btn-guardar",
@@ -447,113 +459,117 @@ export function EntradaForm() {
       >
         <h1 className="title">Nuevo ingreso</h1>
         <div className="campos">
-          <TextField
-            required
-            id="outlined-select-currency"
-            select
-            label="Proveedor"
-            value={proveedor_id}
-            onChange={(e) => {
-              setProveedorId(e.target.value);
-              setErrorProveedor(false);
-            }}
-            error={errorProveedor}
-            helperText={errorProveedor && "El proveedor es requerido"}
-          >
-            <MenuItem value="" disabled>
-              Selecciona un proveedor
-            </MenuItem>
-            {proveedores.map((proveedor) => (
-              <MenuItem
-                key={proveedor.idproveedor}
-                value={proveedor.nombre_proveedor}
-              >
-                {proveedor.nombre_proveedor}
+          <div className="proveedor-fecha">
+            <TextField
+              required
+              id="outlined-select-currency"
+              select
+              label="Proveedor"
+              value={proveedor_id}
+              onChange={(e) => {
+                setProveedorId(e.target.value);
+                setErrorProveedor(false);
+              }}
+              error={errorProveedor}
+              helperText={errorProveedor && "El proveedor es requerido"}
+            >
+              <MenuItem value="" disabled>
+                Selecciona un proveedor
               </MenuItem>
-            ))}
-          </TextField>
+              {proveedores.map((proveedor) => (
+                <MenuItem
+                  key={proveedor.idproveedor}
+                  value={proveedor.nombre_proveedor}
+                >
+                  {proveedor.nombre_proveedor}
+                </MenuItem>
+              ))}
+            </TextField>
 
-          <TextField
-            required
-            id="outlined-required"
-            label="Fecha"
-            type="date"
-            InputLabelProps={{
-              shrink: true, // Esto evita la superposición del label
-            }}
-            value={fecha_entrada}
-            onChange={(e) => {
-              setFechaEntrada(e.target.value);
-              setErrorFecha(false);
-            }}
-            error={errorFecha}
-            helperText={errorFecha ? "La fecha es requerida" : ""}
-          />
-
-          <TextField
-            required
-            id="outlined-select-currency"
-            select
-            label="Insumo"
-            type="text"
-            value={insumo_id}
-            onChange={(e) => {
-              setInsumoId(e.target.value);
-              setErrorInsumoId(false);
-            }}
-            error={errorInsumoId}
-            helperText={errorInsumoId ? "Tienes que seleccionar un insumo" : ""}
-          >
-            <MenuItem value="" disabled>
-              Selecciona un insumo
-            </MenuItem>
-            {seleccionarInsumo.map((insumo) => (
-              <MenuItem key={insumo.insumo_id} value={insumo.nombre_insumo}>
-                {insumo.nombre_insumo}
+            <TextField
+              required
+              id="outlined-required"
+              label="Fecha"
+              type="date"
+              InputLabelProps={{
+                shrink: true, // Esto evita la superposición del label
+              }}
+              value={fecha_entrada}
+              onChange={(e) => {
+                setFechaEntrada(e.target.value);
+                setErrorFecha(false);
+              }}
+              error={errorFecha}
+              helperText={errorFecha ? "La fecha es requerida" : ""}
+            />
+          </div>
+          <br />
+          <div className="insumos-cantidad-precio">
+            <TextField
+              required
+              id="outlined-select-currency"
+              select
+              label="Insumo"
+              type="text"
+              value={insumo_id}
+              onChange={(e) => {
+                setInsumoId(e.target.value);
+                setErrorInsumoId(false);
+              }}
+              error={errorInsumoId}
+              helperText={errorInsumoId ? "Tienes que seleccionar un insumo" : ""}
+            >
+              <MenuItem value="" disabled>
+                Selecciona un insumo
               </MenuItem>
-            ))}
-          </TextField>
+              {seleccionarInsumo.map((insumo) => (
+                <MenuItem key={insumo.insumo_id} value={insumo.nombre_insumo}>
+                  {insumo.nombre_insumo}
+                </MenuItem>
+              ))}
+            </TextField>
 
-          <TextField
-            required
-            id="outlined-number"
-            label="Cantidad"
-            type="number"
-            value={cantidad}
-            onChange={(e) => {
-              setCantidad(e.target.value);
-              setErrorCantidad(false);
-            }}
-            error={errorCantidad}
-            helperText={errorCantidad ? "La cantidad es requerida" : ""}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  {
-                    seleccionarInsumo.find(
-                      (insumo) => insumo.nombre_insumo === insumo_id
-                    )?.tipo_medida
-                  }
-                </InputAdornment>
-              ),
-            }}
-          />
+            <TextField
+              required
+              id="outlined-number"
+              label="Cantidad"
+              type="number"
+              value={cantidad}
+              onChange={(e) => {
+                setCantidad(e.target.value);
+                setErrorCantidad(false);
+              }}
+              error={errorCantidad}
+              helperText={errorCantidad ? "La cantidad es requerida" : ""}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {
+                      seleccionarInsumo.find(
+                        (insumo) => insumo.nombre_insumo === insumo_id
+                      )?.tipo_medida
+                    }
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-          <TextField
-            required
-            id="outlined-number"
-            label="Precio unitario"
-            type="number"
-            value={precio_unitario}
-            onChange={(e) => {
-              setPrecioUnitario(e.target.value);
-              setErrorPrecioUnitario(false);
-            }}
-            error={errorPrecioUnitario}
-            helperText={
-              errorPrecioUnitario ? "El precio unitario es requerido" : ""
-            }
-          />
+            <TextField
+              required
+              id="outlined-number"
+              label="Precio unitario"
+              type="number"
+              value={precio_unitario}
+              onChange={(e) => {
+                setPrecioUnitario(e.target.value);
+                setErrorPrecioUnitario(false);
+              }}
+              error={errorPrecioUnitario}
+              helperText={
+                errorPrecioUnitario ? "El precio unitario es requerido" : ""
+              }
+            />
+          </div>
 
           <br />
         </div>
@@ -565,7 +581,7 @@ export function EntradaForm() {
           Agregar insumo
         </button>
 
-        {listaDetalle.length != 0 && <>{renderInsumos()}</>}
+        {renderInsumos()}
 
         <div className="monto">
           <TextField
