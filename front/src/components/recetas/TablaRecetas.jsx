@@ -16,6 +16,7 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export const TablaRecetas = () => {
   const [recetas, setRecetas] = useState([]);
@@ -28,6 +29,12 @@ export const TablaRecetas = () => {
     campo: "nombre_receta",
     direccion: "asc",
   });
+
+  const navigate = useNavigate();
+
+  const navegarANuevaReceta = () => {
+    navigate("/registrorecetas");
+  };
 
   useEffect(() => {
     fetchData();
@@ -388,9 +395,10 @@ export const TablaRecetas = () => {
     <div className="section-content">
       <div>
         <h1 className="title">Recetas</h1>
-        <Link to="/registrorecetas">
+        <button className="btn-create-sin-searchbox" onClick={navegarANuevaReceta}>+ Nueva receta</button>
+        {/* <Link to="/registrorecetas">
           <button className="btn-create-sin-searchbox">+ Nueva receta</button>
-        </Link>
+        </Link> */}
         {renderRecetas()}
         {selectedRecetas && <>{renderRecetasDetalle()}</>}
       </div>

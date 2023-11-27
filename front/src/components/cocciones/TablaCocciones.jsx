@@ -17,6 +17,7 @@ import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import CustomTextField from '../CustomSearchTextField';
+import { useNavigate } from "react-router-dom";
 
 export const TablaCocciones = () => {
   const [cocciones, setCocciones] = useState([]);
@@ -26,6 +27,12 @@ export const TablaCocciones = () => {
     campo: "identrada",
     direccion: "asc",
   });
+
+  const navigate = useNavigate();
+
+  const navegarANuevaCoccion = () => {
+    navigate("/nuevacoccion");
+  };
 
   const handleChange = (event) => {
     setBusqueda(event.target.value);
@@ -180,10 +187,10 @@ export const TablaCocciones = () => {
       <div className="search-box">
        
         <CustomTextField value={busqueda} onChange={handleChange} />
-
-        <Link to="/nuevacoccion">
+        <button className="btn-create" onClick={navegarANuevaCoccion}>+ Nueva cocción</button>
+        {/* <Link to="/nuevacoccion">
           <button className="btn-create">+ Nueva cocción</button>
-        </Link>
+        </Link> */}
         <button onClick={descargarInforme} className="btn-informe">
           Descargar Informe
         </button>

@@ -18,6 +18,7 @@ import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import CustomTextField from '../CustomSearchTextField';
+import { useNavigate } from "react-router-dom";
 
 export const TablaProveedores = () => {
   const [proveedores, setData] = useState([]);
@@ -61,6 +62,12 @@ export const TablaProveedores = () => {
       }
     });
     setData(resultadosBusqueda);
+  };
+
+  const navigate = useNavigate();
+
+  const navegarANuevoProveedor = () => {
+    navigate("/altaproveedores");
   };
 
   useEffect(() => {
@@ -354,9 +361,11 @@ export const TablaProveedores = () => {
       <h1 className="title">Proveedores</h1>
       <div className="search-box">
         <CustomTextField value={busqueda} onChange={handleChange} />
-        <Link to="/altaproveedores">
+
+        <button className="btn-create" onClick={navegarANuevoProveedor}>+ Nuevo proveedor</button>
+        {/* <Link to="/altaproveedores">
           <button className="btn-create">+ Nuevo proveedor</button>
-        </Link>
+        </Link> */}
       </div>
       <TableContainer class="table-container-format" component={Paper}>
         <Table>
