@@ -56,38 +56,112 @@ export function AltaInsumos() {
     fetchProveedores();
   }, []);
 
+  function validarNombre_insumo() {
+    if (nombre_insumo.trim() === "") {
+      setErrorNombre_insumo(true);
+      return false;
+    } else {
+      setErrorNombre_insumo(false);
+      return true;
+    }
+  };
+
+  function validarCantidad_disponible() {
+    if (cantidad_disponible === undefined) {
+      setErrorCantidad_disponible(true);
+      return false;
+    } else {
+      setErrorCantidad_disponible(false);
+      return true;
+    }
+  };
+
+  function validarTipo_medida() {
+    if (tipo_medida.trim() === "") {
+      setErrorTipo_medida(true);
+      return false;
+    } else {
+      setErrorTipo_medida(false);
+      return true;
+    }
+  };
+
+  function validarCategoria() {
+    if (categoria.trim() === "") {
+      setErrorCategoria(true);
+      return false;
+    } else {
+      setErrorCategoria(false);
+      return true;
+    }
+  };
+
+  function validarPrecio_unitario() {
+    if (precio_unitario === undefined) {
+      setErrorPrecio_unitario(true);
+      return false;
+    } else {
+      setErrorPrecio_unitario(false);
+      return true;
+    }
+  };
+
+  function validarProveedor_id() {
+    if (proveedor_id.trim() === "") {
+      setErrorProveedor_id(true);
+      return false;
+    } else {
+      setErrorProveedor_id(false);
+      return true;
+    }
+  };
+
+  function validarCantidad_Negativa() {
+    if (cantidad_disponible < 0) {
+      setErrorCantidadNegativa(true);
+      return false;
+    } else {
+      setErrorCantidadNegativa(false);
+      return true;
+    }
+  };
+
+  function validarPrecio_Negativo() {
+    if (precio_unitario < 0) {
+      setErrorPrecioNegativo(true);
+      return false;
+    } else {
+      setErrorPrecioNegativo(false);
+      return true;
+    }
+  };
+
+  function validarFormulario() {
+    const nombre_insumoEsValido = validarNombre_insumo();
+    const cantidad_disponibleEsValido = validarCantidad_disponible();
+    const tipo_medidaEsValido = validarTipo_medida();
+    const categoriaEsValido = validarCategoria();
+    const precio_unitarioEsValido = validarPrecio_unitario();
+    const proveedor_idEsValido = validarProveedor_id();
+    const cantidadNegativaEsValido = validarCantidad_Negativa();
+    const precioNegativoEsValido = validarPrecio_Negativo();
+
+    return (
+      nombre_insumoEsValido &&
+      cantidad_disponibleEsValido &&
+      tipo_medidaEsValido &&
+      categoriaEsValido &&
+      precio_unitarioEsValido &&
+      proveedor_idEsValido &&
+      cantidadNegativaEsValido &&
+      precioNegativoEsValido
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación para valores negativos
-    if (cantidad_disponible < 0) {
-      setErrorCantidadNegativa(true);
-    } else {
-      setErrorCantidadNegativa(false);
-    }
-
-    if (precio_unitario < 0) {
-      setErrorPrecioNegativo(true);
-    } else {
-      setErrorPrecioNegativo(false);
-    }
-
-    if (
-      nombre_insumo.trim() === "" ||
-      cantidad_disponible.trim() === "" ||
-      tipo_medida.trim() === "" ||
-      categoria.trim() === "" ||
-      precio_unitario.trim() === "" ||
-      proveedor_id.trim() === "" ||
-      errorNombre_insumo ||
-      errorCantidad_disponible ||
-      errorTipo_medida ||
-      errorCategoria ||
-      errorPrecio_unitario ||
-      errorProveedor_id ||
-      errorCantidadNegativa ||
-      errorPrecioNegativo
-    ) {
+    if (!validarFormulario()) {
       // Mostrar alerta de error
       Swal.fire({
         title: 'Error',
