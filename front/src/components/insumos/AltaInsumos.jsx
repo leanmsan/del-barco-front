@@ -259,109 +259,113 @@ export function AltaInsumos() {
       >
         <h1 className="title">Nuevo insumo</h1>
         <div>
-          <TextField
-            required
-            id="outlined-required"
-            label="Nombre de insumo"
-            type="text"
-            value={nombre_insumo}
-            onChange={(e) => {
-              setNombre_insumo(e.target.value);
-              setErrorNombre_insumo(false);
-            }}
-            error={errorNombre_insumo}
-            helperText={errorNombre_insumo ? 'El nombre de insumo es requerido' : ''}
-          />
-          <TextField
-            required
-            id="outlined-select-currency"
-            className="form-tipo-medida"
-            select
-            label="Tipo de medida"
-            value={tipo_medida}
-            onChange={(e) => {
-              setTipo_medida(e.target.value);
-              setErrorTipo_medida(false);
-            }}
-            error={errorTipo_medida}
-            helperText={errorTipo_medida ? 'La unidad de medida es requerida. Selecciona el tipo de medida que utilizas para las recetas' : 'Selecciona el tipo de medida que utilizas para las recetas'}
-          >
-            <MenuItem value="" disabled>
-              Selecciona la unidad de medida
-            </MenuItem>
-            {unidadesDeMedida.map((unidad, index) => (
-              <MenuItem key={index} value={unidad}>
-                {unidad}
+          <div className="insumo-categoria">
+            <TextField
+              required
+              id="outlined-required"
+              label="Nombre de insumo"
+              type="text"
+              value={nombre_insumo}
+              onChange={(e) => {
+                setNombre_insumo(e.target.value);
+                setErrorNombre_insumo(false);
+              }}
+              error={errorNombre_insumo}
+              helperText={errorNombre_insumo ? 'El nombre de insumo es requerido' : ''}
+            />
+            <TextField
+              required
+              id="outlined-disabled"
+              label="Categoria"
+              value={categoria}
+              onChange={(e) => {
+                setCategoria(e.target.value);
+                setErrorCategoria(false);
+              }}
+              error={errorCategoria}
+              helperText={errorCategoria ? 'La categoría es requerida' : ''}
+            />
+          </div>
+          <div className="cantidad-medida">
+            <TextField
+              required
+              id="outlined-select-currency"
+              className="form-tipo-medida"
+              select
+              label="Tipo de medida"
+              value={tipo_medida}
+              onChange={(e) => {
+                setTipo_medida(e.target.value);
+                setErrorTipo_medida(false);
+              }}
+              error={errorTipo_medida}
+              helperText={errorTipo_medida ? 'La unidad de medida es requerida. Selecciona el tipo de medida que utilizas para las recetas' : 'Selecciona el tipo de medida que utilizas para las recetas'}
+            >
+              <MenuItem value="" disabled>
+                Selecciona la unidad de medida
               </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            required
-            id="outlined-number"
-            label="Cantidad disponible"
-            type="number"
-            value={cantidad_disponible}
-            onChange={(e) => {
-              const value = e.target.value;
-              setCantidad_disponible(value);
-              setErrorCantidad_disponible(false);
-              setErrorCantidadNegativa(value < 0);
-            }}
-            error={errorCantidad_disponible || errorCantidadNegativa}
-            helperText={errorCantidad_disponible ? 'La cantidad disponible es requerida' : (errorCantidadNegativa ? 'La cantidad no puede ser negativa' : 'Recuerda cargar la cantidad de acuerdo al tipo de medida')}
-          />
-
-          <TextField
-            required
-            id="outlined-disabled"
-            label="Categoria"
-            value={categoria}
-            onChange={(e) => {
-              setCategoria(e.target.value);
-              setErrorCategoria(false);
-            }}
-            error={errorCategoria}
-            helperText={errorCategoria ? 'La categoría es requerida' : ''}
-          />
-          <TextField
-            required
-            id="outlined-number"
-            label="Precio unitario"
-            type="number"
-            value={precio_unitario}
-            onChange={(e) => {
-              const value = e.target.value;
-              setPrecio_unitario(value);
-              setErrorPrecio_unitario(false);
-              setErrorPrecioNegativo(value < 0);
-            }}
-            error={errorPrecio_unitario || errorPrecioNegativo}
-            helperText={errorPrecio_unitario ? 'El precio unitario es requerido' : (errorPrecioNegativo ? 'El precio no puede ser negativo' : '')}
-          />
-
-          <TextField
-            required
-            id="outlined-select-currency"
-            select
-            label="Proveedor"
-            value={proveedor_id}
-            onChange={(e) => {
-              setProveedor_id(e.target.value);
-              setErrorProveedor_id(false);
-            }}
-            error={errorProveedor_id}
-            helperText={errorProveedor_id && 'El proveedor es requerido'}
-          >
-            <MenuItem value="" disabled>
-              Selecciona un proveedor
-            </MenuItem>
-            {proveedores.map((proveedor) => (
-              <MenuItem key={proveedor.idproveedor} value={proveedor.nombre_proveedor}>
-                {proveedor.nombre_proveedor}
+              {unidadesDeMedida.map((unidad, index) => (
+                <MenuItem key={index} value={unidad}>
+                  {unidad}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              required
+              id="outlined-number"
+              label="Cantidad disponible"
+              type="number"
+              value={cantidad_disponible}
+              onChange={(e) => {
+                const value = e.target.value;
+                setCantidad_disponible(value);
+                setErrorCantidad_disponible(false);
+                setErrorCantidadNegativa(value < 0);
+              }}
+              error={errorCantidad_disponible || errorCantidadNegativa}
+              helperText={errorCantidad_disponible ? 'La cantidad disponible es requerida' : (errorCantidadNegativa ? 'La cantidad no puede ser negativa' : 'Recuerda cargar la cantidad de acuerdo al tipo de medida')}
+            />
+          </div>
+          <div className="proveedor-precio">
+            <TextField
+              required
+              id="outlined-select-currency"
+              select
+              label="Proveedor"
+              value={proveedor_id}
+              onChange={(e) => {
+                setProveedor_id(e.target.value);
+                setErrorProveedor_id(false);
+              }}
+              error={errorProveedor_id}
+              helperText={errorProveedor_id && 'El proveedor es requerido'}
+            >
+              <MenuItem value="" disabled>
+                Selecciona un proveedor
               </MenuItem>
-            ))}
-          </TextField>
-          <br />
+              {proveedores.map((proveedor) => (
+                <MenuItem key={proveedor.idproveedor} value={proveedor.nombre_proveedor}>
+                  {proveedor.nombre_proveedor}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              required
+              id="outlined-number"
+              label="Precio unitario"
+              type="number"
+              value={precio_unitario}
+              onChange={(e) => {
+                const value = e.target.value;
+                setPrecio_unitario(value);
+                setErrorPrecio_unitario(false);
+                setErrorPrecioNegativo(value < 0);
+              }}
+              error={errorPrecio_unitario || errorPrecioNegativo}
+              helperText={errorPrecio_unitario ? 'El precio unitario es requerido' : (errorPrecioNegativo ? 'El precio no puede ser negativo' : '')}
+            />
+          </div>
+          
         </div>
         <br />
         <button className="button-guardar" type="submit">
