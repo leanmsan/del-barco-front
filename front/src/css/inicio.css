@@ -4,11 +4,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 1000px;
 }
 
 .title.inicio {
   text-align: center;
-  width: 75%;
+  width: 70%;
 }
 
 .slider-container {
