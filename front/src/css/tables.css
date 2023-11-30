@@ -12,6 +12,7 @@
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-family: "Poppins", sans-serif;
 }
 
 /* Estilos específicos para pantallas pequeñas */
@@ -30,7 +31,7 @@
 }
 
 .cell-head-TableContainer {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: bold;
   font-size: 0.875rem;
   line-height: 1.5rem;

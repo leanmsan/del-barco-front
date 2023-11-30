@@ -18,6 +18,7 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 export const TablaSalidasMovimientos = () => {
   const [salidas, setSalidas] = useState([]);
@@ -28,6 +29,12 @@ export const TablaSalidasMovimientos = () => {
     campo: "idsalida",
     direccion: "asc",
   });
+
+  const navigate = useNavigate();
+
+  const navegarANuevaSalida = () => {
+    navigate("/registrosalidas");
+  };
 
   useEffect(() => {
     fetchData();
@@ -259,9 +266,10 @@ export const TablaSalidasMovimientos = () => {
     <div className="section-content">
       <div>
         <h1 className="title">Egresos</h1>
-        <Link to="/registrosalidas">
+        <button className="btn-create-sin-searchbox" onClick={navegarANuevaSalida}>+ Nuevo egreso</button>
+        {/* <Link to="/registrosalidas">
           <button className="btn-create-sin-searchbox">+ Nuevo egreso</button>
-        </Link>
+        </Link> */}
         {renderSalidas()}
         {selectedSalidas && <>{renderSalidasDetalle()}</>}
       </div>

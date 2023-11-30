@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import RequiredFieldError from "../../../utils/errors";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
+import Box from "@mui/material/Box";
+import { TextField, InputAdornment } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 export function EntradaForm() {
   // entrada
@@ -39,7 +39,7 @@ export function EntradaForm() {
 
   const [listaDetalle, setListaDetalle] = useState([]);
 
-  const navegate = useNavigate()
+  const navegate = useNavigate();
 
   useEffect(() => {
     const fetchProveedores = async () => {
@@ -82,7 +82,9 @@ export function EntradaForm() {
   useEffect(() => {
     const fetchLastInsertedId = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/lastidentrada/");
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/lastidentrada/"
+        );
         const data = await response.json();
         const lastId = data.lastid + 1;
 
@@ -119,7 +121,10 @@ export function EntradaForm() {
       const cantidadNumero = parseFloat(cantidad);
       const precioNumero = parseFloat(precio_unitario);
 
-      if (!isPositiveNumber(cantidadNumero) || !isPositiveNumber(precioNumero)) {
+      if (
+        !isPositiveNumber(cantidadNumero) ||
+        !isPositiveNumber(precioNumero)
+      ) {
         if (!isPositiveNumber(cantidadNumero)) {
           setErrorCantidad(true);
         }
@@ -127,19 +132,24 @@ export function EntradaForm() {
           setErrorPrecioUnitario(true);
         }
 
-        throw RequiredFieldError('Cantidad y precio unitario deben ser números positivos');
+        throw new RequiredFieldError(
+          "Cantidad y precio unitario deben ser números positivos"
+        );
       }
-      throw RequiredFieldError('Todos los campos del detalle son obligatorios');
+      throw new RequiredFieldError(
+        "Todos los campos del detalle son obligatorios"
+      );
     }
 
     // Verificación adicional para asegurar que tanto cantidad como precio_unitario sean positivos
     if (parseFloat(cantidad) <= 0 || parseFloat(precio_unitario) <= 0) {
       setErrorCantidad(true);
       setErrorPrecioUnitario(true);
-      throw RequiredFieldError('Cantidad y precio unitario deben ser números positivos');
+      throw new RequiredFieldError(
+        "Cantidad y precio unitario deben ser números positivos"
+      );
     }
   };
-
 
   const agregarDetalle = () => {
     try {
@@ -151,10 +161,10 @@ export function EntradaForm() {
 
       if (insumoExistente) {
         Swal.fire({
-          title: 'Error',
-          text: 'El insumo ya está en la lista',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Error",
+          text: "El insumo ya está en la lista",
+          icon: "error",
+          confirmButtonText: "OK",
         });
         throw new RequiredFieldError("El insumo ya está en la lista");
       }
@@ -199,7 +209,7 @@ export function EntradaForm() {
       if (!proveedor_id || !fecha_entrada) {
         setErrorProveedor(true);
         setErrorFecha(true);
-        throw RequiredFieldError("Este campo es obligatorio");
+        throw new RequiredFieldError("Este campo es obligatorio");
       }
 
       if (listaDetalle.length === 0) {
@@ -207,7 +217,7 @@ export function EntradaForm() {
         setErrorCantidad(true);
         setErrorPrecioUnitario(true);
         console.log("Debes agregar al menos un detalle.");
-        throw RequiredFieldError("Debes agregar al menos un detalle");
+        throw new RequiredFieldError("Debes agregar al menos un detalle");
       }
 
       agregarDetalle();
@@ -234,8 +244,7 @@ export function EntradaForm() {
         setProveedorId("");
         setMontoTotal(0);
         setListaDetalle([]);
-      }
-      else {
+      } else {
         console.log("Error al crear la entrada", response);
         return;
       }
@@ -253,30 +262,71 @@ export function EntradaForm() {
       await Promise.all(promises);
 
       Swal.fire({
-        title: 'Éxito',
-        text: 'La entrada se registró correctamente!',
-        icon: 'success',
-        confirmButtonText: 'OK'
+        title: "Éxito",
+        text: "La entrada se registró correctamente!",
+        icon: "success",
+        confirmButtonText: "OK",
       }).then(() => {
-        console.log('redireccion a la tabla entradas')
-        navegate('/entradas')
-      })
+        console.log("redireccion a la tabla entradas");
+        navegate("/entradas");
+      });
 
       console.log("Entrada y detalles creados exitosamente");
     } catch (error) {
       if (error instanceof RequiredFieldError) {
-        console.log('Error de validación', error.message);
+        console.log("Error de validación", error.message);
       } else {
         console.log("Error de red", error);
       }
 
       Swal.fire({
-        title: 'Error',
-        text: 'Hubo un problema al enviar el formulario',
-        icon: 'error',
-        confirmButtonText: 'OK'
+        title: "Error",
+        text: "Hubo un problema al enviar el formulario",
+        icon: "error",
+        confirmButtonText: "OK",
       });
     }
+  };
+
+  const renderInsumos = () => {
+    return (
+      <>
+        <h2 className="subtitulo-tablas">Lista de insumos</h2>
+        <TableContainer
+          class="table-container-format tabla-detalles"
+          component={Paper}
+        >
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell class="cell-head-TableContainer">Insumo</TableCell>
+                <TableCell class="cell-head-TableContainer">Cantidad</TableCell>
+                <TableCell class="cell-head-TableContainer">Precio Unitario</TableCell>
+                <TableCell class="cell-head-TableContainer">Acciones</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {listaDetalle.map((detalle, index) => (
+                <TableRow key={detalle.identrada_id}>
+                  <TableCell>{detalle.insumo_id}</TableCell>
+                  <TableCell>{detalle.cantidad}</TableCell>
+                  <TableCell>{detalle.precio_unitario}</TableCell>
+                  <TableCell>
+                    <button
+                      type="button"
+                      className="button-on-table-baja"
+                      onClick={() => handleQuitarDetalle(index)}
+                    >
+                      Quitar
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
+    );
   };
 
   const handleQuitarDetalle = (index) => {
@@ -293,24 +343,99 @@ export function EntradaForm() {
 
   const driverAction = () => {
     const driverObj = driver({
-      popoverClass: 'driverjs-theme',
+      popoverClass: "driverjs-theme",
       showProgress: true,
       steps: [
-        { element: '.section-content-form', popover: { title: 'Nuevo ingreso', description: 'Aquí podrás cargar los datos de los insumos que ingresan', side: "left", align: 'start' } },
-        { element: '.campos', popover: { title: 'Datos', description: 'En los campos vas cargando los datos de los insumos', side: "right", align: 'start' } },
-        { element: '.btn-agregar', popover: { title: 'Agregar insumo', description: 'Cuando tengas los datos cargados de un insumo, presiona aquí', side: "left", align: 'start' } },
-        { element: '.tabla-detalles', popover: { title: 'Lista de insumos', description: 'Aqui se verán los insumos que vas cargando', side: "right", align: 'start' } },
-        { element: '.monto', popover: { title: 'Monto total', description: 'Aquí se irá actualizando con el monto total de los ingresos. TIP: Recuerda tener los precios de insumos actualizados', side: "left", align: 'start' } },
-        { popover: { title: 'Quitar de la lista', description: 'Cuando cargues insumos te aparecerá el boton para quitarlo, en caso de que te hayas confundido' } },
-        { element: '.btn-guardar', popover: { title: 'Guardar', description: 'Una vez cargados los datos, presiona Guardar para registrarlo', side: "right", align: 'start' } },
-        { popover: { title: 'Eso es todo!', description: 'Ya puedes continuar' } }
+        {
+          element: ".section-content-form",
+          popover: {
+            title: "Nuevo ingreso",
+            description:
+              "Aquí podrás cargar los datos de los insumos que ingresan",
+            side: "left",
+            align: "start",
+          },
+        },
+        {
+          element: ".proveedor-fecha",
+          popover: {
+            title: "Datos de proveedor y fecha",
+            description: "Aqui seleccionas el proveedor al que le compraste y la fecha de ingreso. TIP: recuerda tener cargado el proveedor antes de crear un ingreso",
+            side: "right",
+            align: "start",
+          },
+        },
+        {
+          element: ".insumos-cantidad-precio",
+          popover: {
+            title: "Datos de insumos",
+            description: "Aquí debes seleccionar el insumo, la cantidad y el precio unitario. TIP: recuerda tener cargado el insumo antes de crear un ingreso",
+            side: "right",
+            align: "start",
+          },
+        },
+        {
+          element: ".btn-agregar",
+          popover: {
+            title: "Agregar insumo",
+            description:
+              "Cuando tengas los datos cargados de un insumo, presiona aquí para añadirlo a la lista",
+            side: "left",
+            align: "start",
+          },
+        },
+        {
+          element: ".tabla-detalles",
+          popover: {
+            title: "Lista de insumos",
+            description: "Aqui se verán los insumos que vas cargando",
+            side: "right",
+            align: "start",
+          },
+        },
+        {
+          element: ".monto",
+          popover: {
+            title: "Monto total",
+            description:
+              "Aquí se irá actualizando con el monto total de los ingresos.",
+            side: "left",
+            align: "start",
+          },
+        },
+        {
+          element: ".button-on-table-baja",
+          popover: {
+            title: "Quitar de la lista",
+            description:
+              "Cuando cargues insumos te aparecerá el boton para quitarlo, en caso de que te hayas confundido",
+              side: "left",
+              align: "start",
+            },
+        },
+        {
+          element: ".btn-guardar",
+          popover: {
+            title: "Guardar",
+            description:
+              "Una vez cargados los datos, presiona Guardar para registrarlo",
+            side: "right",
+            align: "start",
+          },
+        },
+        {
+          popover: {
+            title: "Eso es todo!",
+            description: "Ya puedes continuar",
+          },
+        },
       ],
-      nextBtnText: 'Próximo',
-      prevBtnText: 'Anterior',
-      doneBtnText: 'Finalizar',
-      progressText: '{{current}} de {{total}}',
+      nextBtnText: "Próximo",
+      prevBtnText: "Anterior",
+      doneBtnText: "Finalizar",
+      progressText: "{{current}} de {{total}}",
     });
-    driverObj.drive()
+    driverObj.drive();
   };
 
   return (
@@ -318,7 +443,7 @@ export function EntradaForm() {
       <Box
         component="form"
         sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
         }}
         noValidate
         autoComplete="off"
@@ -326,133 +451,130 @@ export function EntradaForm() {
       >
         <h1 className="title">Nuevo ingreso</h1>
         <div className="campos">
-          <TextField
-            required
-            id="outlined-select-currency"
-            select
-            label="Proveedor"
-            value={proveedor_id}
-            onChange={(e) => {
-              setProveedorId(e.target.value);
-              setErrorProveedor(false);
-            }}
-            error={errorProveedor}
-            helperText={errorProveedor && 'El proveedor es requerido'}
-          >
-            <MenuItem value="" disabled>
-              Selecciona un proveedor
-            </MenuItem>
-            {proveedores.map((proveedor) => (
-              <MenuItem key={proveedor.idproveedor} value={proveedor.nombre_proveedor}>
-                {proveedor.nombre_proveedor}
+          <div className="proveedor-fecha">
+            <TextField
+              required
+              id="outlined-select-currency"
+              select
+              label="Proveedor"
+              value={proveedor_id}
+              onChange={(e) => {
+                setProveedorId(e.target.value);
+                setErrorProveedor(false);
+              }}
+              error={errorProveedor}
+              helperText={errorProveedor && "El proveedor es requerido"}
+            >
+              <MenuItem value="" disabled>
+                Selecciona un proveedor
               </MenuItem>
-            ))}
-          </TextField>
+              {proveedores.map((proveedor) => (
+                <MenuItem
+                  key={proveedor.idproveedor}
+                  value={proveedor.nombre_proveedor}
+                >
+                  {proveedor.nombre_proveedor}
+                </MenuItem>
+              ))}
+            </TextField>
 
-          <TextField
-            required
-            id="outlined-required"
-            label="Fecha"
-            type="date"
-            InputLabelProps={{
-              shrink: true, // Esto evita la superposición del label
-            }}
-            value={fecha_entrada}
-            onChange={(e) => {
-              setFechaEntrada(e.target.value);
-              setErrorFecha(false);
-            }}
-            error={errorFecha}
-            helperText={errorFecha ? 'La fecha es requerida' : ''}
-          />
-
-          <TextField
-            required
-            id="outlined-select-currency"
-            select
-            label="Insumo"
-            type="text"
-            value={insumo_id}
-            onChange={(e) => {
-              setInsumoId(e.target.value);
-              setErrorInsumoId(false);
-            }}
-            error={errorInsumoId}
-            helperText={errorInsumoId ? 'Tienes que seleccionar un insumo' : ''}
-          >
-            <MenuItem value="" disabled>
-              Selecciona un insumo
-            </MenuItem>
-            {seleccionarInsumo.map((insumo) => (
-              <MenuItem
-                key={insumo.insumo_id}
-                value={insumo.nombre_insumo}
-              >
-                {insumo.nombre_insumo}
+            <TextField
+              required
+              id="outlined-required"
+              label="Fecha"
+              type="date"
+              InputLabelProps={{
+                shrink: true, // Esto evita la superposición del label
+              }}
+              value={fecha_entrada}
+              onChange={(e) => {
+                setFechaEntrada(e.target.value);
+                setErrorFecha(false);
+              }}
+              error={errorFecha}
+              helperText={errorFecha ? "La fecha es requerida" : ""}
+            />
+          </div>
+          <br />
+          <div className="insumos-cantidad-precio">
+            <TextField
+              required
+              id="outlined-select-currency"
+              select
+              label="Insumo"
+              type="text"
+              value={insumo_id}
+              onChange={(e) => {
+                setInsumoId(e.target.value);
+                setErrorInsumoId(false);
+              }}
+              error={errorInsumoId}
+              helperText={errorInsumoId ? "Tienes que seleccionar un insumo" : ""}
+            >
+              <MenuItem value="" disabled>
+                Selecciona un insumo
               </MenuItem>
-            ))}
-          </TextField>
+              {seleccionarInsumo.map((insumo) => (
+                <MenuItem key={insumo.insumo_id} value={insumo.nombre_insumo}>
+                  {insumo.nombre_insumo}
+                </MenuItem>
+              ))}
+            </TextField>
 
-          <TextField
-            required
-            id="outlined-number"
-            label="Cantidad"
-            type="number"
-            value={cantidad}
-            onChange={(e) => {
-              setCantidad(e.target.value);
-              setErrorCantidad(false);
-            }}
-            error={errorCantidad}
-            helperText={errorCantidad ? 'La cantidad es requerida' : ''}
-          />
+            <TextField
+              required
+              id="outlined-number"
+              label="Cantidad"
+              type="number"
+              value={cantidad}
+              onChange={(e) => {
+                setCantidad(e.target.value);
+                setErrorCantidad(false);
+              }}
+              error={errorCantidad}
+              helperText={errorCantidad ? "La cantidad es requerida" : ""}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {
+                      seleccionarInsumo.find(
+                        (insumo) => insumo.nombre_insumo === insumo_id
+                      )?.tipo_medida
+                    }
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-          <TextField
-            required
-            id="outlined-number"
-            label="Precio unitario"
-            type="number"
-            value={precio_unitario}
-            onChange={(e) => {
-              setPrecioUnitario(e.target.value);
-              setErrorPrecioUnitario(false);
-            }}
-            error={errorPrecioUnitario}
-            helperText={errorPrecioUnitario ? 'El precio unitario es requerido' : ''}
-          />
+            <TextField
+              required
+              id="outlined-number"
+              label="Precio unitario"
+              type="number"
+              value={precio_unitario}
+              onChange={(e) => {
+                setPrecioUnitario(e.target.value);
+                setErrorPrecioUnitario(false);
+              }}
+              error={errorPrecioUnitario}
+              helperText={
+                errorPrecioUnitario ? "El precio unitario es requerido" : ""
+              }
+            />
+          </div>
 
           <br />
         </div>
-        <button className="button-guardar btn-agregar" type="button" onClick={agregarDetalle}>
+        <button
+          className="button-guardar btn-agregar"
+          type="button"
+          onClick={agregarDetalle}
+        >
           Agregar insumo
         </button>
 
-        <h2 className="subtitulo-tablas">Lista de insumos</h2>
-        <TableContainer class="table-container-format tabla-detalles" component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Insumo</TableCell>
-                <TableCell>Cantidad</TableCell>
-                <TableCell>Precio Unitario</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {listaDetalle.map((detalle, index) => (
-                <TableRow key={detalle.identrada_id}>
-                  <TableCell>{detalle.insumo_id}</TableCell>
-                  <TableCell>{detalle.cantidad}</TableCell>
-                  <TableCell>{detalle.precio_unitario}</TableCell>
-                  <TableCell>
-                    <button type='button' className="button-on-table-baja" onClick={() => handleQuitarDetalle(index)}>
-                      Quitar
-                    </button></TableCell>
+        {renderInsumos()}
 
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
         <div className="monto">
           <TextField
             id="outlined-read-only-input"
@@ -461,14 +583,16 @@ export function EntradaForm() {
             InputProps={{
               readOnly: true,
             }}
-
-          /></div>
+          />
+        </div>
         <button className="button-guardar btn-guardar" type="submit">
           Guardar
         </button>
       </Box>
-      <div className='btn-ayuda'>
-        <button onClick={driverAction} className='button-ayuda'><FontAwesomeIcon icon={faQuestion} style={{ color: "#ffffff", }} /></button>
+      <div className="btn-ayuda">
+        <button onClick={driverAction} className="button-ayuda">
+          <FontAwesomeIcon icon={faQuestion} style={{ color: "#ffffff" }} />
+        </button>
       </div>
     </div>
   );

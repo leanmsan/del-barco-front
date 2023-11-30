@@ -16,6 +16,8 @@ import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import CustomTextField from '../CustomSearchTextField';
+import { useNavigate } from "react-router-dom";
 
 export const TablaCocciones = () => {
   const [cocciones, setCocciones] = useState([]);
@@ -25,6 +27,12 @@ export const TablaCocciones = () => {
     campo: "identrada",
     direccion: "asc",
   });
+
+  const navigate = useNavigate();
+
+  const navegarANuevaCoccion = () => {
+    navigate("/nuevacoccion");
+  };
 
   const handleChange = (event) => {
     setBusqueda(event.target.value);
@@ -129,7 +137,7 @@ export const TablaCocciones = () => {
           },
         },
         {
-          element: ".search-box",
+          element: ".input-search",
           popover: {
             title: "Buscar",
             description:
@@ -176,21 +184,13 @@ export const TablaCocciones = () => {
   return (
     <div className="section-content">
       <h1 className="title">Cocciones</h1>
-
       <div className="search-box">
-        <button className="btn-search">
-          <FontAwesomeIcon icon={faSearch} style={{ color: "#ffffff" }} />
-        </button>
-        <input
-          className="input-search"
-          type="text"
-          placeholder="Buscar..."
-          value={busqueda}
-          onChange={handleChange}
-        />
-        <Link to="/nuevacoccion">
+       
+        <CustomTextField value={busqueda} onChange={handleChange} />
+        <button className="btn-create" onClick={navegarANuevaCoccion}>+ Nueva cocción</button>
+        {/* <Link to="/nuevacoccion">
           <button className="btn-create">+ Nueva cocción</button>
-        </Link>
+        </Link> */}
         <button onClick={descargarInforme} className="btn-informe">
           Descargar Informe
         </button>
