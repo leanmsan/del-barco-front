@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import RequiredFieldError from "../../utils/errors";
-import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from "@mui/material";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -56,10 +55,16 @@ export function CoccionesForm() {
         }
 
         try {
+            if (fecha_coccion.trim() === "") {
+                setErrorFechaCoccion(true);
+                setFechaCoccion("");
+                throw RequiredFieldError('Este campo es obligatorio');
+            }
+
             if (receta_id.trim() === "") {
                 setErrorRecetaId(true);
                 setRecetaId("");
-                throw new RequiredFieldError('Este campo es obligatorio');
+                throw RequiredFieldError('Este campo es obligatorio');
             } else {
                 setErrorRecetaId(false);
             }
@@ -67,7 +72,7 @@ export function CoccionesForm() {
             if (volumen_producido.trim() === "") {
                 setErrorVolumenProducido(true);
                 setVolumenProducido("");
-                throw new RequiredFieldError('Este campo es obligatorio');
+                throw RequiredFieldError('Este campo es obligatorio');
             } else {
                 setErrorVolumenProducido(false);
             }

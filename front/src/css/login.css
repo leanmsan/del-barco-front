@@ -1,0 +1,87 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+
+  .login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #fcb404;
+  }
+  
+  .imagen-login {
+    width: fit-content;
+    height: fit-content;
+    background-color: #fff;
+    align-items: end;
+    justify-content: flex-end;
+    display: flex;
+  }
+  
+  .login-imagen {
+    min-width: fit-content;
+    max-height: 100vh;
+    align-items: end;
+  }
+  
+  .login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  
+  .login-logo {
+    width: 10vw;
+    margin: 10vh;
+  }
+
+  .wrapper {
+    width: 100%;
+  }
+  
+  .form-box {
+    background-color: #fff;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .email-form,
+  .password-form {
+    width: 100%;
+    padding: 10px;
+    margin-right: 10px;
+    margin-left: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .submitButton {
+    background-color: #fcb404 !important;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .pass-link {
+    margin-top: 10px;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+  }
