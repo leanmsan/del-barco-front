@@ -53,6 +53,7 @@ export const TablaProveedores = () => {
   const filtrar = (terminoBusqueda) => {
     let resultadosBusqueda = tablaProveedores.filter((elemento) => {
       if (
+        elemento.nombre_proveedor.toString().toLowerCase() !== "proveedor no especificado" &&
         elemento.nombre_proveedor
           .toString()
           .toLowerCase()
@@ -80,7 +81,11 @@ export const TablaProveedores = () => {
         `http://127.0.0.1:8000/api/proveedores/?search=${searchTerm}`
       );
 
-      const sortedProveedores = response.data.proveedores.sort((a, b) => {
+      const filteredProveedores = response.data.proveedores.filter(
+        (proveedor) => proveedor.nombre_proveedor.toLowerCase() !== "proveedor no especificado"
+      );
+
+      const sortedProveedores = filteredProveedores.sort((a, b) => {
         if (a.estado === "A" && b.estado === "I") return -1;
         if (a.estado === "I" && b.estado === "A") return 1;
         return 0;
