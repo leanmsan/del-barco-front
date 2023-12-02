@@ -66,7 +66,7 @@ export function RecetasForm() {
       Swal.fire({
         icon: "error",
         title: "Formulario incompleto",
-        text: "Por favor, completa el nombre y tipo correctamente.",
+        text: "Por favor, completa el nombre y estilo correctamente.",
       });
       if (nombre.trim() === "") {
         setErrorNombreReceta(true);
@@ -79,7 +79,7 @@ export function RecetasForm() {
       if (editable === true) {
         Swal.fire({
           icon: "success",
-          title: "Nombre y tipo cargados correctamente",
+          title: "Nombre y estilos cargados correctamente",
           text: "Por favor, continua con los insumos.",
         });
       }
@@ -364,9 +364,9 @@ export function RecetasForm() {
         {
           element: ".nombre-tipo",
           popover: {
-            title: "Nombre y tipo de receta",
+            title: "Nombre y estilo de cerveza",
             description:
-              "En estos campos cargas el nombre y tipo de la receta",
+              "En estos campos cargas el nombre y estilo de la cerveza",
             side: "right",
             align: "start",
           },
@@ -374,9 +374,9 @@ export function RecetasForm() {
         {
           element: ".btn-nombre-tipo",
           popover: {
-            title: "Confirmar nombre y tipo",
+            title: "Confirmar nombre y estilo",
             description:
-              "Una vez cargados el nombre y tipo de la receta, presiona aquí para confirmarlos. TIP: Si te equivocaste, puedes volver a editarlos",
+              "Una vez cargados el nombre y estilo de la cerveza, presiona aquí para confirmarlos. TIP: Si te equivocaste, puedes volver a editarlos",
             side: "right",
             align: "start",
           },
@@ -461,13 +461,13 @@ export function RecetasForm() {
               <TextField
                 required
                 id="outlined-required"
-                label="Nombre de receta"
+                label="Nombre de cerveza"
                 type="text"
                 value={nombreReceta}
                 onChange={handleNombreRecetaChange}
                 error={errorNombreReceta}
                 helperText={
-                  errorNombreReceta ? "El nombre de receta es requerido" : ""
+                  errorNombreReceta ? "El nombre de cerveza es requerido" : ""
                 }
                 InputProps={{
                   readOnly: !editable, // Establecer readOnly en función del estado editable
@@ -477,13 +477,13 @@ export function RecetasForm() {
               <TextField
                 required
                 id="outlined-required"
-                label="Tipo de receta"
+                label="Estilo de cerveza"
                 type="text"
                 value={tipoReceta}
                 onChange={handleTipoRecetaChange}
                 error={errorTipoReceta}
                 helperText={
-                  errorTipoReceta ? "El tipo de receta es requerido" : ""
+                  errorTipoReceta ? "El estilo de cerveza es requerido" : ""
                 }
                 InputProps={{
                   readOnly: !editable, // Establecer readOnly en función del estado editable

@@ -66,7 +66,7 @@ export function AltaInsumos() {
     }
   };
 
-  function validarCantidad_disponible() {
+  /* function validarCantidad_disponible() {
     if (cantidad_disponible === undefined) {
       setErrorCantidad_disponible(true);
       return false;
@@ -74,7 +74,7 @@ export function AltaInsumos() {
       setErrorCantidad_disponible(false);
       return true;
     }
-  };
+  }; */
 
   function validarTipo_medida() {
     if (tipo_medida.trim() === "") {
@@ -96,7 +96,7 @@ export function AltaInsumos() {
     }
   };
 
-  function validarPrecio_unitario() {
+  /* function validarPrecio_unitario() {
     if (precio_unitario === undefined) {
       setErrorPrecio_unitario(true);
       return false;
@@ -134,32 +134,38 @@ export function AltaInsumos() {
       setErrorPrecioNegativo(false);
       return true;
     }
-  };
+  }; */
 
   function validarFormulario() {
     const nombre_insumoEsValido = validarNombre_insumo();
-    const cantidad_disponibleEsValido = validarCantidad_disponible();
+    //const cantidad_disponibleEsValido = validarCantidad_disponible();
     const tipo_medidaEsValido = validarTipo_medida();
     const categoriaEsValido = validarCategoria();
-    const precio_unitarioEsValido = validarPrecio_unitario();
-    const proveedor_idEsValido = validarProveedor_id();
-    const cantidadNegativaEsValido = validarCantidad_Negativa();
-    const precioNegativoEsValido = validarPrecio_Negativo();
+    //const precio_unitarioEsValido = validarPrecio_unitario();
+    //const proveedor_idEsValido = validarProveedor_id();
+    //const cantidadNegativaEsValido = validarCantidad_Negativa();
+    //const precioNegativoEsValido = validarPrecio_Negativo();
 
     return (
       nombre_insumoEsValido &&
-      cantidad_disponibleEsValido &&
+      /* cantidad_disponibleEsValido && */
       tipo_medidaEsValido &&
-      categoriaEsValido &&
+      categoriaEsValido /* &&
       precio_unitarioEsValido &&
       proveedor_idEsValido &&
       cantidadNegativaEsValido &&
-      precioNegativoEsValido
+      precioNegativoEsValido */
     );
   };
 
   const handleSubmit = async (e) => {
+    setCantidad_disponible(0);
+    setPrecio_unitario(0);
+    setProveedor_id("Proveedor no especificado");
+    
     e.preventDefault();
+
+    
 
     if (!validarFormulario()) {
       // Mostrar alerta de error
@@ -173,13 +179,17 @@ export function AltaInsumos() {
       return;
     }
 
+    const cant = 0;
+    const prec= 0;
+    const prov = "Proveedor no especificado";
+
     const insumo = {
       nombre_insumo,
-      cantidad_disponible,
+      cantidad_disponible: cant,
       tipo_medida,
       categoria,
-      precio_unitario,
-      proveedor_id,
+      precio_unitario: prec,
+      proveedor_id: prov,
     };
 
     try {
@@ -211,7 +221,7 @@ export function AltaInsumos() {
         console.log("Error al enviar el formulario.");
         Swal.fire({
           title: 'Error',
-          text: 'Hubo un problema al enviar el formulario.',
+          text: 'El insumo ya existe.',
           icon: 'error',
           confirmButtonText: 'OK'
         });
@@ -310,7 +320,7 @@ export function AltaInsumos() {
                 </MenuItem>
               ))}
             </TextField>
-            <TextField
+            {/* <TextField
               required
               id="outlined-number"
               label="Cantidad disponible"
@@ -324,9 +334,9 @@ export function AltaInsumos() {
               }}
               error={errorCantidad_disponible || errorCantidadNegativa}
               helperText={errorCantidad_disponible ? 'La cantidad disponible es requerida' : (errorCantidadNegativa ? 'La cantidad no puede ser negativa' : 'Recuerda cargar la cantidad de acuerdo al tipo de medida')}
-            />
+            /> */}
           </div>
-          <div className="proveedor-precio">
+          {/* <div className="proveedor-precio">
             <TextField
               required
               id="outlined-select-currency"
@@ -364,7 +374,7 @@ export function AltaInsumos() {
               error={errorPrecio_unitario || errorPrecioNegativo}
               helperText={errorPrecio_unitario ? 'El precio unitario es requerido' : (errorPrecioNegativo ? 'El precio no puede ser negativo' : '')}
             />
-          </div>
+          </div> */}
           
         </div>
         <br />

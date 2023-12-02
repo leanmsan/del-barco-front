@@ -341,6 +341,10 @@ export function EntradaForm() {
     setMontoTotal(nuevoTotal);
   };
 
+  const insumoSeleccionado = seleccionarInsumo.find(
+    (insumo) => insumo.nombre_insumo === insumo_id
+  );
+
   const driverAction = () => {
     const driverObj = driver({
       popoverClass: "driverjs-theme",
@@ -549,7 +553,11 @@ export function EntradaForm() {
             <TextField
               required
               id="outlined-number"
-              label="Precio unitario"
+              label={
+                insumoSeleccionado
+                  ? `Precio unitario por ${insumoSeleccionado.tipo_medida}`
+                  : "Precio unitario"
+              }
               type="number"
               value={precio_unitario}
               onChange={(e) => {

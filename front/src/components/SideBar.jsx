@@ -259,9 +259,6 @@ export function SideBar(selectedTab) {
               </ul>
             )}
           </li>
-        </ul>
-  
-        <ul className="logout-mod">
           <li
             className={`nav-link-item ${selectedTab === "cocciones" ? "active" : ""
               }`}
