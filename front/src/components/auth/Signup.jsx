@@ -1,51 +1,53 @@
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import RequiredFieldError from "../../utils/errors";
+//import RequiredFieldError from "../../utils/errors";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Swal from 'sweetalert2';
 
 export function Signup() {
-  const[email, setEmail] = useState("");
-  const[emailErrorMessage, setEmailErrorMessage] = useState("");
-  const[emailError, setEmailError] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
+  const [emailError, setEmailError] = useState(false);
 
-  const[first_name, setFirstName] = useState("");
-  const[errorFirstName, setFirstNameError] = useState(false);
+  const [first_name, setFirstName] = useState("");
+  const [errorFirstName, setFirstNameError] = useState(false);
 
-  const[last_name, setLastName] = useState("");
-  const[errorLastName, setLastNameError] = useState(false);
+  const [last_name, setLastName] = useState("");
+  const [errorLastName, setLastNameError] = useState(false);
 
-  const[password, setPassword] = useState("");
-  const[errorPassword, setPasswordError] = useState(false);
+  const [password, setPassword] = useState("");
+  const [errorPassword, setPasswordError] = useState(false);
 
-  const[password2, setPassword2] = useState("");
-  const[password2ErrorMessage, setPassword2ErrorMessage] = useState("");
-  const[errorPassword2, setPassword2Error] = useState(false);
+  const [password2, setPassword2] = useState("");
+  const [password2ErrorMessage, setPassword2ErrorMessage] = useState("");
+  const [errorPassword2, setPassword2Error] = useState(false);
 
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-
+    e.preventDefault();
+  
     const registro = {
       email,
       first_name,
       last_name,
       password,
       password2,
-    }
-
+    };
+  
     try {
+      // Validar campos requeridos del lado del cliente
       if (!email || !first_name || !last_name || !password || !password2) {
-        if (email.trim()=== "") {
+        // Manejar errores de campo requerido de manera más específica
+        if (email.trim() === "") {
           setEmailError(true);
           setEmailErrorMessage('El email es requerido');
           setEmail("");
         }
   
         if (first_name.trim() === "") {
-          setFirstNameError(true),
+          setFirstNameError(true);
           setFirstName("");
         }
   
@@ -61,45 +63,69 @@ export function Signup() {
   
         if (password2.trim() === "") {
           setPassword2Error(true);
-          setPassword2ErrorMessage('La confirmación de la contraseña es requerida')
+          setPassword2ErrorMessage('La confirmación de la contraseña es requerida');
           setPassword2("");
         }
-        throw RequiredFieldError('Todos los campos son obligatorio')
+  
+        throw new Error('Todos los campos son obligatorios');
       }
-
+  
       const response = await fetch('http://127.0.0.1:8000/api/register/', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(registro),
-      })
-      //console.log(response.data)
+      });
+  
       if (response.status === 201) {
-        navigate("/otp/verify")
-      } else if (response.email && response.email[0] === "user with this Email Address already exists.") {
-        setEmailErrorMessage('El usuario con este correo electrónico ya existe.');
-      } else if (response.non_field_errors && response.non_field_errors[0] === "Las contraseñas no coiciden") {
-        setPassword2ErrorMessage('Las contraseñas no coinciden.');
-      } else {
+        // Manejar éxito
+        //const responseData = await response.json();
         Swal.fire({
-          title: 'Error',
-          text: 'Se produjo un error. Por favor, vuelva a intentar.',
-          icon: 'error',
-          confirmButtonText: 'OK'
+          title: "Correo Enviado",
+          text: "Se ha enviado un correo electrónico con el enlace de recuperación",
+          icon: "success",
+          confirmButtonText: 'OK',
+          didClose: () => {
+            navigate("/otp/verify");
+          }
         });
+        //console.log(responseData);
+      } else {
+        // Manejar errores de respuesta del servidor
+        const errorData = await response.json();
+        //console.log('Error Data:', errorData);
+  
+        if (errorData.email && errorData.email[0] === "user with this Email Address already exists.") {
+          setEmailError(true);
+          setEmailErrorMessage('Esta dirección de correo ya está en uso.');
+        } else if (errorData.non_field_errors) {
+          // Modificar la condición para verificar si hay algún mensaje de error
+          setPassword2Error(true);
+          setPassword2ErrorMessage(errorData.non_field_errors[0]);
+          //console.log('Error de contraseñas no coincidentes:', errorData.non_field_errors);
+        } else {
+          // Manejar otros errores de respuesta del servidor
+          Swal.fire({
+            title: 'Error',
+            text: 'Se produjo un error. Por favor, vuelva a intentar.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
       }
-
     } catch (error) {
+      // Manejar errores de red y otros errores inesperados
       Swal.fire({
         title: 'Error',
         text: 'Se produjo un error. Por favor, vuelva a intentar.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
-      console.log('Se produjo un error al registrar el usuario', error)
+      //console.log('Se produjo un error al registrar el usuario', error);
     }
-  }
+  };   
+  
 
   return (
     <div className='section-content-form'>
