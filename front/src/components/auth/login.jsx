@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import apiService from "../../services/apiService";
-import imagenlogin from '../../assets/img/imagen-login.png'
+import imagenlogin from '../../assets/img/Logo1.png'
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -68,7 +68,6 @@ export function Login() {
               borderRadius: 2,
               px: 4,
               py: 6,
-              marginTop: 8,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",

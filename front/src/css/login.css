@@ -1,87 +1,104 @@
+@import "./global.css";
+
 /* Estilos generales */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-  }
 
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--primary-color);
+  transition: var(--tran-05);
+}
+
+/* .login-container para pantallas moviles y que los items se alineen en columna reversa */
+@media screen and (max-width: 768px) {
   .login-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: #fcb404;
+    flex-direction: column-reverse;
+    transition: var(--tran-05);
   }
-  
-  .imagen-login {
-    width: fit-content;
-    height: fit-content;
-    background-color: #fff;
-    align-items: end;
-    justify-content: flex-end;
-    display: flex;
-  }
-  
+}
+
+.imagen-login {
+  width: fit-content;
+  height: fit-content;
+  background-color: #ffffff00;
+  align-items: end;
+  justify-content: flex-end;
+  display: flex;
+}
+
+.login-imagen {
+  min-width: fit-content;
+  max-height: 100vh;
+  align-items: end;
+  transition: var(--tran-05);
+}
+
+@media screen and (max-width: 768px) {
   .login-imagen {
-    min-width: fit-content;
-    max-height: 100vh;
-    align-items: end;
-  }
-  
-  .login {
-    display: flex;
-    flex-direction: column;
+    margin-top: 2rem;
+    max-height: 25vh;
     align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
+    transition: var(--tran-03);
   }
-  
-  .login-logo {
-    width: 10vw;
-    margin: 10vh;
-  }
+}
 
-  .wrapper {
-    width: 100%;
-  }
-  
-  .form-box {
-    background-color: #fff;
-  }
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .form-group {
-    margin-bottom: 16px;
+@media screen and (max-width: 768px) {
+  .login {
+    margin-top: 2rem;
   }
-  
-  .email-form,
-  .password-form {
-    width: 100%;
-    padding: 10px;
-    margin-right: 10px;
-    margin-left: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .submitButton {
-    background-color: #fcb404 !important;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .pass-link {
-    margin-top: 10px;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 10px;
-  }
+}
+
+.login-logo {
+  width: 10vw;
+  margin: 10vh;
+}
+
+.wrapper {
+  width: 100%;
+}
+
+.form-box {
+  background-color: #fff;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.email-form,
+.password-form {
+  width: 100%;
+  padding: 10px;
+  margin-right: 10px;
+  margin-left: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submitButton {
+  background-color: var(--primary-color) !important;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.pass-link {
+  margin-top: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
