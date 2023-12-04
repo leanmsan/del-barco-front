@@ -115,7 +115,7 @@ export const TablaRecetas = () => {
               <TableCell
                 class="cell-head-TableContainer"
               >
-                Litros esperados
+                Litros
               </TableCell>
             </TableRow>
           </TableHead>
@@ -150,8 +150,15 @@ export const TablaRecetas = () => {
                 >
                   {receta.tipo}
                 </TableCell>
-                <TableCell>
-                  
+                <TableCell
+                  style={{
+                    fontWeight:
+                      selectedRecetas === receta.nombre_receta
+                        ? "bold"
+                        : "normal",
+                  }}
+                >
+                  {receta.litros}
                 </TableCell>
               </TableRow>
             ))}
@@ -288,11 +295,7 @@ export const TablaRecetas = () => {
                     <TableCell class="cell-head-TableContainer">
                       Tipo Medida
                     </TableCell>
-                    <TableCell
-                      className="cell-head-TableContainer"
-                      colSpan={2}
-                      style={{ textAlign: "center" }}
-                    >
+                    <TableCell class="cell-head-TableContainer">
                       Acciones
                     </TableCell>
                   </TableRow>

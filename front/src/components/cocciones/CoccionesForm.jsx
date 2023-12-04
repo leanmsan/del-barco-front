@@ -18,9 +18,6 @@ export function CoccionesForm() {
     const [receta_id, setRecetaId] = useState("");
     const [errorRecetaId, setErrorRecetaId] = useState(false);
 
-    const [volumen_producido, setVolumenProducido] = useState("")
-    const [errorVolumenProducido, setErrorVolumenProducido] = useState(false);
-    
     const navegate = useNavigate()
 
     // listado de recetas
@@ -51,7 +48,6 @@ export function CoccionesForm() {
         const conccion = {
             fecha_coccion,
             receta_id,
-            volumen_producido,
         }
 
         try {
@@ -67,14 +63,6 @@ export function CoccionesForm() {
                 throw RequiredFieldError('Este campo es obligatorio');
             } else {
                 setErrorRecetaId(false);
-            }
-
-            if (volumen_producido.trim() === "") {
-                setErrorVolumenProducido(true);
-                setVolumenProducido("");
-                throw RequiredFieldError('Este campo es obligatorio');
-            } else {
-                setErrorVolumenProducido(false);
             }
 
             const response = await fetch("http://127.0.0.1:8000/api/cocciones/", {
@@ -111,12 +99,6 @@ export function CoccionesForm() {
                 console.log('Este campo es obligatorio');
             } else {
                 console.log('Error en la solicitud POST', error);
-            }
-            if (volumen_producido.trim() === "") {
-                setErrorVolumenProducido(true);
-                setVolumenProducido("");
-            } else {
-                setErrorVolumenProducido(false);
             }
             if (receta_id.trim() === "") {
                 setErrorRecetaId(true);
@@ -205,21 +187,6 @@ export function CoccionesForm() {
                                 </MenuItem>
                             ))}
                     </TextField>
-
-                    <TextField
-                    required
-                    id="outlined-number"
-                    label="Volumen producido en litros"
-                    type="number"
-                    value={volumen_producido}
-                    onChange={(e) => {
-                        setVolumenProducido(e.target.value);
-                        setErrorVolumenProducido(false);
-                    }}
-                    error={errorVolumenProducido}
-                    helperText={errorVolumenProducido ? 'La cantidad es requerida' : ''}
-                    />
-                    
                     <br />
                 </div>
                 <br />

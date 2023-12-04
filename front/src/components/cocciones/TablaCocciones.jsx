@@ -188,9 +188,6 @@ export const TablaCocciones = () => {
        
         <CustomTextField value={busqueda} onChange={handleChange} />
         <button className="btn-create" onClick={navegarANuevaCoccion}>+ Nueva cocción</button>
-        {/* <Link to="/nuevacoccion">
-          <button className="btn-create">+ Nueva cocción</button>
-        </Link> */}
         <button onClick={descargarInforme} className="btn-informe">
           Descargar Informe
         </button>
@@ -216,9 +213,6 @@ export const TablaCocciones = () => {
                 Fecha{" "}
                 <FontAwesomeIcon icon={faSort} style={{ color: "#000000" }} />
               </TableCell>
-              <TableCell class="cell-head-TableContainer">
-                Volumen producido en litros
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -226,7 +220,6 @@ export const TablaCocciones = () => {
               <TableRow key={row.idcoccion}>
                 <TableCell>{row.receta_id}</TableCell>
                 <TableCell>{row.fecha_coccion}</TableCell>
-                <TableCell>{row.volumen_producido}</TableCell>
               </TableRow>
             ))}
           </TableBody>

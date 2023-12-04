@@ -26,7 +26,6 @@ nav.close {
 
 nav .logo-image {
   transition: var(--tran-05);
-  margin: 1rem 0rem 1rem 0rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,7 +134,6 @@ nav.close .nav-link-item a .link-name {
 }
 
 .logout-mod {
-  padding-top: 10px;
   border-top: 1px solid #f9c4405d;
 }
 

@@ -24,6 +24,9 @@ export function RecetasForm() {
   const [tipoReceta, setTipoReceta] = useState("");
   const [errorTipoReceta, setErrorTipoReceta] = useState(false);
 
+  const [litrosReceta, setLitrosReceta] = useState("");
+  const [errorLitrosReceta, setErrorLitrosReceta] = useState(false);
+
   const [insumoId, setInsumoId] = useState("");
   const [errorInsumoId, setErrorInsumoId] = useState(false);
   const [seleccionarInsumo, setSeleccionarInsumo] = useState([]);
@@ -93,6 +96,24 @@ export function RecetasForm() {
     }
   }
 
+  // Funcion para validar litros
+  function validaLitros(litros) {
+    // Agrega tu lógica de validación aquí
+    // Devuelve verdadero si es válido, falso en caso contrario
+    if (litros.trim() === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Formulario incompleto",
+        text: "Por favor, completa los litros correctamente.",
+      });
+      if (litros.trim() === "") {
+        setErrorLitrosReceta(true);
+      }
+      return false;
+    }
+    return true;
+  }
+
   // Función para validar insumo y cantidad
   function validaInsumoYCantidad(insumo, cantidad) {
     // Agrega tu lógica de validación aquí
@@ -132,12 +153,12 @@ export function RecetasForm() {
   }
 
   // Función para validar el formulario
-  function validaFormulario(nombre, tipo, detalles) {
-    return validaNombreYTipo(nombre, tipo) && validaDetalles(detalles);
+  function validaFormulario(nombre, tipo, detalles, litros) {
+    return validaNombreYTipo(nombre, tipo) && validaDetalles(detalles) && validaLitros(litros);
   }
 
   const validarFormulario = () => {
-    if (!validaFormulario(nombreReceta, tipoReceta, listaDetalles)) {
+    if (!validaFormulario(nombreReceta, tipoReceta, listaDetalles, litrosReceta)) {
       return false;
     } else {
       return true;
@@ -152,6 +173,11 @@ export function RecetasForm() {
   const handleTipoRecetaChange = (e) => {
     setTipoReceta(e.target.value);
     setErrorTipoMedida(false);
+  };
+
+  const handleLitrosChange = (e) => {
+    setLitrosReceta(e.target.value);
+    setErrorLitrosReceta(false);
   };
 
   const handleInsumoIdChange = (e) => {
@@ -252,7 +278,7 @@ export function RecetasForm() {
   const handleNombreTipo = () => {
     // Puedes agregar lógica adicional aquí antes de deshabilitar la edición
     // Si el formulario no es válido, no deshabilitar la edición
-    if (!validaNombreYTipo(nombreReceta, tipoReceta)) {
+    if (!validaNombreYTipo(nombreReceta, tipoReceta) && !validaLitros(litrosReceta)) {
       return;
     }
     setEditable(!editable);
@@ -271,6 +297,7 @@ export function RecetasForm() {
     const recetasData = {
       nombre_receta: nombreReceta,
       tipo: tipoReceta,
+      litros: litrosReceta,
     };
 
     try {
@@ -321,6 +348,7 @@ export function RecetasForm() {
         // Limpiar formulario después del envío exitoso
         setNombreReceta("");
         setTipoReceta("");
+        setLitrosReceta("");
         setInsumoId("");
         setCantidad("");
         setTipoMedida("");
@@ -489,7 +517,25 @@ export function RecetasForm() {
                   readOnly: !editable, // Establecer readOnly en función del estado editable
                 }}
               />
+
+              <TextField
+                required
+                id="outlined-required"
+                label="Litros"
+                type="number"
+                value={litrosReceta}
+                onChange={handleLitrosChange}
+                error={errorLitrosReceta}
+                helperText={
+                  errorLitrosReceta ? "Los litros de cerveza es requerido" : ""
+                }
+                InputProps={{
+                  readOnly: !editable, // Establecer readOnly en función del estado editable
+                }}
+              />
             </div>
+
+            
             <button
               className="button-guardar btn-nombre-tipo"
               type="button"
