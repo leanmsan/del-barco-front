@@ -115,7 +115,7 @@ export const TablaRecetas = () => {
               <TableCell
                 class="cell-head-TableContainer"
               >
-                Litros esperados
+                Litros
               </TableCell>
             </TableRow>
           </TableHead>
@@ -150,8 +150,15 @@ export const TablaRecetas = () => {
                 >
                   {receta.tipo}
                 </TableCell>
-                <TableCell>
-                  
+                <TableCell
+                  style={{
+                    fontWeight:
+                      selectedRecetas === receta.nombre_receta
+                        ? "bold"
+                        : "normal",
+                  }}
+                >
+                  {receta.litros}
                 </TableCell>
               </TableRow>
             ))}
@@ -286,13 +293,6 @@ export const TablaRecetas = () => {
                       Cantidad
                     </TableCell>
                     <TableCell class="cell-head-TableContainer">
-                      Tipo Medida
-                    </TableCell>
-                    <TableCell
-                      className="cell-head-TableContainer"
-                      colSpan={2}
-                      style={{ textAlign: "center" }}
-                    >
                       Acciones
                     </TableCell>
                   </TableRow>
@@ -301,8 +301,7 @@ export const TablaRecetas = () => {
                   {filteredRecetasDetalle.map((e) => (
                     <TableRow key={`${e.receta_id}-${e.insumo_id}`}>
                       <TableCell>{e.insumo_id}</TableCell>
-                      <TableCell>{e.cantidad}</TableCell>
-                      <TableCell>{e.tipo_medida}</TableCell>
+                      <TableCell>{e.cantidad} {e.tipo_medida}</TableCell>
                       <TableCell>
                         <button
                           type="button"
@@ -396,9 +395,6 @@ export const TablaRecetas = () => {
       <div>
         <h1 className="title">Recetas</h1>
         <button className="btn-create-sin-searchbox" onClick={navegarANuevaReceta}>+ Nueva receta</button>
-        {/* <Link to="/registrorecetas">
-          <button className="btn-create-sin-searchbox">+ Nueva receta</button>
-        </Link> */}
         {renderRecetas()}
         {selectedRecetas && <>{renderRecetasDetalle()}</>}
       </div>

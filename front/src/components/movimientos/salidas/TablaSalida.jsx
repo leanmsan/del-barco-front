@@ -24,6 +24,7 @@ export const TablaSalidasMovimientos = () => {
   const [salidas, setSalidas] = useState([]);
   const [salidasDetalle, setSalidasDetalle] = useState([]);
   const [selectedSalidas, setSelectedSalidas] = useState(null);
+  const [seleccionarInsumo, setSeleccionarInsumo] = useState([]);
   const [showSalidasDetalle, setShowSalidasDetalle] = useState(false);
   const [orden, setOrden] = useState({
     campo: "idsalida",
@@ -54,6 +55,25 @@ export const TablaSalidasMovimientos = () => {
       console.error("Error al obtener los datos:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchInsumos = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/insumos/");
+        const data = await response.json();
+
+        if (response.ok) {
+          setSeleccionarInsumo(data.insumos);
+        } else {
+          console.log("Error al obtener los insumos", response);
+        }
+      } catch (error) {
+        console.log("Error de red", error);
+      }
+    };
+
+    fetchInsumos();
+  }, []);
 
   const handleOrdenar = (campo) => {
     setOrden((estadoAnterior) => ({
@@ -191,7 +211,7 @@ export const TablaSalidasMovimientos = () => {
                     >
                       <TableCell>{salidasDetalle.idsalida_id}</TableCell>
                       <TableCell>{salidasDetalle.insumo_id}</TableCell>
-                      <TableCell>{salidasDetalle.cantidad}</TableCell>
+                      <TableCell>{`${salidasDetalle.cantidad} ${seleccionarInsumo.find((insumo) => insumo.nombre_insumo === salidasDetalle.insumo_id)?.tipo_medida}`}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -267,9 +287,6 @@ export const TablaSalidasMovimientos = () => {
       <div>
         <h1 className="title">Egresos</h1>
         <button className="btn-create-sin-searchbox" onClick={navegarANuevaSalida}>+ Nuevo egreso</button>
-        {/* <Link to="/registrosalidas">
-          <button className="btn-create-sin-searchbox">+ Nuevo egreso</button>
-        </Link> */}
         {renderSalidas()}
         {selectedSalidas && <>{renderSalidasDetalle()}</>}
       </div>

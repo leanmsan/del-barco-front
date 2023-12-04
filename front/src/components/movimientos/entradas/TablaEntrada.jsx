@@ -24,6 +24,7 @@ export const TablaEntradas = () => {
   const [EntradasDetalle, setEntradasDetalle] = useState([]);
   const [selectedEntrada, setSelectedEntrada] = useState(null);
   const [showEntradaDetalle, setShowEntradaDetalle] = useState(false);
+  const [seleccionarInsumo, setSeleccionarInsumo] = useState([]);
   const [orden, setOrden] = useState({
     campo: "identrada",
     direccion: "asc",
@@ -53,6 +54,25 @@ export const TablaEntradas = () => {
       console.log("Error al obtener los datos", error);
     }
   };
+
+  useEffect(() => {
+    const fetchInsumos = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/insumos/");
+        const data = await response.json();
+
+        if (response.ok) {
+          setSeleccionarInsumo(data.insumos);
+        } else {
+          console.log("Error al obtener los insumos", response);
+        }
+      } catch (error) {
+        console.log("Error de red", error);
+      }
+    };
+
+    fetchInsumos();
+  }, []);
 
   const handleOrdenar = (campo) => {
     setOrden((estadoAnterior) => ({
@@ -224,7 +244,7 @@ export const TablaEntradas = () => {
                     >
                       <TableCell>{entradasDetalle.identrada_id}</TableCell>
                       <TableCell>{entradasDetalle.insumo_id}</TableCell>
-                      <TableCell>{entradasDetalle.cantidad}</TableCell>
+                      <TableCell>{`${entradasDetalle.cantidad} ${seleccionarInsumo.find((insumo) => insumo.nombre_insumo === entradasDetalle.insumo_id)?.tipo_medida}`}</TableCell>
                       <TableCell>{entradasDetalle.precio_unitario}</TableCell>
                     </TableRow>
                   ))}
@@ -302,9 +322,7 @@ export const TablaEntradas = () => {
         <h1 className="title">Ingresos</h1>
 
         <button className="btn-create-sin-searchbox" onClick={navegarANuevaEntrada}>+ Nuevo ingreso</button>
-        {/* <Link to="/registroentradas">
-          <button className="btn-create-sin-searchbox">+ Nuevo ingreso</button>
-        </Link> */}
+        
         {renderEntradas()}
         {selectedEntrada && <>{renderEntradasDetalle()}</>}
       </div>
