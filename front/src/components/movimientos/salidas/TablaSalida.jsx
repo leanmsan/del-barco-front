@@ -267,9 +267,6 @@ export const TablaSalidasMovimientos = () => {
       <div>
         <h1 className="title">Egresos</h1>
         <button className="btn-create-sin-searchbox" onClick={navegarANuevaSalida}>+ Nuevo egreso</button>
-        {/* <Link to="/registrosalidas">
-          <button className="btn-create-sin-searchbox">+ Nuevo egreso</button>
-        </Link> */}
         {renderSalidas()}
         {selectedSalidas && <>{renderSalidasDetalle()}</>}
       </div>

@@ -302,9 +302,7 @@ export const TablaEntradas = () => {
         <h1 className="title">Ingresos</h1>
 
         <button className="btn-create-sin-searchbox" onClick={navegarANuevaEntrada}>+ Nuevo ingreso</button>
-        {/* <Link to="/registroentradas">
-          <button className="btn-create-sin-searchbox">+ Nuevo ingreso</button>
-        </Link> */}
+        
         {renderEntradas()}
         {selectedEntrada && <>{renderEntradasDetalle()}</>}
       </div>

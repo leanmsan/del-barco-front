@@ -368,9 +368,6 @@ export const TablaProveedores = () => {
         <CustomTextField value={busqueda} onChange={handleChange} />
 
         <button className="btn-create" onClick={navegarANuevoProveedor}>+ Nuevo proveedor</button>
-        {/* <Link to="/altaproveedores">
-          <button className="btn-create">+ Nuevo proveedor</button>
-        </Link> */}
       </div>
       <TableContainer class="table-container-format" component={Paper}>
         <Table>

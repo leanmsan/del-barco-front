@@ -315,9 +315,6 @@ export const TablaInsumos = () => {
         <CustomTextField value={busqueda} onChange={handleChange} />
 
         <button className="btn-create" onClick={navegarANuevoInsumo}>+ Nuevo insumo</button>
-        {/* <Link to="/altainsumos">
-          <button className="btn-create">+ Nuevo insumo</button>
-        </Link> */}
         <button onClick={descargarInforme} className="btn-informe">
           Descargar Informe
         </button>
