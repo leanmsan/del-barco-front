@@ -309,7 +309,7 @@ export function EntradaForm() {
               {listaDetalle.map((detalle, index) => (
                 <TableRow key={detalle.identrada_id}>
                   <TableCell>{detalle.insumo_id}</TableCell>
-                  <TableCell>{detalle.cantidad}</TableCell>
+                  <TableCell>{`${detalle.cantidad} ${seleccionarInsumo.find((insumo) => insumo.nombre_insumo === detalle.insumo_id)?.tipo_medida}`}</TableCell>
                   <TableCell>{detalle.precio_unitario}</TableCell>
                   <TableCell>
                     <button
