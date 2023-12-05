@@ -154,9 +154,8 @@ export const TablaSalidasMovimientos = () => {
                       selectedSalidas === salida.idsalida ? "bold" : "normal",
                   }}
                 >
-                  {format(new Date(salida.fecha_salida), "EEEE dd MMMM yyyy", {
-                    locale: esLocale,
-                  })}
+                  {salida.fecha_salida
+                  }
                 </TableCell>
               </TableRow>
             ))}
