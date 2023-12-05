@@ -171,11 +171,9 @@ export const TablaEntradas = () => {
                       selectedEntrada === entrada.identrada ? "bold" : "normal",
                   }}
                 >
-                  {format(
-                    new Date(entrada.fecha_entrada),
-                    "EEEE dd MMMM yyyy",
-                    { locale: esLocale }
-                  )}
+                  {//format(
+                  entrada.fecha_entrada 
+                  }
                 </TableCell>
                 <TableCell
                   style={{
